@@ -23,9 +23,40 @@ Though, with the rising of \ac{iot}, there have been an increasingly amount of n
 
 \subsection{\ac{bas} Protocols}
 
+In this section there will be addressed the most common technologies present at the current Building Automation market. Each one of them as an important role at different levels of a Building Automation System. As shown in figure \ref{fig:hierarchy}, those levels are Management System Level, Automation Level and Field Level \cite{Iwayemi2011}. The all set of devices, sensors or actuators, compose the field layer. The Automation level is responsible for all the logic and hardware needed to control those devices and the Management Level consists in the control and management of the system and the reactions to events present in the gathered data.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/hierarchy.png}
+	\caption{Building Automation System hierarchy \cite{kastener}. }
+	\label{fig:hierarchy}
+\end{figure}
+
+The most common protocols used in BAS are \acf{bacnet} \cite{bacnet}, \acf{knx} \cite{knx}, \acf{lonworks} \cite{EchelonCorporation2009}, EnOcean \cite{enocean}, and \acf{dali} \cite{dali}. Each one of them has its own position on the \ac{bas} hierarchy. All the features of each one and the differences between them will be addressed in the next subsections.
+
 
 \subsubsection{BACnet}
+The \acf{bacnet} protocol, was developed by \acf{ashrae} in 1987 but was only published and accepted as a ANSI/ASHRAE standard latter in 1995.
+
+\ac{bacnet} was designed to allow communication of building automation and control systems in fields such as HVAC, lighting control and others. The \ac{bacnet} protocol allow the deployment of automation mechanisms to sensors and actuators exchange information, irrespective of any service they perform.
+
+\ac{bacnet} is modelled in object-oriented manner. There are a standard set object types that define the application services supported, such as devices, control loops, notifications, commands, schedules and more \cite{Domingues2016}. Each of the objects can have its own properties, that define together their functionality. For, example, a motion sensor can have multiple properties such as, number of times it was triggered and record of the last on-state time, and not only the current state. The access and manipulation of the object properties is done through a service that allows reading and writing object properties, that can interact with the real device state based on his object properties \cite{Fernbach2011}.
+
+As stated before, other important \ac{bacnet} features are scheduling, which allow to schedule actions and program periodic events, notifications, that allow to distribute event notifications to the subscribed recipients \cite{Domingues2016} and logging, allowing a historical view of every change carried out in the system.
+
+\ac{bacnet} is surely a complete solution that can be a good option for a full building automation system deployment. Yet \ac{bacnet} is an open standard, but the tools are supplied individually by each manufacturer \cite{openprotocol}, being sometimes complex the use and manage devices from different vendors. Figure \ref{fig:bacnet} shows an example of a multi vendor architecture.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/bacnet.png}
+	\caption{Native BACnet architecture. Adapted from \cite{bacnetimage}. }
+	\label{fig:bacnet}
+\end{figure}
+
+
 \subsubsection{KNX}
+
 \subsubsection{LonWorks}
 \subsubsection{DALI}
 \subsubsection{EnOcean}
