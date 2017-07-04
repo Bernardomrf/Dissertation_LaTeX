@@ -57,14 +57,53 @@ As stated before, other important \ac{bacnet} features are scheduling, which all
 
 \subsubsection{KNX}
 
+\ac{knx} was created from the combination of the best aspects of European Installation Bus (EIB), European Home Systems (EHS), and BatiBUS technologies. Later, KNX was standardized as norm EN 50090, and in 2006 as a international ISO/IEC 14543 standard \cite{Domingues2016}.
+
+KNX deployment architecture uses a common bus connected to every device, actuator or sensor. The communication can be done using unicast addressing, since every device has a unique identifier corresponding to its position in the network. There is also the possibility of multicast communication since devices can be also aggregated in groups through a group identifier \cite{Kastner2005}.  
+
+KNX support a variety of communication means such as twisted-pair (TP), power line (PL), IP tunnelling and a wireless one named KNX
+Radio Frequency. Being KNX a field bus system \cite{Osorio}, the interworking of devices is a very important matter taken in account by KNX. This is possible since KNX certifies products in order to ensure that they apply to their interworking rules, such as, being able to communicate with the whole system, according to KNX specifications, and following the KNX standardized set of data types \cite{Interworking_KNX}. Also, KNX ensures that all the products can be configured using a Engineering Tool Software (ETS). This tool provides two modes of configuration, S-mode (System mode) and E-mode (Easy mode) as shown in Figure \ref{fig:knx_modes}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/knx_modes.png}
+	\caption{KNX configuration modes \cite{knx}. }
+	\label{fig:knx_modes}
+\end{figure}
+ 
+ S-mode is intended to be used by experienced KNX installers as it offers full control over the system functions and configurations. The E-mode is targeted to installers with less experience, since components are already pre-programmed with a default array of parameters.
+ 
+To conclude, KNX is capable of resolve most of the problems in the Building Automation field. Features such as the very rigorous certification program for devices from different manufactures is a great ??????????? that help reduce the heterogeneity in communication between devices.
+
+ 
 \subsubsection{LonWorks}
+
+LonWorks is an event-triggered control network system \cite{Osorio}, developed by Echelon Corporation \cite{echelon} in 1988. This system uses LonTalk, a communication protocol firstly presented in 1999 as a official ANSI/EIA-709 standard and later as a ISO/International Electrotechnical Commission (IEC) 14908.
+
+LonWorks uses a decentralized peer to peer architecture, where devices are treated as nodes and can communicate with each other by any medium available, using a standard protocol. This nodes have a unique identifier and a set of functionalities and network variables, i.e. all the datapoints needed to nodes communicate directly with each other \cite{Domingues2016}.
+
+
+
+
+Lonworks has replaced centralized automation control system architecture into highly distributed peer to peer architecture. As mentioned there will not be any centralized controller here and all the Lonworks devices (i.e. nodes) communicate with other nodes on whatever medium is available using standard protocol. Lonworks supports physical mediums such as twisted pair, power line, RF, fiber optics, infrared and coax. Hence different data rates and distances can be achieved in Lonworks system based on medium.
+
+Here each mode has its own application program and hence control logic is distributed throughout the Lonworks system.
+
+Lonworks technology is developed based on contributing elements such as Neuron chip control processor, transceiver, Lontalk protocol and Lonworks network services.
+
+
 \subsubsection{DALI}
+
+
 \subsubsection{EnOcean}
 \subsection{\ac{bas} Solutions}
 \subsubsection{Metasys \ac{bas}}
 \subsubsection{Honeywell \ac{bas}}
 \subsubsection{Desigo \ac{bas}}
 \section{\acf{iot}}
+
+
+
 \subsection{\acf{m2m}}
 \subsection{\acf{wsan}}
 \subsection{Wireless Communication Protocols}

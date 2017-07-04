@@ -1,2 +1,51 @@
-\chapter{Solution}
-\label{chapter:solution}
+\chapter{Architecture}
+\label{chapter:architecture}
+
+In this chapter there will be provided a solution to improve the efficiency and usability of a building by using automation mechanisms, enhancing the intelligence of the building. Taking in account the \ac{iot} principles, this system will be capable of real-time processing of large data streams, analyse and correlate events, and being able to react and adapt to emergency states and guarantee the minimum functionality, always. This solution is intended to integrate the SmartLightinhg project and will be addressed in this chapter.
+
+This chapter will begin with a brief description, in section \ref{Architecture:slproject}, of SmartLighting project and its intentions of developing a smart environment of automation and control in IT2 building. Later, in section \ref{Architecture:Stakeholders}, there will be presented a description of the stakeholders and their roles in this project.
+
+In order to ensure that all system necessities are addressed and taken into account, in section \ref{Architecture:Requirements} will be done a survey of necessary capabilities and  requirements to satisfy its stakeholders, following by the mapping of user cases in section \ref{Architecture:usecases}, and finally, in section \ref{Architecture:Architecture}, a presentation and evaluation of the system architecture, and its components interactions. 
+
+
+\newpage
+
+
+\section{SmartLighting Project}
+\label{Architecture:slproject}
+
+The SmartLighting project aims to create a smart environment in IT2 building in order to automate the lighting and HVAC infrastructure. IT2 building have been running with CFL luminaries, which, are often not only, inefficient and hazardous for the environment, but also, in most cases, unable to be dimmed. 
+
+This project intend to remove all this CFL luminaries by LED luminaries, that can resolve all the issues stated before and also are able, combining with sensors, to collect data from the environment such as luminance, temperature, humidity, motion and others. All of the collected data will be used to act in real-time to the changes in the sensors readings. 
+
+Such system needs to be backed up by an intelligent management platform in order to act based on a set of rules and input streams of sensors values. Moreover, there will be mechanisms to correlate events and determine patterns that will enable a more immediate reaction. As an example, if a user has the habit of turn on the AC everyday in the morning, the system will be able to learn and automatically do that action soon as the user arrives in the building. 
+
+Also, the system can use external sources such as meteorological forecast to take preventively actions, such as increase the dimming levels of luminaries and the building temperature in cold rainy days.
+
+Additionally, the users will be able to set their own rules to enhance the comfort in its office. This can be done either by using a mobile application or a web interface. Also, this user platforms can enable the use of notifications providing ways to alert the building occupants of important events. For instance, users can be informed about future meetings, the presence of another occupant in the building, and more.
+
+Finally, an important feature for this project is the fail safe mechanisms to ensure that all the basic automation needed for the building well functioning, such as the trigger of a motion sensor lighting up the corresponding luminaries, work even if in situations of failure in core elements of the architecture fail or network communication problems. This will be the main focus of the presented dissertation.
+
+
+\section{Stakeholders}
+\label{Architecture:Stakeholders}
+
+\begin{itemize}
+	\item Building occupants
+	\item Building owners
+	\item Building managers
+	\item Developers team
+\end{itemize}
+
+
+\section{Requirements}
+\label{Architecture:Requirements}
+
+\section{User Driven Cases}
+\label{Architecture:usecases}
+
+\section{System Architecture}
+\label{Architecture:Architecture}
+
+
+
