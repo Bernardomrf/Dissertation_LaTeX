@@ -24,9 +24,8 @@ Also, the system can use external sources such as meteorological forecast to tak
 
 Additionally, the users will be able to set their own rules to enhance the comfort in its office. This can be done either by using a mobile application or a web interface. Also, this user platforms can enable the use of notifications providing ways to alert the building occupants of important events. For instance, users can be informed about future meetings, the presence of another occupant in the building, and more.
 
-Finally, an important feature for this project is the fail safe mechanisms to ensure that all the basic automation needed for the building well functioning, such as the trigger of a motion sensor lighting up the corresponding luminaries, work even if in situations of failure in core elements of the architecture fail or network communication problems. This will be the main focus of the presented dissertation.
+Finally, an important feature for this project is the fail safe mechanisms to ensure that all the basic automation needed for the building well functioning, such as the trigger of a motion sensor lighting up the corresponding luminaries, work even if in situations of failure in core elements of the architecture or network communication problems. This can be achieved by giving gateways, the component that communicate directly with the sensors and actuators, lightweight processing mechanisms to ensure the basic functionalities described before. This will be the main focus of the presented dissertation.
 
-\newpage
 
 \section{Stakeholders}
 \label{Architecture:Stakeholders}
@@ -50,13 +49,84 @@ As for building managers, the benefits are from easier interaction and configura
 Lastly, the developers team take a huge benefit in the success of the project since they are interested and devoted to create the best product possible that fulfils all the other stakeholders expectations.
 
 
+\section{Use Cases}
+\label{Architecture:usecases}
+In order to a better understanding of the system features, in this section will be presented some examples of use cases. This approach will be divided in two subsections, namely, user interactions, in section \ref{Use:users} , where will be addressed the direct interaction between real actors and system features, and, in section \ref{Use:system}, system interactions, where will be addressed all the interactions between internal components of the system.
+
+\subsection{User Interaction}
+\label{Use:users}
+
+This section will focus on the direct interactions between the two main users of the IT2 building and this system. Firstly will be addressed the use cases of the normal building occupants and later, the use cases of the building manger, responsible for the management and configuration of the system.
+
+\subsubsection{Building Occupant}
+
+The building occupants will be the principal users that will interact with the system. This interaction can be achieved by using either a mobile application or a web interface. The use cases addressed bellow combine the most common and frequent operations:
+
+\begin{Paragraph}{Login/Logout}
+
+This use cases are intended to enable the access to user oriented features. The building occupants can login in the platform, either using the mobile application or the web interface, to access his preferences and personal environment control features. 
+
+\end{Paragraph}
+
+\begin{Paragraph}{Request changes in devices state}
+
+The building occupant can request a change in the state of a device, that can be accepted or denied by the system depending on the access rights of the user. For instance, an occupant can request a change in near by devices like  air conditioners, lights, and others.
+
+\end{Paragraph}
+
+\begin{Paragraph}{List nearby devices}
+
+This use case allows users to request the list of nearby devices, based on its location, allowing to access or request changes to devices in the same room as the occupant, giving that these are the most likely to be needed access.
+
+\end{Paragraph}
+
+\begin{Paragraph}{Configure device preferences}
+
+The user can create or edit device pre-sets, allowing that the selected values are applied automatically to the device in future uses. For instance, the air conditioner in a user office can be pre-set to 21ºC so that when this device is turned on, that value is automatically set. This changes would also depend with the user access rights.
+
+\end{Paragraph}
+
+\begin{Paragraph}{Configure user rules}
+	
+This use case allow the building occupants to create rules that preform a set of actions automatically, giving the right conditions. For instance the user could create a rule to automatically turn the air conditioner on if the temperature in his office exceed a giving value.
+	
+\end{Paragraph}
+
+\subsubsection{Building Manager}
+
+\begin{Paragraph}{Create building structure}
+	
+The manager can create the representation of the building in the structure management platform. This allow the creation of a virtual portrayal of the floors, rooms and areas of the building.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Distribute devices}
+
+This use case permit that connected devices can be distributed through the areas and rooms of the building virtual representation.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Configure global rules}
+
+The building manager has the ability to add, delete, enable or disable rules for the whole building. These core rules' main purpose are the building's efficiency increase, for instance instead of leaving the corridors lights always on, a rule can be created to turn them off when there's no one walking by. There is also a mechanism to test the rule before the deployment.
+
+\end{Paragraph}
+
+
+\subsection{System Interaction}
+\label{Use:system}
+TODO
+\subsubsection{Device}
+TODO
+\subsubsection{Gateway}
+TODO
+\subsubsection{CEP Engine}
+TODO
+\subsubsection{Management System}
+TODO
+
 \section{Requirements}
 \label{Architecture:Requirements}
-
-
-
-\section{User Driven Cases}
-\label{Architecture:usecases}
 
 \section{System Architecture}
 \label{Architecture:Architecture}
