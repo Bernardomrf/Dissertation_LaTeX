@@ -115,18 +115,136 @@ The building manager has the ability to add, delete, enable or disable rules for
 
 \subsection{System Interaction}
 \label{Use:system}
-TODO
+
+This section is going to be focused on the interactions between physical system components. The key pieces of the architecture are  devices, gateways, the CEP engine and the management system, and the use cases of them are presented bellow.
+
 \subsubsection{Device}
-TODO
+\begin{Paragraph}{Change state} %atuators
+	
+This use case is targeted to actuators so that given an input they can change its functioning state. For instance, luminaries and air conditioners turn on or off.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Send event} %sensors
+	
+The targets of this use case are sensing devices, so that they can report the sensed values. For example, a temperature sensor can send periodically temperature readings to be consumed and processed.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Report state}
+	
+
+	
+\end{Paragraph}
+
 \subsubsection{Gateway}
-TODO
+\begin{Paragraph}{Register in the system}
+	
+Gateways, when inserted in the field, should register in the management system by sending an authenticated message to make the all nodes aware that a new gateway is available. After the registration, the gateway stays idle, waiting for the work distribution by the management system.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Report connected devices}
+	
+When asked by the management system, gateways should send the available devices within its range, and wait for a response of which ones should they control and be responsible for the communication. 
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Process events}
+	
+Each gateway, when needed, should be able to process input events, either sent directly from connected devices or sent by the management system, and based on the pre-loaded set of rules, produce an output event. This outputs events can be sent directly to the devices, if connected to the same gateway, or sent to the management system that will distribute them to the correct gateway.
+
+\end{Paragraph}
+
+\begin{Paragraph}{Control devices}
+	
+Gateways are the components that connect directly to devices, thus, they should be able to communicate through some protocol known by the device. For instance, a gateway connected to a BLE luminary, should be able to convert an output event to turn off the light in a specific format so that the luminary is able to understand and perform the change.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Report state}
+	
+In order to the management system be aware of the available and working gateways, a periodical message or heartbeat should be sent by each of them, so that in case of a gateway failure, the system will be aware of this fact and proceed with balancing rules, devices and events throughout the other gateways.
+
+\end{Paragraph}
+
 \subsubsection{CEP Engine}
-TODO
+
+\begin{Paragraph}{Process events}
+	
+The CEP engine should be able to, giving an input stream, process, correlate and produce output events based on the pre-loaded rules. The event streams need to be configured by the Building Manager module.
+
+\end{Paragraph}
+
 \subsubsection{Management System}
-TODO
+
+\begin{Paragraph}{Distribute rules}
+	
+The Management system is able to distribute basic rules, created previously by the Building Manager and distribute them among the available gateways. The distribution process can be either by deliver a equal number of rules to each gateway or distribute rules by proximity to the target devices.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Distribute devices}
+	
+The Management system should inform gateways of the devices each one should control. For instance, two gateways can be able to communicate with some device, but only one, chosen by the Management system will be able to control it. In case of a gateway failure, its devices are distributed to other gateways.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Distribute events}
+	
+Each generated event should be redirected to the CEP engine, or, in case of failure, to the gateway with the corresponding rule. The Management system has all the information regarding the location of every rule and which events trigger those rules. 
+	
+\end{Paragraph}
+
 
 \section{Requirements}
 \label{Architecture:Requirements}
+As stated before, the proposed solution for this dissertation is part of the SmartLighting project, thus, designed to be integrated in a real-world scenario. Accordingly, the requirements, in this section, must converge and be in conformity with the project's objectives stated in section \ref{Architecture:slproject}. 
+
+\begin{Paragraph}{Fast Responsiveness}
+
+The system's performance and fast responsiveness are huge requirements for a successful \ac{bas} solution. The system must react to events with such responsiveness that the occupants experience and comfort is not affected. For instance, when a user enters a room, it is expects that the lights turn on in a question of milliseconds causing an instantaneousness feeling to the user. In other cases, a slower responsiveness is not critical for the occupant. As an example, in the heating system, when the temperature goes bellow a certain threshold, if the air conditioners take a few seconds to turn on, it won't be noticeable for the users.
+
+In addiction, the system's management platform responsiveness is another performance requirement as it shouldn't feel slow to the user.
+
+\end{Paragraph}
+
+\begin{Paragraph}{Flexibility}
+
+One important requirement for this project is flexibility. Firstly, in order to have a system that can be easily upgradable, components must be independent of hardware. For instance, the gateway software must be developed in such way that can work in a large number of micro-controllers and  low power \ac{soc} computer. Also, the communication protocols between system components should be able to be changed allowing to meet different requirements of different scenarios. 
+
+
+Finally, the system should facilitate the integration of different type of sensors or actuators, without the need verbose and difficult configurations.
+
+\end{Paragraph}
+
+\begin{Paragraph}{Scalability}
+
+The system should assure that with the addition of devices, the overall performance does not decline. Also, it should facilitate the horizontal scalability of system nodes, making it transparent and easy to integrate new servers to maintain or improve the system's performance.
+
+\end{Paragraph}
+
+\begin{Paragraph}{Failure Handling and Basic Functionalities}
+	
+Failure handling and the assurance of basic functionalities were the main goals for this dissertation, making very important, the requirements regarding this topic.
+
+The whole system is designed to fulfil a set of expectations and to work perfectly at any given time, however, there could be some cases where due to a critical system failure, either a downtime in the CEP engine, communication errors or a congested network, the whole system could start malfunctioning. In more severe cases this could mean, for instance, an entire blackout in a building, or a fire sensor not triggering the alarm leading to serious injuries to the occupants.
+
+With all this facts in consideration, a significant requirement for a \ac{bas} solution is the ability to be always aware of the entire system state and to react immediately to abnormal system occurrences. This means, for instance, that in case of communication failure between the sensors and the \ac{cep} engine, the basic functionalities like lights turning on or off, alarms, doors and other key functionalities still work autonomously.
+\end{Paragraph}
+
+\begin{Paragraph}{Data Correlation}
+
+In order to a more accurate and elaborate reaction to sensing events, the event processing unit should be able to correlate events and infer decisions based on previous learning. For instance, if a user always turn on the air conditioner, when the temperature is bellow a certain threshold, the system should be able to learn from this behaviour and promptly react without human intervention.
+
+\end{Paragraph}
+
+\begin{Paragraph}{User Control and User-friendly Interfaces}
+	
+The system should allow users, based on their roles and permissions, to manually alter the state of a device. This means that interfaces, web or mobile, should be available to the users to control the surroundings. This interfaces should be done, taking in account that not all users have the expertise to interact with verbose configuration parameters, thus, the interfaces should be as intuitive and perceptible as possible.
+	
+\end{Paragraph}
+
 
 \section{System Architecture}
 \label{Architecture:Architecture}
