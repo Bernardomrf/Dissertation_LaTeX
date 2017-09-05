@@ -1,22 +1,40 @@
-\chapter{Architecture}
+\chapter{Smart Building Solution}
 \label{chapter:architecture}
 
 In this chapter there will be provided a solution to improve the efficiency and usability of a building by using automation mechanisms, enhancing the intelligence of the building. Taking in account the \ac{iot} principles, this system will be capable of real-time processing of large data streams, analyse and correlate events, and being able to react and adapt to emergency states and guarantee the minimum functionality, always. This solution is intended to integrate the SmartLightinhg project and will be addressed in this chapter.
 
-This chapter will begin with a brief description, in section \ref{Architecture:slproject}, of SmartLighting project and its intentions of developing a smart environment of automation and control in IT2 building. Later, in section \ref{Architecture:Stakeholders}, there will be presented a description of the stakeholders and their roles in this project.
+This chapter will begin with a brief description, in section \ref{Architecture:slproject}, of SmartLighting project and its intentions of developing a smart environment of automation and control in IT2 building. Later, in order to ensure that all system necessities are addressed and taken into account, in section \ref{Architecture:Requirements} will be done a survey of necessary capabilities and  requirements to satisfy its stakeholders.
 
-In order to ensure that all system necessities are addressed and taken into account, in section \ref{Architecture:Requirements} will be done a survey of necessary capabilities and  requirements to satisfy its stakeholders, following by the mapping of user cases in section \ref{Architecture:usecases}, and finally, in section \ref{Architecture:Architecture}, a presentation and evaluation of the system architecture, and its components interactions. 
+Since the main aim of this dissertation is the failure handling and adaptation of the gateways to emergency states, in section \ref{Architecture:usecases}, will be addressed three scenarios of operation needed to be taken into account.
+
+Finally, in section \ref{Architecture:Architecture}, a presentation and evaluation of the system architecture, and its components interactions. 
 
 
 \newpage
 
 
+\iffalse
+********************************
+
+
+
+
+********************************
+
+\fi
+
+
+
+
 \section{SmartLighting Project}
 \label{Architecture:slproject}
 
+\subsection{Overview and Objectives}
+\label{Architecture:Overview}
+
 The SmartLighting project aims to create a smart environment in IT2 building in order to automate the lighting and HVAC infrastructure. IT2 building have been running with CFL luminaries, which, are often not only, inefficient and hazardous for the environment, but also, in most cases, unable to be dimmed. 
 
-This project intend to remove all this CFL luminaries by LED luminaries, that can resolve all the issues stated before and also are able, combining with sensors, to collect data from the environment such as luminance, temperature, humidity, motion and others. All of the collected data will be used to act in real-time to the changes in the sensors readings. 
+This project intend to remove all this CFL luminaries by LED luminaries, that can resolve all the issues stated before and also are able, combining with sensors, to collect data from the environment such as luminance, temperature, humidity, motion and others. All of the collected data will be used to act in real-time to the changes in sensors readings. 
 
 Such system needs to be backed up by an intelligent management platform in order to act based on a set of rules and input streams of sensors values. Moreover, there will be mechanisms to correlate events and determine patterns that will enable a more immediate reaction. As an example, if a user has the habit of turn on the AC everyday in the morning, the system will be able to learn and automatically do that action soon as the user arrives in the building. 
 
@@ -27,7 +45,7 @@ Additionally, the users will be able to set their own rules to enhance the comfo
 Finally, an important feature for this project is the fail safe mechanisms to ensure that all the basic automation needed for the building well functioning, such as the trigger of a motion sensor lighting up the corresponding luminaries, work even if in situations of failure in core elements of the architecture or network communication problems. This can be achieved by giving gateways, the component that communicate directly with the sensors and actuators, lightweight processing mechanisms to ensure the basic functionalities described before. This will be the main focus of the presented dissertation.
 
 
-\section{Stakeholders}
+\subsection{Stakeholders}
 \label{Architecture:Stakeholders}
 
 The success of a project depends directly in the people involved, either by developing its features or simply by consuming them in its final form. A correct identification of the stakeholders, their motivations and expectations, pay a important role in the success of any project. 
@@ -49,16 +67,16 @@ As for building managers, the benefits are from easier interaction and configura
 Lastly, the developers team take a huge benefit in the success of the project since they are interested and devoted to create the best product possible that fulfils all the other stakeholders expectations.
 
 
-\section{Use Cases}
-\label{Architecture:usecases}
+\subsection{Use Cases}
+\label{Architecture:SLusecases}
 In order to a better understanding of the system features, in this section will be presented some examples of use cases. This approach will be divided in two subsections, namely, user interactions, in section \ref{Use:users} , where will be addressed the direct interaction between real actors and system features, and, in section \ref{Use:system}, system interactions, where will be addressed all the interactions between internal components of the system.
-
-\subsection{User Interaction}
+\iffalse
+\subsubsection{User Interaction}
 \label{Use:users}
 
 This section will focus on the direct interactions between the two main users of the IT2 building and this system. Firstly will be addressed the use cases of the normal building occupants and later, the use cases of the building manger, responsible for the management and configuration of the system.
 
-\subsubsection{Building Occupant}
+\subsubsubsection{Building Occupant}
 
 The building occupants will be the principal users that will interact with the system. This interaction can be achieved by using either a mobile application or a web interface. The use cases addressed bellow combine the most common and frequent operations:
 
@@ -92,7 +110,7 @@ This use case allow the building occupants to create rules that preform a set of
 	
 \end{Paragraph}
 
-\subsubsection{Building Manager}
+\subsubsubsection{Building Manager}
 
 \begin{Paragraph}{Create building structure}
 	
@@ -113,12 +131,12 @@ The building manager has the ability to add, delete, enable or disable rules for
 \end{Paragraph}
 
 
-\subsection{System Interaction}
+\subsubsection{System Interaction}
 \label{Use:system}
 
 This section is going to be focused on the interactions between physical system components. The key pieces of the architecture are  devices, gateways, the CEP engine and the management system, and the use cases of them are presented bellow.
 
-\subsubsection{Device}
+\subsubsubsection{Device}
 \begin{Paragraph}{Change state} %atuators
 	
 This use case is targeted to actuators so that given an input they can change its functioning state. For instance, luminaries and air conditioners turn on or off.
@@ -137,7 +155,7 @@ The targets of this use case are sensing devices, so that they can report the se
 	
 \end{Paragraph}
 
-\subsubsection{Gateway}
+\subsubsubsection{Gateway}
 \begin{Paragraph}{Register in the system}
 	
 Gateways, when inserted in the field, should register in the management system by sending an authenticated message to make the all nodes aware that a new gateway is available. After the registration, the gateway stays idle, waiting for the work distribution by the management system.
@@ -168,7 +186,7 @@ In order to the management system be aware of the available and working gateways
 
 \end{Paragraph}
 
-\subsubsection{CEP Engine}
+\subsubsubsection{CEP Engine}
 
 \begin{Paragraph}{Process events}
 	
@@ -176,7 +194,7 @@ The CEP engine should be able to, giving an input stream, process, correlate and
 
 \end{Paragraph}
 
-\subsubsection{Management System}
+\subsubsubsection{Management System}
 
 \begin{Paragraph}{Distribute rules}
 	
@@ -195,6 +213,9 @@ The Management system should inform gateways of the devices each one should cont
 Each generated event should be redirected to the CEP engine, or, in case of failure, to the gateway with the corresponding rule. The Management system has all the information regarding the location of every rule and which events trigger those rules. 
 	
 \end{Paragraph}
+
+\fi 
+
 
 
 \section{Requirements}
@@ -246,8 +267,60 @@ The system should allow users, based on their roles and permissions, to manually
 \end{Paragraph}
 
 
+\section{Use Cases}
+\label{Architecture:usecases}
+
+As was referred in the introduction for this chapter, the main aim for this dissertation is the handling of failures, in the different components of the architecture, and empower gateways with the ability to process events (i.e sensors outputs) and produce responses based on simple and basic rules loaded beforehand.
+
+In order to achieve an environment where the minimum functionality of the system is always assured, for example, the lights turning on when someone walks in a corridor, there can be no system component that, in case of failure, could put in risk those functionalities. With this in mind, and looking to the existing architecture, simplified in Figure... only with components that directly and actively affect the event processing capability, three operation scenarios can be identified. 
+
+\begin{Paragraph}{Scenario 1}
+	
+	This first scenario corresponds to the normal operation of the system, where every component is working properly. In this case, the CEP module is responsible for processing every event and return the outcome to the corresponding gateway.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Scenario 2}
+	
+	In this second scenario, when the CEP module fails, the event processing is halted. So, in order to assure that 
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Scenario 3}
+	
+	This use case allows users to request the list of nearby devices, based on its location, allowing to access or request changes to devices in the same room as the occupant, giving that these are the most likely to be needed access.
+	
+\end{Paragraph}
+
 \section{System Architecture}
 \label{Architecture:Architecture}
+
+Taking into account the requirements covered above, the proposed architecture for the SmartLighting project has in mind both \ac{iot} and complex event processing principles to achieve a efficient and smart solution to address this building automation problem.
+
+In this section will be presented the global system architecture for this project as well as a description of all the components that compose the solution.
+
+\subsection{Overview}
+
+Based on the \ac{iot} reference model covered in the section **IOT** from the State of the Art chapter, the architecture for this project, represented in figure**, was also divided in different layers, Field, Network, Aggregation and Automation, and Services and Applications.
+
+
+\begin{Paragraph}{Field layer}
+	
+The field layer represents the set of devices, both sensors and actuators, used to gather information and interact with the environment. The information gathering and detection of changes is done by sensors, that send this information to the respective gateways in the Network layer. After the processing of this data, either in the Aggregation and Automation layer or even by the gateways in the Network layer, the orders for changes are sent to the actuators.
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Network layer}
+	
+
+	
+\end{Paragraph}
+
+
+
+
+
+
 
 
 
