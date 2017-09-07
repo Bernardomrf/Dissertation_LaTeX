@@ -69,67 +69,53 @@ Lastly, the developers team take a huge benefit in the success of the project si
 
 \subsection{Use Cases}
 \label{Architecture:SLusecases}
-In order to a better understanding of the system features, in this section will be presented some examples of use cases. This approach will be divided in two subsections, namely, user interactions, in section \ref{Use:users} , where will be addressed the direct interaction between real actors and system features, and, in section \ref{Use:system}, system interactions, where will be addressed all the interactions between internal components of the system.
-\iffalse
-\subsubsection{User Interaction}
-\label{Use:users}
 
-This section will focus on the direct interactions between the two main users of the IT2 building and this system. Firstly will be addressed the use cases of the normal building occupants and later, the use cases of the building manger, responsible for the management and configuration of the system.
+Based on the stakeholders survey done previously, the two main actors for this \ac{bas} solution are the building's manager and the occupants. Those actors directly use the platforms and resources provided, to enhance the comfort of the environment around them as they please, so the main focus for user driven cases will be in those two. 
 
-\subsubsubsection{Building Occupant}
-
+Although there are many use cases for both the building's manager and the occupants, in this section will be only addressed those that were already implemented in this project. Later in section \ref{Architecture:usecases}, there will be presented the use cases and scenarios introduced by this dissertation work.
+\newpage
+\begin{Paragraph}{Building occupant}
+	
 The building occupants will be the principal users that will interact with the system. This interaction can be achieved by using either a mobile application or a web interface. The use cases addressed bellow combine the most common and frequent operations:
 
-\begin{Paragraph}{Login/Logout}
 
-This use cases are intended to enable the access to user oriented features. The building occupants can login in the platform, either using the mobile application or the web interface, to access his preferences and personal environment control features. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/usecase1.png}
+	\caption{Use case diagram of building occupants interaction with the system.}
+	\label{fig:user}
+\end{figure}
 
+\begin{itemize}
+
+	\item{\textbf{Login/Logout:}	This use cases are intended to enable the access to user oriented features. The building occupants can login in the platform, either using the mobile application or the web interface, to access his preferences and personal environment control features.}
+	\item{\textbf{Request changes in devices state:}	The building occupant can request a change in the state of a device, that can be accepted or denied by the system depending on the access rights of the user. For instance, an occupant can request a change in near by devices like  air conditioners, lights, and others.}
+	\item{\textbf{List nearby devices:}	This use case allows users to request the list of nearby devices, based on its location, allowing to access or request changes to devices in the same room as the occupant, giving that these are the most likely to be needed access.}
+	\item{\textbf{Configure device preferences:}	The user can create or edit device pre-sets, allowing that the selected values are applied automatically to the device in future uses. For instance, the air conditioner in a user office can be pre-set to 21ºC so that when this device is turned on, that value is automatically set. This changes would also depend with the user access rights.}
+	\item{\textbf{Configure user rules:}	This use case allow the building occupants to create rules that preform a set of actions automatically, giving the right conditions. For instance the user could create a rule to automatically turn the air conditioner on if the temperature in his office exceed a giving value.} 
+
+\end{itemize}
 \end{Paragraph}
 
-\begin{Paragraph}{Request changes in devices state}
 
-The building occupant can request a change in the state of a device, that can be accepted or denied by the system depending on the access rights of the user. For instance, an occupant can request a change in near by devices like  air conditioners, lights, and others.
-
-\end{Paragraph}
-
-\begin{Paragraph}{List nearby devices}
-
-This use case allows users to request the list of nearby devices, based on its location, allowing to access or request changes to devices in the same room as the occupant, giving that these are the most likely to be needed access.
-
-\end{Paragraph}
-
-\begin{Paragraph}{Configure device preferences}
-
-The user can create or edit device pre-sets, allowing that the selected values are applied automatically to the device in future uses. For instance, the air conditioner in a user office can be pre-set to 21ºC so that when this device is turned on, that value is automatically set. This changes would also depend with the user access rights.
-
-\end{Paragraph}
-
-\begin{Paragraph}{Configure user rules}
+\begin{Paragraph}{Building manager}
 	
-This use case allow the building occupants to create rules that preform a set of actions automatically, giving the right conditions. For instance the user could create a rule to automatically turn the air conditioner on if the temperature in his office exceed a giving value.
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/usecase2.png}
+		\caption{Use case diagram of building manager interaction with the system.}
+		\label{fig:manager}
+	\end{figure}
+\begin{itemize}
+	\item{\textbf{Manage building structure:}	The manager can create the representation of the building in the structure management platform. This allow the creation of a virtual portrayal of the floors, rooms and areas of the building.}
+	\item{\textbf{Distribute devices:}	This use case permit that connected devices can be distributed through the areas and rooms of the building virtual representation.}
+	\item{\textbf{Configure global rules:}	The building manager has the ability to add, delete, enable or disable rules for the whole building. These core rules' main purpose are the building's efficiency increase, for instance instead of leaving the corridors lights always on, a rule can be created to turn them off when there's no one walking by. There is also a mechanism to test the rule before the deployment.}
+\end{itemize}
 \end{Paragraph}
 
-\subsubsubsection{Building Manager}
-
-\begin{Paragraph}{Create building structure}
-	
-The manager can create the representation of the building in the structure management platform. This allow the creation of a virtual portrayal of the floors, rooms and areas of the building.
-	
-\end{Paragraph}
-
-\begin{Paragraph}{Distribute devices}
-
-This use case permit that connected devices can be distributed through the areas and rooms of the building virtual representation.
-	
-\end{Paragraph}
-
-\begin{Paragraph}{Configure global rules}
-
-The building manager has the ability to add, delete, enable or disable rules for the whole building. These core rules' main purpose are the building's efficiency increase, for instance instead of leaving the corridors lights always on, a rule can be created to turn them off when there's no one walking by. There is also a mechanism to test the rule before the deployment.
-
-\end{Paragraph}
-
+\iffalse
+In order to a better understanding of the system features, in this section will be presented some examples of use cases. This approach will be divided in two subsections, namely, user interactions, in section \ref{Use:users} , where will be addressed the direct interaction between real actors and system features, and, in section \ref{Use:system}, system interactions, where will be addressed all the interactions between internal components of the system.
 
 \subsubsection{System Interaction}
 \label{Use:system}
@@ -214,10 +200,9 @@ Each generated event should be redirected to the CEP engine, or, in case of fail
 	
 \end{Paragraph}
 
+
+
 \fi 
-
-
-
 \section{Requirements}
 \label{Architecture:Requirements}
 As stated before, the proposed solution for this dissertation is part of the SmartLighting project, thus, designed to be integrated in a real-world scenario. Accordingly, the requirements, in this section, must converge and be in conformity with the project's objectives stated in section \ref{Architecture:slproject}. 
@@ -323,32 +308,52 @@ In every scenario stated before there is a need for failure recovery of the gate
 \label{Architecture:Architecture}
 
 
-Taking into account the requirements covered above, and the existing architecture for the SmartLighting project, the proposed architecture has in mind, not only \ac{iot} and complex event processing principles, but also the referred features for this dissertation such as failure handling and rules distribution through gateways.
+Taking into account the objectives, use cases and requirements covered above, and the existing architecture for the SmartLighting project, the proposed architecture has in mind, not only \ac{iot} and complex event processing principles, but also the referred features for this dissertation such as failure handling and rules distribution through gateways.
 
 In this section will be presented the global system architecture for this project as well as a description of all the components that compose the solution.
 
-\subsection{Overview}
-
-Based on the \ac{iot} reference model covered in the section **IOT** from the State of the Art chapter, the architecture for this project, represented in figure**, was also divided in different layers, Field, Network, Aggregation and Automation, and Services and Applications.
-
-	\begin{figure}[H]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/architecture.png}
-	\caption{Smart Building: architecture diagram}
+	\caption{Smart Building: Architecture diagram}
 	\label{fig:arch}
 \end{figure}
 
-\begin{Paragraph}{Field layer}
+
+
+\subsection{Components Overview}
+
+\begin{Paragraph}{User Management}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Building Management}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{CEP Engine}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Broker}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Gateway Manager}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Gateways}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Sensors and actuators}
 	
 The field layer represents the set of devices, both sensors and actuators, used to gather information and interact with the environment. The information gathering and detection of changes is done by sensors, that send this information to the respective gateways in the Network layer. After the processing of this data, either in the Aggregation and Automation layer or even by the gateways in the Network layer, the orders for changes are sent to the actuators.
 	
 \end{Paragraph}
 
-\begin{Paragraph}{Network layer}
-	
 
-	
-\end{Paragraph}
 
 
 
