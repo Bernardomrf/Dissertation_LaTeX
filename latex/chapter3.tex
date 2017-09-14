@@ -325,21 +325,33 @@ In this section will be presented the global system architecture for this projec
 
 \begin{Paragraph}{User Management}
 	
+	The user management platform is responsible for giving to common users of the building, the ability to interact with the platform through a web page. Users can manage their own building rules and control field devices directly. This can be done by publishing on the broker the wanted changes or by communication directly with the CEP Engine or the building management platform.
+	
 \end{Paragraph}
 
 \begin{Paragraph}{Building Management}
+	
+	The building manager component is a user friendly platform that aims to facilitate the rule management and the configuration of the building's schema. The building manager can create, edit  or delete rules in a simple intuitive way and this component later translates them in a complex language that the CEP Engine can understand. Also, through a virtual representation of the building, the \ac{bm} can distribute devices across all its areas. After the correct configuration of the desired devices, this component is responsible for providing the information about each device and how should the CEP engine, and the other blocks of the architecture, address to this device in order to, for instance, send an order to change state or report new sensor data to the CEP Engine.
 	
 \end{Paragraph}
 
 \begin{Paragraph}{CEP Engine}
 	
+	The CEP Engine is one of the most important components for a successful building automation solution. This engine must be a real-time and high performance component, that should be able to process hundreds of sensor triggered events per second based on complex rules created by the users. The actions preformed by this engine can be either directly to an actuator or to a component in the platform. For instance, sending an alert to the building manager when there are irregular sensor readings.
+	
+	
 \end{Paragraph}
 
 \begin{Paragraph}{Broker}
 	
+	The broker component, which refers to a message broker, acts as the central point of the whole architecture, and it's responsible to receive and route information across the connected components. In where every component connects to receive and send information to and from other components.
+	
 \end{Paragraph}
 
 \begin{Paragraph}{Gateway Manager}
+	
+	The gateway manager is the component responsible for rules distribution to gateways and fail handling. The first one, since gateways will be equipped with the ability to process events, based on simple rules in the case of CEP failure, there is the need for a regulator to distribute and be always aware where this rules are being deployed, and, in case of a gateway failure, distribute the devices and rules from that gateway, to other ones capable of supporting them. Also, the gateway manager should guarantee a balanced number of rules and devices across all gateways. For instance, if two gateways are in the reach of the same device, the gateways manager should allocate that device to the gateway with fewer devices.
+	
 	
 \end{Paragraph}
 
