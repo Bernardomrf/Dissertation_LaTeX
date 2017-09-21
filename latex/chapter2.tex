@@ -86,18 +86,17 @@ Also, the use of a standard network variable types (SNVT), facilitates integrati
 
 
 \subsubsection{DALI}
-
-
-
+TODO
 
 \subsubsection{EnOcean}
+TODO
+
 \subsection{\ac{bas} Solutions}
+TODO
 
 \subsubsection{HCL Technologies \ac{bas}}
+TODO
 
-\subsubsection{Metasys \ac{bas}}
-\subsubsection{Honeywell \ac{bas}}
-\subsubsection{Desigo \ac{bas}}
 \section{\acf{iot}}
 
 \acf{iot} is a concept that have been emerging over the years in which in addition to the devices we usually connect to the Internet, like smartphones or personal computers, a new diversity of devices will also be connected, forming a vast network of smart objects. Devices like vehicles or normal household appliances will be equipped with sensors and actuators that will be able to gather data, giving people the information to do better and valuable decisions \cite{Weiser1991}. Also, with controllers and the sensing information, this devices can preform certain tasks without human intervention.
@@ -128,8 +127,27 @@ To conclude, \ac{iot} will have an important role in a vast number of sectors, a
 
 Although both of the concepts goals remain alike, i.e. enable communication between machines, \ac{m2m} should be considered as a subset of \ac{iot}, as it lacks in the creation of meaning to the information exchanges. \ac{iot} is a wide web of not only \ac{m2m} networks but also, a vast set of applications that enables, as stated in the previous section, automatic decision making and data analytics. 
 
-\subsection{\acf{wsan}}
+\subsection{\acf{wsn}}
+
+\acf{wsn} is a network of distributed devices, sensors and/or actuators, interconnected by a wireless medium. As stated in \cite{IEC2014a}, this network of nodes sense and control the environment cooperatively, enabling the interaction between persons or computers and the environment around them. 
+
+Nowadays \ac*{wsn}s usually include sensors, actuators and gateways. Sensors are devices capable of detecting changes in environmental variables and supply that information to other nodes. This devices can measure variables like luminosity, temperature, humidity, pressure, motion and a wide variety of other environmental data. Actuators, in the other hand, are devices that control mechanisms to alter the physical environment state and preform this actions based on input data. For instance, an actuator can be programmed to turn on or off a air conditioner based on a input trigger set off by the temperature in a room.
+Lastly, gateways are devices connected to sensors and actuators, responsible orchestrate and interconnect this devices, as well as for mechanisms of automation and remote access. Gateways can be programmed to based on input data gathered by sensors and a set of pre loaded rules, trigger a actuator to act on some physical environment element. Gateways are the brains of \ac{wsn}s. Also, gateways can be programmed with self learning mechanisms and autonomously control devices. 
+
+The connection between this three devices form a \ac{wsn}, which is, nowadays, the primary enabler of \ac{iot}, since, with the use of \ac{iot} protocols and standards, this nodes become smart objects. In the following sections, this \ac{iot} protocols will be discussed.
+
+
+
+
 \subsection{Wireless Communication Protocols}
+
+The communication between devices is one of the most important concerns of \ac{iot}. The devices must be able to communicate with each other, through standardized protocols, in other to achieve full interoperability between them. 
+
+In this section there will be presented some of the most used communication protocols in \ac{iot}. Since \ac{iot} devices will need to have wireless networking capabilities and be battery-powered, the main focus for this section will be wireless protocols with low power usage for the devices.
+
+
+
+
 
 \subsubsection{IEEE 802.15.4}
 \subsubsection{6LoWPAN}
