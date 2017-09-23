@@ -145,26 +145,56 @@ The communication between devices is one of the most important concerns of \ac{i
 
 In this section there will be presented some of the most used communication protocols in \ac{iot}. Since \ac{iot} devices will need to have wireless networking capabilities and be battery-powered, the main focus for this section will be wireless protocols with low power usage for the devices.
 
+When talking about wireless communication, the protocol that first comes to mind is IEEE 802.11, better known as Wi-Fi. This wireless standard was introduced in 1997 by the \acf{ieee} \cite{Bellis2017}, and nowadays it's used across all laptops, phones and other media devices. Although it has an important role for this kind of technological equipments, IEEE 802.11 has never been widely used for communication between \ac{iot} devices. The reason for that is the heavy power requirements that such protocol need, making it unsustainable for smart devices to use it.
 
+Another important and well known wireless protocol for communications between devices is Bluetooth. This standard was created in 1999 by \acf{sig} and in 2016 reached its fifth version \cite{BluetoothSIG2016}. Bluetooth is widely used for connecting smartphones to other bluetooth enabled devices, such as wearables, cars and others, making it one of the most used close range communication protocol.
 
-
+Both Bluetooth and Wi-Fi standards have polished and mature specifications, making them reliable communication protocols. However this standards are not suited for low capabilities devices since they were not created with restrictions like low power consumption and limited resources in mind. Over the next sections, will be presented a variety of protocols, more suited for this kind of devices.
 
 \subsubsection{IEEE 802.15.4}
+
+The IEEE 802.15.4 standard was introduced by the \acf{ieee} and its intent was to target Low Rate WPANs (LR-WPANs) \cite{Kemp2010}. This protocol specifies the two lowest layers of the OSI model, represented in Figure \ref{fig:osi}, and it is branded for its simpleness, low data rates and battery saving \cite{Devadiga2003}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/osi.png}
+	\caption{\acf{osi} model \cite{Zikrillah}.}
+	\label{fig:osi}
+\end{figure}
+
+This characteristics are what make this standard quite significant for \ac{iot}. Since \ac{iot} sensors and actuators have many battery constrains, using a protocol that has this facts in mind, make IEEE 802.15.4 a suitable standard for communications within \ac{wsn}s.
+
+IEEE 802.15.4 is also the baseline for other \ac{iot} communication protocols such as ZigBee, which will be covered in a section below.
+
+
 \subsubsection{6LoWPAN}
+TODO
 \subsubsection{ZigBee}
+TODO
 \subsubsection{\acf{ble}}
+TODO
 \subsubsection{IEEE802.11ah}
+TODO
 \subsubsection{Wireless Communication Protocols Comparison}
+TODO
 \subsection{Application Protocols}
+TODO
 \subsubsection{\acf{mqtt}}
+TODO
 \subsubsection{\acf{amqp}}
+TODO
 \subsubsection{\acf{coap}}
+TODO
 \subsubsection{\acf{xmpp}}
+TODO
 \subsubsection{Interaction Protocols Comparison}
+TODO
 
 \section{Fault Tolerance}
+TODO
 
 \subsection{Fail mechanisms in \ac{bas} }
+TODO
 
 
 
