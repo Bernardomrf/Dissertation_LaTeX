@@ -230,13 +230,13 @@ IEEE802.11ah
 
 As previously stated, the fast growth of IoT devices motivated the search for lightweight protocols in order to enable this low resources devices to efficiently communicate with other nodes. 
 
-In this section will be presented protocols that address the Application layer of the OSI model, shown in Figure \ref{fig:osi}, and are suitable to be used in IoT. Since IoT solutions address a huge amount of different scenarios, with different requirements, bellow will be presented protocols that have different features, and the strengths and weak points of each one will be evaluated.
+In this section will be presented protocols that address the Application layer of the OSI model, shown in Figure \ref{fig:osi}, and are suitable to be used in \ac{iot}. Since \ac{iot} solutions address a huge amount of different scenarios, with different requirements, bellow will be presented protocols that have different features, and the strengths and weak points of each one will be evaluated.
 
 \subsubsection{\acf{mqtt}}
 
-\acf{mqtt} is a \ac{m2m} communication protocol introduced by IBM in 1999, but was only standardized in 2013 as OASIS \cite{Al-fuqaha2015}. \ac{MQTT} follows a publish/subscribe client/server model and, due to its simpleness, it is suitable to be used in constrained devices.
+\acf{mqtt} is a \ac{m2m} communication protocol introduced by IBM in 1999, but was only standardized in 2013 as OASIS \cite{Al-fuqaha2015}. \ac{mqtt} follows a publish/subscribe client/server model and, due to its simpleness, it is suitable to be used in constrained devices.
 
-The publish/subscribe model features three components: a broker, publishers and subscribers. In the scenario shown on Figure \ref{fig:mqtt}, the central piece, the server, is a MQTT Broker, and the other components such as data gatherers and data consumers are clients that connect to this broker. Clients are able to publish and/or subscribe to topics on the MQTT Broker, and its task is to route messages from publishers, to the corresponding subscribers of each topic. Taking for example the case illustrated in Figure \ref{fig:mqtt}, a temperature sensor publishes data on some topic and the MQTT Broker forwards this messages to the clients subscribed to that temperature topic. The great advantage of this protocol is that it allows that publishers do not need to send the same information to every client nor need to be aware of its presence. This fact makes this protocol very suited to be used in contexts where devices need to be as efficient as possible, which is the case on IoT environments 
+The publish/subscribe model features three components: a broker, publishers and subscribers. In the scenario shown on Figure \ref{fig:mqtt}, the central piece, the server, is a \ac{mqtt} Broker, and the other components such as data gatherers and data consumers are clients that connect to this broker. Clients are able to publish and/or subscribe to topics on the \ac{mqtt} Broker, and its task is to route messages from publishers, to the corresponding subscribers of each topic \cite{Al-fuqaha2015}. 
 
 \begin{figure}[H]
 	\centering
@@ -245,6 +245,13 @@ The publish/subscribe model features three components: a broker, publishers and 
 	\label{fig:mqtt}
 \end{figure}
 
+Taking as example the case illustrated in Figure \ref{fig:mqtt}, a temperature sensor publishes data on some topic and the \ac{mqtt} Broker forwards this messages to the clients subscribed to that temperature topic. MQTT offers the possibility of four different communication types: one-to-one,  many-to-one, one-to-many, many-to-many \cite{Chen2016}.The great advantage of this protocol is that publishers do not need to send the same information to every client nor need to be aware of its presence. This fact makes this protocol very suited to be used in contexts where devices need to be as efficient as possible, which is the case of \ac{iot} environments. 
+
+Regarding the guarantees of a successful message delivery, MQTT has three levels of \acf{qos}: at most once (0), at least once (1) or exactly once (2) \cite{mqtt_qos}. The level 0 of \ac{qos}, also known as "Fire and Forget" is the most basic one, since the message is sent only one time to the subscribers. It has no fail mechanisms, so if, by a network error, the message do not reach its target, is not resented by the broker. This level of QoS is suited when occasional unsuccessfully message delivers do not jeopardy the system functioning or when the broker-clients connection is stable enough. With level 1 of \ac{qos}, the sender stores the published message in cache and waits for the acknowledge message. If the acknowledge is not received within a pre programmed time interval, the message is sent again. The drawback of this level os \ac{qos} is that a message can be received multiple times if the acknowledge do not reach the sender. Lastly, \ac{qos} level 2 grants that a message is delivered exactly one time, however this process introduces a greater overhead, as it takes longer that any other level of \ac{qos}.
+
+Other important features of MQTT are the last will message, where a client can register a message to be delivered to a specific topic in the case of a lost of connection between the broker and the client, and the security concerns, in which an authentication method is provided, using a username and password. Also, regarding security, the payload of the message can be encrypted with SSL/TLS.
+
+To sum, MQTT is a very suitable protocol to be used in .....
 
 \subsubsection{\acf{coap}}
 TODO
