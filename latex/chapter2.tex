@@ -88,9 +88,6 @@ Also, the use of a standard network variable types (SNVT), facilitates integrati
 \subsubsection{DALI}
 TODO
 
-\subsubsection{EnOcean}
-TODO
-
 \subsection{\ac{bas} Solutions}
 TODO
 
@@ -168,27 +165,94 @@ IEEE 802.15.4 is also the baseline for other \ac{iot} communication protocols su
 
 
 \subsubsection{6LoWPAN}
-TODO
+\acf{6plowpan} is a standard presented by Internet Engineering Task Force (IETF), and its main objective was to implement IPv6 over low power networks, granting the possibility for IoT devices to be reached through the Internet using a unique address. Also this would allow the use of some IPv6 important features such as Quality of Service (QoS), mobility and multicasting.
+
+\ac{6plowpan} uses the previously addressed standard, IEEE 802.15.4, for the two lowest layers of the OSI model, shown in Figure \ref{fig:osi}. Since the network layer protocol was needed to comply with those two lower layers, and the requirements for an IPv6 based protocol didn't match the constrained IEEE 802.15.4 standard, 6LoWPAN implemented mechanisms to efficiently transport IPv6 packets within small link layer frames \cite{chalappuram2016}. 
+
+In order to use \ac{6plowpan} in a IPv6 network, it is only needed a low complexity edge router to route the traffic from IPv6 to \ac{6plowpan}, as shown in Figure \ref{fig:6low}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/edge.png}
+	\caption{Connection between a 6LoWPAN and an IPv6 network \cite{6low}.}
+	\label{fig:6low}
+\end{figure}
+
+
+To sum up, with the proliferating market of \ac{iot} devices, the use of IPv6 is unavoidable, and the fact that 6LoWPAN offers a low power and low complexity way of addressing this problem, makes this protocol a viable solution for its use in \ac{iot} environments \cite{Mehboob2016}.  
+
+
 \subsubsection{ZigBee}
-TODO
+ZigBee is a standard introduced by ZigBee Alliance, released to the public in June 2005. ZigBee is built on top of the IEEE 802.15.4 standard, addressed early, and it specifies the its own implementation of upper layers \cite{INSTEON2013}. As shown in Figure \ref{fig:zig}, ZigBee provides on the Application, a ZigBee Cluster Library (ZCL) that maps commands to be used by developers when defining application profiles.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/zig.jpg}
+	\caption{ZigBee protocol stack \cite{article}.}
+	\label{fig:zig}
+\end{figure}
+
+
+Although other standards have been emerging on the IoT constrained devices market, ZigBee widely dominates this market as it has been targeting it since the beginning, as a very low power and low latency standard.
+Although ZigBee is not suitable for long ranges and has low data transfer speeds, a single master node is able to control 254 devices such as light bulbs and light switches \cite{Mehboob2016}. 
+To sum up, ZigBee fulfils every expected requirements to be a strong competitor for the IoT communication standards.
+
 \subsubsection{\acf{ble}}
-TODO
-\subsubsection{IEEE802.11ah}
-TODO
+
+\acf{ble} was created by Bluetooth SIG, in 2011, as a way to address the low power constrained devices that emerged with the rising growth of \ac{iot}. 
+
+
+Although \ac{ble} followed the specifications of Bleutooth 4.0, there was no compatibility between them and so, BLE wouldn't be compatible with most of the widely adopted Bluetooth protocol that most smartphones and tablets used. This fact forced the emerging of two new classes of bluetooth devices: Bluetooth Smart and Bluetooth Smart Ready, as shown in Figure \ref{fig:ble1} \cite{Andersson2014}. The first one, known as single-mode device, is only capable of communicate using BLE, being used in sensors (presence sensor, temperature sensors, etc.) or other types of battery-operated and low processing accessories. The second, also known as dual-mode Bluetooth, is capable of communicating with both BLE devices and classic Bluetooth devices, being more suitable for smartphones, IoT gateways and other more powerful devices. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/ble.png}
+	\caption{Product examples of Bluetooth single and dual-mode modules. Adapted from \cite{Andersson2014}.}
+	\label{fig:ble1}
+\end{figure}
+
+BLE is suitable to low-energy devices because it adopts a client/server model where devices are in a sleep state and periodically send advertisement messages for clients, such as a smartphone or a gateway, discover it and begin a connection as shown in Figure \ref{fig:ble2}. When connected, the clients can ask for data in a pre configured interval \cite{Andersson2014}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/ble2.png}
+	\caption{BLE discover of devices. Adapted from \cite{Andersson2014}.}
+	\label{fig:ble2}
+\end{figure}
+
+To sum up, BLE is one of the best solutions for communications between IoT devices and gateways, since it offers low energy consumption and acceptable data transfer rates.
+
 \subsubsection{Wireless Communication Protocols Comparison}
-TODO
+TODO  
+IEEE802.11ah
 \subsection{Application Protocols}
-TODO
+
+As previously stated, the fast growth of IoT devices motivated the search for lightweight protocols in order to enable this low resources devices to efficiently communicate with other nodes. 
+
+In this section will be presented protocols that address the Application layer of the OSI model, shown in Figure \ref{fig:osi}, and are suitable to be used in IoT. Since IoT solutions address a huge amount of different scenarios, with different requirements, bellow will be presented protocols that have different features, and the strengths and weak points of each one will be evaluated.
+
 \subsubsection{\acf{mqtt}}
-TODO
-\subsubsection{\acf{amqp}}
-TODO
+
+\acf{mqtt} is a \ac{m2m} communication protocol introduced by IBM in 1999, but was only standardized in 2013 as OASIS \cite{Al-fuqaha2015}. \ac{MQTT} follows a publish/subscribe client/server model and, due to its simpleness, it is suitable to be used in constrained devices.
+
+The publish/subscribe model features three components: a broker, publishers and subscribers. In the scenario shown on Figure \ref{fig:mqtt}, the central piece, the server, is a MQTT Broker, and the other components such as data gatherers and data consumers are clients that connect to this broker. Clients are able to publish and/or subscribe to topics on the MQTT Broker, and its task is to route messages from publishers, to the corresponding subscribers of each topic. Taking for example the case illustrated in Figure \ref{fig:mqtt}, a temperature sensor publishes data on some topic and the MQTT Broker forwards this messages to the clients subscribed to that temperature topic. The great advantage of this protocol is that it allows that publishers do not need to send the same information to every client nor need to be aware of its presence. This fact makes this protocol very suited to be used in contexts where devices need to be as efficient as possible, which is the case on IoT environments 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/mqtt.jpg}
+	\caption{MQTT protocol architecture \cite{Turan}.}
+	\label{fig:mqtt}
+\end{figure}
+
+
 \subsubsection{\acf{coap}}
 TODO
-\subsubsection{\acf{xmpp}}
-TODO
+
 \subsubsection{Interaction Protocols Comparison}
 TODO
+amqp
+xmpp
 
 \section{Fault Tolerance}
 TODO
