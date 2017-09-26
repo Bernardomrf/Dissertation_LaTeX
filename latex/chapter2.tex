@@ -251,9 +251,42 @@ Regarding the guarantees of a successful message delivery, MQTT has three levels
 
 Other important features of MQTT are the last will message, where a client can register a message to be delivered to a specific topic in the case of a lost of connection between the broker and the client, and the security concerns, in which an authentication method is provided, using a username and password. Also, regarding security, the payload of the message can be encrypted with SSL/TLS.
 
-To sum, MQTT is a very suitable protocol to be used in .....
+To sum, MQTT is an important Application layer protocol and very suitable to be used in constrained networks and devices as a powerful communications standard.
 
 \subsubsection{\acf{coap}}
+
+\acf{coap} is an application protocol created by IETF with the objective of providing \acf{rest} functionalities to constrained devices and networks. \ac{rest} is a standard used to communications between computer systems on the Internet. Although this protocol its a well known and adopted standard for HTTP, when talking about IoT, whose devices are very constrained energy-wise, this standard presents too much of an overhead \cite{Salman2013}. \ac{coap} comes to resolve this drawback by presenting a lightweight RESTful solution, following a request/response pattern, with the constrained devices market in mind.
+
+As shown in Figure \ref{fig:coap}, \ac{coap}, unlike HTTP, uses \ac{udp} in the underlying layer of its architecture. This fact makes \ac{coap} communication more efficient as packets are sent without handshaking, or congestion control mechanisms that would introduce more overhead, used by TCP. The communication reliability is implemented by \ac{coap} lightweight internal mechanisms \cite{Salman2013}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/coap.png}
+	\caption{\ac{coap} architecture \cite{Mehboob2016}.}
+	\label{fig:coap}
+\end{figure}
+
+As is also shown in Figure \ref{fig:coap}, \ac{coap} is divided into two sub-layers: request/response and messages. The messages layer is responsible for message processes such as fail and duplication handling, since UDP, as stated before, do not have reliability mechanisms \cite{Salman2013}. The request/response layer is responsible for enable the RESTful interaction by offering well known methods such as GET, POST, PUTT and DELETE to interchange data \cite{Lerche2012}.
+
+\ac{coap} has also an "observe" resource that enables clients, through a publish/subscribe mechanism, to observe a resource and when there is a change, the client is notified by the server \cite{Lerche2012}. All \ac{coap} features make this protocol also very attractive for some use cases in an \ac{iot} environment.
+
+
+\subsubsection{\acf{amqp}}
+
+\acf{amqp} is a communication protocol, initially created aiming the financial sector, that, like \ac{mqtt}, runs over \ac{tcp} and adopts a publish/subscribe architecture. The use of this protocol for financial purposes is due to the fact that \ac{amqp} has powerful mechanisms that grant high reliability and scalability that are crucial for that sector.
+
+\ac{amqp} architecture is composed, as shown in Figure \ref{fig:amqp} by three elements: producers, clients and the broker, being the last one divided by two components, the exchange and topic queues. The producers publish messages in a specific topic and the exchange module is responsible for deposit that messages in the correct topic queue. Clients are connected to the queues of specific topics and then have access to the published messages in that queues \cite{Salman2013}. This system allows that instead of the broker having to send the same message to multiple clients subscribed to a topic, the message is only sent to the respective queue. Also, it allows clients to be offline at the time the message is sent to the queue, since it becomes stored there until it is consumed \cite{Al-fuqaha2015}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/amqp.png}
+	\caption{\ac{amqp} architecture \cite{Badugu}.}
+	\label{fig:amqp}
+\end{figure}
+
+Although for majority of \ac{iot} environments reliability is not a deciding feature for the communication system, there are some few cases where that is indispensable. For instance, in a situation where a luminance sensor that sends periodic data of the measured values, a lost message will not be a huge problem because shortly after, another value will be sent and the prior loss will have almost no impact to the system. However in a hospital, if an emergency message in not delivered successfully could mean a life threatening situation for a patient. Situations like this ensure the importance of a communication protocol like \ac{amqp} in the \ac{iot} context.
+
+\subsubsection{\acf{xmpp}}
 TODO
 
 \subsubsection{Interaction Protocols Comparison}
