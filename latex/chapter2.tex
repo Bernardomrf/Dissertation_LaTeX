@@ -44,7 +44,7 @@ The \acf{bacnet} protocol, was developed by \acf{ashrae} in 1987 but was only pu
 
 As stated before, other important \ac{bacnet} features are scheduling, which allow to schedule actions and program periodic events, notifications, that allow to distribute event notifications to the subscribed recipients \cite{Domingues2016} and logging, allowing a historical view of every change carried out in the system.
 
-\ac{bacnet} is surely a complete solution that can be a good option for a full building automation system deployment. Yet \ac{bacnet} is an open standard, but the tools are supplied individually by each manufacturer \cite{openprotocol}, being sometimes complex the use and manage devices from different vendors. Figure \ref{fig:bacnet} shows an example of a multi vendor architecture.
+\ac{bacnet} is surely a complete solution that can be a good option for a full building automation system deployment. Although \ac{bacnet} is an open standard, but the tools are supplied individually by each manufacturer \cite{openprotocol}, being sometimes complex to use and manage devices from different vendors. Figure \ref{fig:bacnet} shows an example of a multi vendor architecture.
 
 
 \begin{figure}[H]
@@ -66,14 +66,14 @@ Radio Frequency. Being KNX a field bus system \cite{Osorio}, the interworking of
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/knx_modes.png}
+	\includegraphics[width=0.9\textwidth]{figures/knxmodes.png}
 	\caption{KNX configuration modes \cite{knx}. }
 	\label{fig:knx_modes}
 \end{figure}
  
  S-mode is intended to be used by experienced KNX installers as it offers full control over the system functions and configurations. The E-mode is targeted to installers with less experience, since components are already pre-programmed with a default array of parameters.
  
-To conclude, KNX is capable of resolve most of the problems in the Building Automation field. Features such as the very rigorous certification program for devices from different manufactures is a great way to reduce the heterogeneity in communication between devices.
+To conclude, KNX is capable of resolve most problems in the Building Automation field. Features such as the very rigorous certification program for devices from different manufactures is a great way to reduce the heterogeneity in communication between devices.
 
  
 \subsubsection{LonWorks}
@@ -85,14 +85,22 @@ LonWorks uses a decentralized peer to peer architecture, where devices are treat
 Also, the use of a standard network variable types (SNVT), facilitates integration, as it helps in the prevention of errors and simplifies the engineering process \cite{Siemens2013}. 
 
 
-\subsubsection{DALI}
-TODO
+\subsubsection{\acf{dali}}
+\acf{dali} is a lighting control standardized interface created to enable the communication between sensors of luminance and actuators, like fluorescent lamps, and the building's automation system.
+
+\ac{dali} uses a master/slave principle between controllers and devices. The controller(master) can communicate and control 64 devices(slaves), each one with unique attributed address \cite{Ma2014}. DALI supports a controller to manage a slave through its unique id, or several slaves through a broadcast address. The devices can also be assigned in groups and have several programmed scenes \cite{Ma2014}. As an example, all the lights in a room can be assigned to the same group and a scene can be selected to, for instance, dim all the lights in that room to a certain percentage. 
+
+\ac{dali} offers a wide variety of interesting features such as automatic search for control devices, lighting profiles to be used in case of emergency and a low system cost when compared to other lighting systems on the market\cite{Zhang2006}.
+
+To sum up, although \ac{dali} is a complete solution for lighting control systems, it does not support the implementation of automation rules, being necessary to connect the \ac{dali} gateways to a automation and management system.
 
 \subsection{\ac{bas} Solutions}
-TODO
 
-\subsubsection{HCL Technologies \ac{bas}}
-TODO
+Over the years a large number of companies step forward to offer solutions for reducing energy consumption in buildings. Companies like Siemens, which provides three different \ac{bas} systems, Honeywell, and Johnson Controls, which claims to be the leader of the building automation market, offer services, using, most of the times, the formerly addressed open standard protocols.
+
+However, this products have some common drawbacks: most of them are highly costly, which ends up to be a problem for medium to small companies to afford, and also, the most important of all, are not open source and don't allow for building managers to install and integrate new devices and feature at will. 
+
+Over the next section, it will be presented a new and open paradigm, \acf{iot}, that due to its fast grow and open protocols and low price devices, should be able to alter the course of the building automation market over the next years.
 
 \section{\acf{iot}}
 
@@ -100,7 +108,7 @@ TODO
 
 This concept was first introduced by Kevin Ashton \cite{Ashton} in 1999, where he stated his idea of having computers gathering information from things around us, that humans couldn't do by themselves, to give a new perspective to people of how to reduce waste, loss and cost. For this author, we needed to give computers the power to gather information with their own means, so they could sense the world for themselves and overcome the limited time, attention and accuracy humans have.
 
-In the recent years, with the technological advances made in electronics, devices become smaller, low powered and more affordable, giving a boost to the integration of this concept in our society. According to \cite{Evans2011}, the turning point for \ac{iot} would be when there were more devices connected to the Internet than people. This point was reached somewhere between 2008 and 2009, and as can be seen in Figure \ref{iot_pic}, this numbers will grow exponentially in the next years and can even reach over a 5 to 1 factor between connected devices and the world population.
+In the recent years, with the technological advances made in electronics, devices become smaller, low powered and more affordable, giving a boost to the integration of this concept in our society. According to \cite{Evans2011}, the turning point for \ac{iot} would be when there were more devices connected to the Internet than people. This point was reached somewhere between 2008 and 2009, and as can be seen in Figure \ref{fig:iot_pic}, this numbers will grow exponentially in the next years and can even reach over a 5 to 1 factor between connected devices and the world population.
 
 \begin{figure}[H]
 	\centering
@@ -262,7 +270,7 @@ As shown in Figure \ref{fig:coap}, \ac{coap}, unlike HTTP, uses \ac{udp} in the 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/coap.png}
-	\caption{\ac{coap} architecture \cite{Mehboob2016}.}
+	\caption{\ac{coap} protocol architecture \cite{Mehboob2016}.}
 	\label{fig:coap}
 \end{figure}
 
@@ -280,19 +288,62 @@ As is also shown in Figure \ref{fig:coap}, \ac{coap} is divided into two sub-lay
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/amqp.png}
-	\caption{\ac{amqp} architecture \cite{Badugu}.}
+	\caption{\ac{amqp} protocol architecture \cite{Badugu}.}
 	\label{fig:amqp}
 \end{figure}
 
 Although for majority of \ac{iot} environments reliability is not a deciding feature for the communication system, there are some few cases where that is indispensable. For instance, in a situation where a luminance sensor that sends periodic data of the measured values, a lost message will not be a huge problem because shortly after, another value will be sent and the prior loss will have almost no impact to the system. However in a hospital, if an emergency message in not delivered successfully could mean a life threatening situation for a patient. Situations like this ensure the importance of a communication protocol like \ac{amqp} in the \ac{iot} context.
 
 \subsubsection{\acf{xmpp}}
-TODO
+
+\acf{xmpp} is, like the former, a standardized message-oriented communication protocol and it was created by Jabber open-source community in 1999 for establish near real-time instant messaging (IM), presence information, and others \cite{Badugu}.
+
+\ac{xmpp}, as shown in Figure \ref{fig:xmpp} uses a decentralized architecture where there can be more than one server and the messages can be transferred between them until they reach the desired destination, ensuring that way a high scalability \cite{Al-fuqaha2015}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/xmpp.png}
+	\caption{\ac{xmpp} protocol architecture \cite{Adafruit}.}
+	\label{fig:xmpp}
+\end{figure}
+
+Salman2013
+Unlike the protocols addressed previously, \ac{xmpp} supports not only a publish/subscribe architecture, but also a request/response one, however, by using \ac{xml} messages that, although providing a greater flexibility, induce a higher overhead than the former protocols, which creates more power consumption for devices \cite{Salman2013}. Fact that can be a problem for \ac{iot} environments, as stated before.
+
+Although \ac{xmpp} has some drawbacks, it still has capacity to be an important protocol in some specific \ac{iot} use cases, due to the near real time message exchanging and the high extensibility offered.
 
 \subsubsection{Interaction Protocols Comparison}
+
+In this chapter, the protocols previously addressed will be compared and will be provided an evaluation of the environments where each one of them is more suitable. Bellow in Table \ref{iotapplayer}, the protocols are compared based on the type of transport used, the presence of security mechanisms and \ac{qos}, and also the support of Publish/Subscribe or Request/Response patterns.
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		& \textbf{MQTT}              & \textbf{CoAP} & \textbf{AMQP} & \textbf{XMPP} \\ \hline
+		\textbf{Transport}         & TCP                        & UDP           & TCP           & TCP           \\ \hline
+		\textbf{Security}          & SSL and User/Password auth & DTLS          & SSL           & SSL           \\ \hline
+		\textbf{QoS}               & Yes                        & Yes           & Yes           & No            \\ \hline
+		\textbf{Publish/Subscribe} & Yes                        & No            & Yes           & Yes           \\ \hline
+		\textbf{Request/Response}  & No                         & Yes           & No            & Yes           \\ \hline
+	\end{tabular}
+	\caption{IoT Application Protocols Comparison.}
+	\label{iotapplayer}
+\end{table}
+
+Regarding \ac{mqtt} and \ac{amqp}, both protocols use a publish/subscribe pattern but, although \ac{amqp} offers a wider variety of features, \ac{mqtt} gains for being more lightweight, simpler and easier to deploy in most cases, client and broker wise. For this fact, \ac{mqtt} is usually the choice for most systems, where there are not very restrictive requirements. Nevertheless, both protocols are suited for \ac{iot} environments with constrained and low-power devices.
+
+Looking at \ac{coap}, the greater difference between the last two is the use request/response pattern, instead of a publish/subscribe one. Also, \ac{coap} uses a one-to-one transfer protocol between a client and a server, which makes it more suitable as state change model, instead of a event driven one.
+
+Finally, the \ac{xmpp} although being the protocol with the most extensive number of features, such as allowing both publish/subscribe and request/response patterns, and being a near real time communication protocol, still lacks by not being as lightweight as the other protocols. Nevertheless, this protocol has a place in the market, for solutions where reliability is a key factor.
+
+
+\subsection{\ac{iot} enabled \ac{bas} solutions}
+
+
+\subsubsection{HCL Technologies \ac{bas}}
+
 TODO
-amqp
-xmpp
 
 \section{Fault Tolerance}
 TODO
