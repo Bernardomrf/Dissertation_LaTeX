@@ -30,7 +30,18 @@ Finally, it is important to state that the standard used, in SmartLighting proje
 \section{Access to Devices}
 \label{implementation:devices}
 
-Devices like sensors, to measure environment changes, and actuators, to trigger mechanisms to make changes in that same environment, are fundamental pieces to implement a smart and automated environment. 
+Devices like sensors, which measure environment changes, and actuators, that trigger mechanisms to make changes in that same environment, are fundamental pieces to implement a smart and automated environment. Since there are a huge variety of devices with different characteristics, in order to enable extensibility for the system, the access to those devices, as well as the messages format, should be standardised. In another dissertation for this project, a standard following the IP Smart Objects Alliance guidelines was made and is illustrated in Figure \ref{fig:obj}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/obj.png}
+	\caption{Device objects representation}
+	\label{fig:obj}
+\end{figure}
+
+Objects are abstract representations of an actuator or sensor type, containing a generic description and some additional information, and each unique object is identified by the object ID. A device can have multiple objects, which represent the different sensing and actuating capabilities it provides. For instance, a device can have objects representing a luminaire actuator, a temperature sensor and a motion sensor.
+
+Inside each object, the information is organized in resources. These represent either values that can be read and/or write, e.g. a sensor configuration parameter or an actuator’s current state, or actions that can be triggered remotely, such as the request to dim a luminaire’s output brightness. Each resource of a given type is also identified by an ID number. Additionally, since a device can contain multiple objects of the same type, as well as objects can contain multiple resources of the same type, e.g. for creating arrays of values, both objects and resources contain an instantiation number for being easily accessed. Figure 4.1 helps understand this representation.
 
  
 \section{Rules Definition}
