@@ -1,0 +1,32 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+ \PYG{n+nt}{\PYGZdq{}name\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}CorridorsRule\PYGZdq{}}\PYG{p}{,}
+ \PYG{n+nt}{\PYGZdq{}subrules\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+  \PYG{n+nt}{\PYGZdq{}actions\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+   \PYG{n+nt}{\PYGZdq{}target\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+    \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}mqtt\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nt}{\PYGZdq{}topic\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}/out\PYGZus{}events/IT2/Floor0/Corredor/0\PYGZus{}13\PYGZus{}6/4/all/1501/all/15011/all\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nt}{\PYGZdq{}value\PYGZus{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}int\PYGZdq{}}
+   \PYG{p}{\PYGZcb{},}
+   \PYG{n+nt}{\PYGZdq{}function\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+    \PYG{n+nt}{\PYGZdq{}name\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}set\PYGZus{}value\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nt}{\PYGZdq{}listen\PYGZus{}data\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+     \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}single\PYGZdq{}}\PYG{p}{,}
+     \PYG{n+nt}{\PYGZdq{}listeners\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+      \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}mqtt\PYGZdq{}}\PYG{p}{,}
+      \PYG{n+nt}{\PYGZdq{}topic\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}/in\PYGZus{}events/IT2/Floor0/Corredor/0\PYGZus{}13\PYGZus{}6/4/+/3302/+/5500/+\PYGZdq{}}\PYG{p}{,}
+      \PYG{n+nt}{\PYGZdq{}value\PYGZus{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}int\PYGZdq{}}
+     \PYG{p}{\PYGZcb{}],}
+     \PYG{n+nt}{\PYGZdq{}window\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+      \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}time\PYGZdq{}}\PYG{p}{,}
+      \PYG{n+nt}{\PYGZdq{}value\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{5}\PYG{p}{,}
+      \PYG{n+nt}{\PYGZdq{}units\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}seconds\PYGZdq{}}
+     \PYG{p}{\PYGZcb{},}
+     \PYG{n+nt}{\PYGZdq{}aggregator\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+      \PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}any\PYGZdq{}}
+     \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+   \PYG{p}{\PYGZcb{}}
+  \PYG{p}{\PYGZcb{}]}
+ \PYG{p}{\PYGZcb{}}
+\end{Verbatim}

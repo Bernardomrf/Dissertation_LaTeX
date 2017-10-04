@@ -39,17 +39,185 @@ Devices like sensors, which measure environment changes, and actuators, that tri
 	\label{fig:obj}
 \end{figure}
 
-Objects are abstract representations of an actuator or sensor type, containing a generic description and some additional information, and each unique object is identified by the object ID. A device can have multiple objects, which represent the different sensing and actuating capabilities it provides. For instance, a device can have objects representing a luminaire actuator, a temperature sensor and a motion sensor.
+In this representation, a device can have multiple objects (sensors and/or actuators), identified through an ID and an object instance. Per example, a device can have multiple sensing or actuating capabilities, each one of them identified with a different ID. A device with two motion sensors, will have two objects with the same ID but different object instances. 
 
-Inside each object, the information is organized in resources. These represent either values that can be read and/or write, e.g. a sensor configuration parameter or an actuator’s current state, or actions that can be triggered remotely, such as the request to dim a luminaire’s output brightness. Each resource of a given type is also identified by an ID number. Additionally, since a device can contain multiple objects of the same type, as well as objects can contain multiple resources of the same type, e.g. for creating arrays of values, both objects and resources contain an instantiation number for being easily accessed. Figure 4.1 helps understand this representation.
+Inside the representation of each object, the information is divided in resources. Resources represent the available features that each object provides, such as the available values that can be read or written, or the actions that can be triggered. As an example, an luminaire actuator object can have resources to read the current state of the luminaire, turn  on/off or dim the light to a certain value, each one of them represented with a different ID. The resource instance is used when, per example, when an actuator for aluminaire with two lamps offers the same resources for each lamp separately.
 
- 
-\section{Rules Definition}
-\label{implementation:rules}
-TODO
+Using this representation, the properties of a device can me accessed using an Uniform Resource Identifier (URI) the following way: 
+
+
+\begin{minted}[
+frame=single
+]{nginx}
+
+.../Object_ID/Object_Instance/Resource_ID/Resource_Instance
+	
+
+\end{minted}
+	
+For instance, a device with a temperature sensor that offers the possibility of check the current state or check the minimum value measured by the sensor since it is ON, can be illustrated and accessed the following way:
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/obj2.png}
+	\caption{Access to a device resources.}
+	\label{fig:obj2}
+\end{figure}
+	
+Since the protocol used for this project was \ac{mqtt}, which allows to subscribe and publish messages in specific topics, this URI can be used in the topic to address each device resource. 
+
+As stated before, due to the work done in other dissertation for this project, the message format to communicate with devices was chosen based on the event format supported by the WSO2 \ac{cep}, chosen as the \ac{cep} engine for this project. The format is represented in Snippet \ref{snippet:example}.
+
+\begin{listing}[H]
+\begin{minted}[
+frame=single
+]{json}
+
+{
+    "event": {
+        "metaData": { 
+            "attribute_1": ***,
+            "attribute_2": ***,
+            ...
+        },
+        "correlationData": {
+            "attribute_1": ***,
+            "attribute_2": ***,
+            ...
+        }, 
+        "payloadData": {
+            "attribute_1": ***, 
+            "attribute_2": ***,
+        }
+    }
+}
+
+
+\end{minted}
+\caption{Example of a simplified message for an event sent to a device.}
+\label{snippet:example}
+\end{listing}
+
+This event messages are divided in three main logical sections: Payload Data, Correlation Data and Meta Data. Payload Data is the most important data to be transported, such as, the values that are sent to and from devices. The Correlation Data transports information that allows correlating events and lastly, the Meta Data is where other attributes that describe the event can be included. In Snippet \ref{snippet:todevice} is represented an example message of an event sent to a device.
+
+\begin{listing}[H]
+\begin{minted}[
+frame=single
+]{json}
+{
+    "event": {
+        "metaData": {
+            "operation":"set"
+        }, 
+        "payloadData": {
+            "value": 15 
+        }
+    } 
+}
+
+\end{minted}
+\caption{Example of a simplified message for an event sent to a device.}
+\label{snippet:todevice}
+\end{listing}
+
+This message would set the value 15 on a device's resource if sent to the corresponding topic using the format presented above.
+	
 \section{Architecture}
 \label{implementation:architecture}
+Taking into consideration the objectives and adopted technologies addressed in chapters \ref{implementation:objectives} and \ref{implementation:technologies}, the implemented architecture is represented in Figure \ref{fig:arch2}. Comparing this architecture to the one presented in Figure \ref{fig:arch}, it is clear the use of MQTT as the main communication protocol, the removal of the User Management component, since it was not in the scope for this dissertation, and as far as the \ac{cep} engine and the Building Manager concerns, those components were already implemented, as stated before. The BLE Adapter which is part of the gateway was also already implemented. Lastly, the MQTT broker used in this implementation was Mosquitto\footnote{https://mosquitto.org/}, which is a lightweight broker suited for \ac{iot} environments which implements the latest versions on MQTT protocol . 
+
+For the scope of this dissertation, the focus was the implementation of a Gateway with automation capabilities, and also a Gateway Manager to handle not only the rule and device distribution between the available gateways, but also to handling fails in order to maintain the system working even in emergency states.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/architecture3.png}
+	\caption{Implementation Architecture}
+	\label{fig:arch2}
+\end{figure}
+
+\subsection{Gateway Manager}
+\label{arch:gm}
+
+This section will describe how the Gateway Manager fits in the fulfilment of the requirements and objectives proposed for this project, and also how its features were thought and implemented. 
+
+
+This component was programmed using Python 3\footnote{https://docs.python.org/3/} and since MQTT was the chosen protocol to communicate with other nodes, the Eclipse Paho MQTT Python client\footnote{https://pypi.python.org/pypi/paho-mqtt/1.3.0} library was used. This client enables the application to connect to a MQTT broker in order to publish messages and subscribe to topics.
+
+
+\begin{Paragraph}{Rule Parser}
+	
+One of the Gateway's Manager roles is to receive rules, developed in the existing Building Manager platform 
+	
+
+
+\begin{listing}[H]
+	\begin{minted}[
+	frame=single
+	]{json}
+{
+ "name": "CorridorsRule",
+ "subrules": [{
+  "actions": [{
+   "target": {
+    "type": "mqtt",
+    "topic": "/out_events/IT2/Floor0/Corredor/0_13_6/4/all/1501/all/15011/all",
+    "value_type": "int"
+   },
+   "function": {
+    "name": "set_value",
+    "listen_data": {
+     "type": "single",
+     "listeners": [{
+      "type": "mqtt",
+      "topic": "/in_events/IT2/Floor0/Corredor/0_13_6/4/+/3302/+/5500/+",
+      "value_type": "int"
+     }],
+     "window": {
+      "type": "time",
+      "value": 5,
+      "units": "seconds"
+     },
+     "aggregator": {
+      "type": "any"
+     }
+    }
+   }
+  }]
+ }
+
+\end{minted}
+\caption{Example of a simplified message for an event sent to a device.}
+\label{snippet:rule}
+\end{listing}
+
+\end{Paragraph}
+
+\begin{Paragraph}{System Awareness}
+
+\end{Paragraph}
+
+\begin{Paragraph}{Devices Configuration}
+
+\end{Paragraph}
+
+\begin{Paragraph}{Gateways Configuration}
+
+\end{Paragraph}
+
+\begin{Paragraph}{Building Manager Dashboard}
+
+\end{Paragraph}
+
+\subsection{Gateway}
+\label{arch:gw}
 TODO
+
+\subsubsection{Automation Rules Definition}
+\label{arch:rules}
+TODO
+
 \section{Fail Scenarios}
 \label{implementation:scenarios}
 TODO

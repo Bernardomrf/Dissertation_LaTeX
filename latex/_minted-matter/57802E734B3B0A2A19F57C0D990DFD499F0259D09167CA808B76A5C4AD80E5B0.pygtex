@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+    \PYG{n+nt}{\PYGZdq{}event\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}metaData\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}attribute\PYGZus{}1\PYGZdq{}}\PYG{p}{:} \PYG{err}{***}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}attribute\PYGZus{}2\PYGZdq{}}\PYG{p}{:} \PYG{err}{***}\PYG{p}{,}
+            \PYG{err}{...}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}correlationData\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}attribute\PYGZus{}1\PYGZdq{}}\PYG{p}{:} \PYG{err}{***}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}attribute\PYGZus{}2\PYGZdq{}}\PYG{p}{:} \PYG{err}{***}\PYG{p}{,}
+            \PYG{err}{...}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}payloadData\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}attribute\PYGZus{}1\PYGZdq{}}\PYG{p}{:} \PYG{err}{***}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}attribute\PYGZus{}2\PYGZdq{}}\PYG{p}{:} \PYG{err}{***}\PYG{p}{,}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
