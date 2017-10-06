@@ -122,6 +122,82 @@ frame=single
 \end{listing}
 
 This message would set the value 15 on a device's resource if sent to the corresponding topic using the format presented above.
+
+\section{Rules Standard}
+\label{implementation:rules}
+
+
+To obtain a fully autonomous system, rules must be designed in order to achieve it. In a previous dissertation of this project, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the \ac{cep} engine or the Gateway engine, that will be addressed later.
+
+In this solution, a Rule is divided in Actions, each one containing a Target and a Function. The Target specifies to where the output events, resulting from applying the rule, should be sent, while the Listeners inside the Function specify which input events trigger the rule. Also inside the Function, there can be present four types of modules to transform the event stream: Aggregators, Converters, Windows and Filters. Filters are used to select only events that pass a certain condition, otherwise the rule is not applied. Windows, allow to capture events in a given interval of time or occurrences following some criteria. This module is often used with Aggregators that perform aggregate calculations, such as summing the events or calculating averages. Lastly, the function of Converters is to make calculations with each event, for instance to preform unit conversions. There can also be used the Pattern and Sequence modules that, as the name says, are used to detect patterns or specific sequences of events.
+
+
+In Snippet \ref{snippet:rule} is shown an example on an output JSON of a rule with a single action. As can be observed, a rule can be constituted by sub rules. Each sub rule within a Rule has the same Function but different Targets and Listeners. In this particular case, the rule has a function called "setif\_value\_percent" with two different types of Listeners, a "listen\_boolean" and a "listen\_value". The first is used to listen to boolean values (which in this case are the motion sensor state) and the last to listen to float values (luminance sensors, in this case). The boolean data is read for a 6 seconds time window and aggregated with the “any” Aggregator which detects if there was any motion in the last 6 seconds. The data containing the luminance values, is aggregated with an average over the last 5 events, and converted using the converter “lux\_to\_percent”. Therefore, the function sends to the target an event with the 100\% calculated percentage if a motion is detected in the last 6 seconds, and 50\% otherwise. 
+
+
+\begin{listing}[H]
+	\begin{minted}[
+	frame=single
+	]{json}
+{
+    "name": "Labs Lights",
+    "subrules": [{
+        "actions": [{
+            "target": {
+                "type": "mqtt",
+                "topic": "/SM/out_events/IT2/Floor_1/Lab/1.10/1/*/3302/*/5851/*",
+                "value_type": "int"
+            },
+            "function": {
+                "name": "setif_value_percent",
+                "listen_boolean": {
+                    "type": "single",
+                    "listeners": [{
+                        "type": "mqtt",
+                        "topic": "/SM/IT2/Floor_1/Lab/1.10/1/+/3302/+/5500/+",
+                        "value_type": "int"
+                    }],
+                    "window": {
+                        "type": "time",
+                        "units": "seconds",
+                        "value": 6
+                    },
+                    "aggregator": {
+                        "type": "any"
+                    }
+                },
+                "listen_value": {
+                    "type": "single",
+                    "listeners": [{
+                        "type": "mqtt",
+                        "topic": "/SM/IT2/Floor_1/Lab/1.10/1/+/3301/+/5700/+",
+                        "value_type": "float"
+                    }],
+                    "window": {
+                        "type": "length",
+                        "value": 5
+                    },
+                    "aggregator": {
+                        "type": "avg"
+                    },
+                    "converter": {
+                        "type": "lux_to_percentage",
+                        "value": 50
+                    }
+                },
+                "percent_if_true": 100,
+                "percent_if_false": 50
+            }
+        }]
+    }]
+}
+	\end{minted}
+	\caption{Example of a JSON rule outputted be the Building Manager platform.}
+	\label{snippet:rule}
+\end{listing}
+
+
+
 	
 \section{Architecture}
 \label{implementation:architecture}
@@ -143,70 +219,49 @@ For the scope of this dissertation, the focus was the implementation of a Gatewa
 This section will describe how the Gateway Manager fits in the fulfilment of the requirements and objectives proposed for this project, and also how its features were thought and implemented. 
 
 
-This component was programmed using Python 3\footnote{https://docs.python.org/3/} and since MQTT was the chosen protocol to communicate with other nodes, the Eclipse Paho MQTT Python client\footnote{https://pypi.python.org/pypi/paho-mqtt/1.3.0} library was used. This client enables the application to connect to a MQTT broker in order to publish messages and subscribe to topics.
+This component was programmed using Python 3\footnote{https://docs.python.org/3/} and since MQTT was the chosen protocol to communicate with other nodes, the Eclipse Paho MQTT Python client\footnote{https://pypi.python.org/pypi/paho-mqtt/1.3.0} library was used. This client enables the application to connect to a MQTT broker in order to publish messages and subscribe to topics. Bellow will be described the most important features implemented for this component.
 
 
-\begin{Paragraph}{Rule Parser}
+\begin{Paragraph}{Rule Parsing and Distribution}
 	
-One of the Gateway's Manager roles is to receive rules, developed in the existing Building Manager platform 
-	
+One of the Gateway's Manager roles is to receive rules, developed in the existing Building Manager platform. As addressed before, a rule is represented in JSON format, and when the rule is set to be deployed in the gateways automation engine, the Gateway Manager parses it in order to divide the rule in sub rules and distribute them among the available gateways. To keep track of which rules are deployed where, and to which rules different targets and listeners correspond, the \ac{gm} attributes a unique ID to each rule and stores, in data structures, the topics(from input and output events) used in each rule and to which rule IDs they correspond, since different rules can have the same targets and/or listeners. This data structures will be important to implement the fail handling measures, which will be addressed later. Bellow, in Figure \ref{fig:parser_struct}, can be seen the data structure used to store this information.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/parser_struct.png}
+	\caption{Data structures used to store Targets and Listeners and to which Rule IDs they correspond.}
+	\label{fig:parser_struct}
+\end{figure}
 
-\begin{listing}[H]
-	\begin{minted}[
-	frame=single
-	]{json}
-{
- "name": "CorridorsRule",
- "subrules": [{
-  "actions": [{
-   "target": {
-    "type": "mqtt",
-    "topic": "/out_events/IT2/Floor0/Corredor/0_13_6/4/all/1501/all/15011/all",
-    "value_type": "int"
-   },
-   "function": {
-    "name": "set_value",
-    "listen_data": {
-     "type": "single",
-     "listeners": [{
-      "type": "mqtt",
-      "topic": "/in_events/IT2/Floor0/Corredor/0_13_6/4/+/3302/+/5500/+",
-      "value_type": "int"
-     }],
-     "window": {
-      "type": "time",
-      "value": 5,
-      "units": "seconds"
-     },
-     "aggregator": {
-      "type": "any"
-     }
-    }
-   }
-  }]
- }
-
-\end{minted}
-\caption{Example of a simplified message for an event sent to a device.}
-\label{snippet:rule}
-\end{listing}
+After the rule is parsed, the \ac{gm} distribute the sub rules to the available gateways using a round-robin method, in order to maintain a equal number or deployed rules among gateways.
 
 \end{Paragraph}
 
 \begin{Paragraph}{System Awareness}
 
+The \ac{gm}, being the unit that will impose the fail handling measures, needs to be aware of each component and each gateway state. In order to do that, each component has to send a periodic heart beat message to the central broker, using the "/heart\_beat" topic, which is subscribed by the \ac{gm}. The \ac{gm} then checks periodically if every component sent the heart\_beat. If a component fails and it is not able to send the heart\_beat, after a programmable timeout, the \ac{gm} begins the implementation of failing handling measures.
+
 \end{Paragraph}
 
 \begin{Paragraph}{Devices Configuration}
 
-\end{Paragraph}
-
-\begin{Paragraph}{Gateways Configuration}
+When new a gateway is connected to the system, it sends a message to the \ac{gm}, informing which devices it is able to connect and then, with this information, the \ac{gm} balances the available devices among the gateways. To explain further, when two gateways are able to connect to the same devices, the \ac{gm} balances that devices among the two in order to maintain a equal number of devices in each one. Also, it stores for each device, the gateways that are able to connect to it. This allows that when a gateway fails, the \ac{gm} has all the information needed to inform the gateways that are able to connected to the lost devices, to take over the control for those devices.
 
 \end{Paragraph}
 
 \begin{Paragraph}{Building Manager Dashboard}
+
+In order to visualize the state of the gateways present in the system, a dashboard was created, using Python3 web framework Flask\footnote{http://flask.pocoo.org/}. In Figure \ref{fig:main_gm} is shown the main page of this dashboard.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/main_gm.png}
+	\caption{Screenshot of the Gateway Manager dashbord main page.}
+	\label{fig:main_gm}
+\end{figure}
+
+As can be observed, this dashboard allows to check several information about the gateways, such as, the hostnames, the time of the last heart beat received, the number of devices connected, and has also a feature to turn on/off a gateway if pleased. Also, it has not only the a list of rules deployed in the system and in which gateway they are being deployed, but also a list of devices and the corresponding gateway.
+
 
 \end{Paragraph}
 
@@ -214,9 +269,8 @@ One of the Gateway's Manager roles is to receive rules, developed in the existin
 \label{arch:gw}
 TODO
 
-\subsubsection{Automation Rules Definition}
-\label{arch:rules}
-TODO
+\section{System Interactions}
+\label{implementation:interactions}
 
 \section{Fail Scenarios}
 \label{implementation:scenarios}
