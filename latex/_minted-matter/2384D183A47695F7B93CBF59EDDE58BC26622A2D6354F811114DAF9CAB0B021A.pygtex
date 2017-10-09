@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{window} \PYG{o}{!=} \PYG{n+nb+bp}{None} \PYG{o+ow}{and} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{aggregator} \PYG{o}{!=} \PYG{n+nb+bp}{None}\PYG{p}{:}
+
+    \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{window}\PYG{o}{.}\PYG{n}{\PYGZus{}type} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}time\PYGZsq{}}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{aggregator}\PYG{o}{.}\PYG{n}{\PYGZus{}type} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}any\PYGZsq{}}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{value} \PYG{o+ow}{is} \PYG{l+m+mi}{0}\PYG{p}{:}
+                \PYG{k}{return}
+
+            \PYG{n}{event\PYGZus{}id} \PYG{o}{=} \PYG{n}{Action}\PYG{o}{.}\PYG{n}{new\PYGZus{}event}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}
+
+            \PYG{n}{Action}\PYG{o}{.}\PYG{n}{apply\PYGZus{}converter}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{value}\PYG{p}{,} \PYG{n}{client}\PYG{p}{,}\PYG{n}{r\PYGZus{}id}\PYG{p}{,} \PYG{n}{enable}\PYG{p}{)}
+
+            \PYG{n}{await} \PYG{n}{asyncio}\PYG{o}{.}\PYG{n}{sleep}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{window}\PYG{o}{.}\PYG{n}{value}\PYG{p}{)}
+
+            \PYG{k}{if} \PYG{n}{Action}\PYG{o}{.}\PYG{n}{events}\PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{p}{]} \PYG{o}{==} \PYG{n}{event\PYGZus{}id}\PYG{p}{:}
+                \PYG{n}{Action}\PYG{o}{.}\PYG{n}{apply\PYGZus{}converter}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{client}\PYG{p}{,} \PYG{n}{r\PYGZus{}id}\PYG{p}{,} \PYG{n}{enable}\PYG{p}{)}
+\end{Verbatim}

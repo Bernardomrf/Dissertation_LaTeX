@@ -1,0 +1,26 @@
+\chapter{Appendix A: \acf{gae} modules code}
+\label{chapter:appendix-a}
+
+\begin{listing}[H]
+	\begin{minted}[
+	frame=single
+	]{python}
+if self.window != None and self.aggregator != None:
+
+    if self.window._type == 'time':
+        if self.aggregator._type == 'any':
+            if value is 0:
+                return
+
+            event_id = Action.new_event(self)
+
+            Action.apply_converter(self, value, client,r_id, enable)
+
+            await asyncio.sleep(self.window.value)
+
+            if Action.events[self] == event_id:
+                Action.apply_converter(self, 0, client, r_id, enable)
+	\end{minted}
+	\caption{Implementation of the Window Module}
+	\label{snippet:rule}
+\end{listing}
