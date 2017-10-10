@@ -272,6 +272,21 @@ As can be observed, this dashboard allows to check several information about the
 
 \end{Paragraph}
 
+\begin{Paragraph}{Gateway Failure Handling}
+	
+Since Gateways are the components that communicate directly with devices, a gateway failure could have a huge impact for the building. For that reason, one of the most important features of the \ac{gm} is to detect that a gateway fails and, as addressed before, inform other gateways within the range of the lost devices to assume control. Also, the rules that were present in the failing gateway, should also be sent to other gateways to be deployed. Bellow in Figure \ref{fig:gwdown}, it is represented the interaction diagram of the processes that occur when a gateway fails. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/gwdown.png}
+	\caption{Interaction diagram of the procedures when a gateway fails.}
+	\label{fig:gwdown}
+\end{figure}
+	
+As can be observed, since the \ac{gm} has all the information, regarding which gateways have access to which devices, it can easily distribute the lost devices among the gateways that can communicate with them. Also, the rules that were deployed in the lost gateway are distributed through the available gateways using, again, a "round-robin" method in order to balance the number of rules in each gateway.  
+
+\end{Paragraph}
+
 \subsection{Gateway}
 \label{arch:gw}
 
@@ -355,9 +370,56 @@ For each action, the \ac{gae} follows certain steps, as can be visualized in Fig
 
 \end{Paragraph}
 
-\section{Fail Scenarios}
+\section{Functioning Scenarios}
 \label{implementation:scenarios}
 
-In Section \ref{Architecture:usecases} were identified 3 
+As one of the most important requirements and objectives for the present dissertation project, the fail handling mechanisms are a core feature for every smart environment deployed in a building. In order to rely with assurance in a fully autonomous system, it must be adapted to answer swiftly to unexpected behaviours within the system. In the scope of this project, the most important component, to impose an autonomous system, is the \ac{cep} engine, however if that component fails, due to internal software failure or a communication failure, the integrity of the building as well as the safety of its occupants could be at risk. For this reason, as addressed before, an automation engine (\ac{gae}) was implemented so that gateways could process events in order to trigger actions.
+
+In Section \ref{Architecture:usecases}, were introduced three different functioning scenarios: one with every component working as expected, other with the \ac{cep} Engine down and lastly, one with the broker down. However, since a new component was introduced, the Gateway Manager, two new scenarios of failure emerged. Since the Gateway Manager is responsible for failure handling gateways, if a gateway fails while this component is down, the lost devices and rules will not be distributed to other gateways.
+
+\begin{Paragraph}{Functioning scenario 1}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/fs1.png}
+	\caption{Functioning scenario 1.}
+	\label{fig:fs1}
+\end{figure}
+\end{Paragraph}
+
+\begin{Paragraph}{Functioning scenario 2}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/fs2.png}
+	\caption{Functioning scenario 2.}
+	\label{fig:fs2}
+\end{figure}
+\end{Paragraph}
+
+\begin{Paragraph}{Functioning scenario 3}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/fs3.png}
+	\caption{Functioning scenario 3.}
+	\label{fig:fs3}
+\end{figure}
+\end{Paragraph}
+
+\begin{Paragraph}{Functioning scenario 4}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/fs4.png}
+	\caption{Functioning scenario 4.}
+	\label{fig:fs4}
+\end{figure}
+\end{Paragraph}
+
+\begin{Paragraph}{Functioning scenario 5}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{figures/fs5.png}
+	\caption{Functioning scenario 5.}
+	\label{fig:fs5}
+\end{figure}
+\end{Paragraph}
 
 
