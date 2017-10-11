@@ -287,12 +287,17 @@ As can be observed, since the \ac{gm} has all the information, regarding which g
 
 \end{Paragraph}
 
+\begin{Paragraph}{Gateways Synchronization}
+
+As will be addressed later, there can be an emergency where the gateways cannot send events nor receive actions through the central \ac{mqtt} Broker. In this state, Gateways must communicate directly with each others. In order to to that, not only they need to know to which gateways they should send its device events to be processed, but also need to know where they must send the processed events to. Since the Gateway Manager has all the information regarding the gateways state, i.e, which rules and devices are deployed in each gateway, the \ac{gm} generates, everytime there is a change in either a gateway's devices or rules, two JSON's containing this information and send them to all Gateways. The first JSON contains a list of Listeners \ac{mqtt} topics and for each one, a list of gateways that have process rules for those events. To explain further, when a device generates an event, the corresponding Gateway, uses the information in this JSON to know which gateways are deploying rules that process that event, and send it to each one of them. The second JSON contains a list of Targets and the respective gateways that have devices triggered by that output event. This way, when a gateway finishes the processing of an event, it finds in this list which gateways have devices that are triggered by that event and sends it to them.
+ 
+\end{Paragraph}
 
 
 \subsection{Gateway}
 \label{arch:gw}
 
-This section will describe how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that are able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. With this in mind, the programming language proposed used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For this reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
+This section will describe how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that are able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. In an initial state, the implementation began to be done using Java, however, the program would consume too much memory, which would be a downside, taking into account the proposed requirements. With this in mind, the programming language used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For this reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
 
 To allow the communication between gateways in a scenario where the access to the central \ac{mqtt} broker might be impossible(due to a fail in the network or in the broker itself), a Mosquitto lightweight MQTT broker was also deployed in each gateway. The use for this brokers will be explained later in Section \ref{implementation:scenarios}. Also, since the IP addresses of the several components, which are needed to communicate with each others, can change due to network problems, it was deployed in each node of the system an Avahi deamon\footnote{https://www.avahi.org/}, enabling that each component could be reached by just its hostname, which never changes for each machine.
 
@@ -461,10 +466,17 @@ This last scenario is the most severe and complex one, since if the central \ac{
 \end{Paragraph}
 
 \begin{Paragraph}{Summary}
+	
+%	Taking into consideration the proposed architecture and the implementation of its components, it is important to infer whether it meets the requirements.
+	
+	
+
+
+	
 \begin{table}[H]
 	\centering
 	
-		\resizebox{\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|c|c|}
+		\resizebox{\textwidth}{!}{\begin{tabular}{|c|c|c|c?c|c|c|}
 		\hline
 		\textbf{Scenarios} & \textbf{Broker} & \textbf{CEP Engine} & \textbf{\begin{tabular}[c]{@{}c@{}}Gateway \\ Manager\end{tabular}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}Gw Failure\\ Handling\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}Gw Automation \\ Engine Enabled\end{tabular}}} & \textit{\textbf{\begin{tabular}[c]{@{}c@{}}Gw-Gw \\ Communication\end{tabular}}} \\ \hline
 		\textbf{1}         & Up              & Up                  & Up                                                                  & Yes                                                                                  & No                                                                                             & No                                                                               \\ \hline
@@ -478,7 +490,3 @@ This last scenario is the most severe and complex one, since if the central \ac{
 \end{table}
 \end{Paragraph}
 
-%\begin{Paragraph}{Gateways Synchronization}
-
-%Since the \ac{gm} is aware of which rules are deployed and which devices are connected to each gateway, it has all the information regarding the gateways state. In a scenario where only the gateways are working in the system(scenario that will be addressed later)	
-%\end{Paragraph}
