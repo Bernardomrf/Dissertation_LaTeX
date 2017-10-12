@@ -299,7 +299,7 @@ As will be addressed later, there can be an emergency where the gateways cannot 
 
 This section will describe how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that are able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. In an initial state, the implementation began to be done using Java, however, the program would consume too much memory, which would be a downside, taking into account the proposed requirements. With this in mind, the programming language used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For this reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
 
-To allow the communication between gateways in a scenario where the access to the central \ac{mqtt} broker might be impossible(due to a fail in the network or in the broker itself), a Mosquitto lightweight MQTT broker was also deployed in each gateway. The use for this brokers will be explained later in Section \ref{implementation:scenarios}. Also, since the IP addresses of the several components, which are needed to communicate with each others, can change due to network problems, it was deployed in each node of the system an Avahi deamon\footnote{https://www.avahi.org/}, enabling that each component could be reached by just its hostname, which never changes for each machine.
+To allow the communication between gateways in a scenario where the access to the central \ac{mqtt} broker might be impossible(due to a fail in the network or in the broker itself), a Mosquitto lightweight MQTT broker was also deployed in each gateway. The use for this brokers will be explained later in section \ref{implementation:scenarios}. Also, since the IP addresses of the several components, which are needed to communicate with each others, can change due to network problems, it was deployed in each node of the system an Avahi deamon\footnote{https://www.avahi.org/}, enabling that each component could be reached by just its hostname, which never changes for each machine.
 
 Bellow, will be addressed the implemented features on Gateway's software.
 
@@ -386,7 +386,7 @@ This automation engine will only be enabled if the \ac{cep} Engine or the centra
 
 As one of the most important requirements and objectives for the present dissertation project, the fail handling mechanisms are a core feature for every smart environment deployed in a building. In order to rely with assurance in a fully autonomous system, it must be adapted to answer swiftly to unexpected behaviours within the system. In the scope of this project, the most important component, to impose an autonomous system, is the \ac{cep} engine, however if that component fails, due to internal software failure or a communication failure, the integrity of the building as well as the safety of its occupants could be at risk. For this reason, as addressed before, an automation engine (\ac{gae}) was implemented so that gateways could process events in order to trigger actions.
 
-In Section \ref{Architecture:usecases}, were introduced three different functioning scenarios: one with every component working as expected, other with the \ac{cep} Engine down and lastly, one with the broker down. However, since a new component was introduced, the Gateway Manager, two new scenarios of failure emerged. Since the Gateway Manager is responsible for failure handling gateways, if a gateway fails while this component is down, the lost devices and rules will not be distributed to other gateways.
+In section \ref{Architecture:usecases}, were introduced three different functioning scenarios: one with every component working as expected, other with the \ac{cep} Engine down and lastly, one with the broker down. However, since a new component was introduced, the Gateway Manager, two new scenarios of failure emerged. Since the Gateway Manager is responsible for failure handling gateways, if a gateway fails while this component is down, the lost devices and rules will not be distributed to other gateways.
 
 \begin{Paragraph}{Scenario 1 - All components are operational}
 \begin{figure}[H]
@@ -466,11 +466,9 @@ This last scenario is the most severe and complex one, since if the central \ac{
 \end{Paragraph}
 
 \begin{Paragraph}{Summary}
-	
-%	Taking into consideration the proposed architecture and the implementation of its components, it is important to infer whether it meets the requirements.
-	
-	
 
+	
+Looking at the described scenarios, it is noticeable a degradation over the system functionalities. However, regardless the scenario, the most important automation features, that are crucial to the system, can be safeguarded by deploying emergency rules in gateways. Even when core components of the system are down, gateways can still ensure a minimum functionality to the building by themselves. Bellow in Table \ref{summary}, are specified the scenarios, and the component's state and distinctive features present in each one of them.
 
 	
 \begin{table}[H]
@@ -488,5 +486,11 @@ This last scenario is the most severe and complex one, since if the central \ac{
 \caption{Scenarios summary table.}
 \label{summary}
 \end{table}
+
+
+As can be observed, the gateway's Automation Engine is only enabled either on scenarios where the \ac{cep} Engine is down, or when the broker is unavailable, since it connects gateways to the \ac{cep} Engine. Also, since the Gateway Manager is the component responsible for handling gateway failures as redistribute devices and rules, when this component is down, the gateway's failure handling is not assured. Finally, in scenario 5, since the central broker is down, gateways need to communicate directly with each others in order to insure the processing of its events.
+
+As referred before, the system should be working on scenario 1 the great majority of time, however, since all the other scenarios ensure a basic functionality to the system, a fail in a component would not impose great consequences to the system. Therefore, the implemented features addressed all the requirements and objectives for the proposed dissertation. 
+
 \end{Paragraph}
 
