@@ -1,9 +1,53 @@
 \chapter{State of the Art}
 \label{chapter:state_of_the_art}
 
-This chapter aims to provide a description and overview of important concepts and protocols of \acf{bas}, \acf{iot} as well as event processing. For each topic there will be a review of the different technologies, how they interact and how they differ from each other.
+This chapter aims to provide a description and overview of important concepts of Fault Tolerance in Component-based Systems, \acf{bas}, \acf{iot} as well as event processing. For each topic there will be a review of the different technologies and protocols, how they interact and how they differ from each other.
 
 All of the topics addressed in this chapter contributed to the solution presented, either in a combination of different technologies or choosing from similar ones.
+
+
+\section{Fault Tolerance in Component-based Systems}
+
+Nowadays, most system architectures are composed by individual components(physical or logical) with well-defined communication interfaces. This can bring several advantages such as the reusability or replaceability of components without affecting the overall functioning of the system \cite{TutorialsPoint}.
+
+Nevertheless, this type of architecture has to be tolerant to failures of components(or nodes), in order to achieve an high availability solution, which is a crucial feature to the majority of systems \cite{Sun2014a}. As the author of \cite{Zaiter2013} suggests, an error is the manifestation of a fault in the system, and a failure is the manifestation of an error on the provided service by the system. The same author also classify the faults on the base of the faults’s sources, their manifestations and their persistence, namely software errors, materials errors or transmission errors. Therefore a node failure can be caused either by an internal error on the software, a physical malfunctioning on the component or the shutdown of the communication links to the node.
+
+In order to have a fault tolerant system, there must be implemented fault detection and fault recovery techniques. Bellow, will be presented some of those techniques.
+
+\begin{Paragraph}{Fault Detection Techniques}
+	
+	Fault detection is the process of collecting information about the system's nodes state. This information can be gathered by failure detectors using two different keep alive messages: ping and heartbeat \cite{Zaiter2013}. In the first one the failure detector sends a ping message to the monitored nodes and waits to receive an acknowledge message. If the monitored node is down, due to a failure, the failure detector will not receive the \textit{ack} and therefore conclude that the node is down. The last one, the heartbeat message, in contrast to the ping message, it is the monitored nodes that send a periodic message to the failure detector, informing that it is still running as expected. If the detector does not receive a heartbeat message from a node, after a timeout, it concludes that the node is no longer available. The author of \cite{Zaiter2013}, claims that heartbeat messages have more advantages when compared to ping messages, such as the heartbeat need of half the messages used by ping detectors. However, the ping detectors only have to preform time control in case of a failure in receiving an acknowledge, while the heartbeat detectors need to keep track of the time to detect the absence of heartbeats after a timeout. 
+	
+	Regarding the fault detector location in the system, the author of \cite{kshir} identifies two approaches, a centralized or distributed detector. The centralized approach uses a single node to preform the monitoring of other components, however, although this approach being efficient and accurate to identify faults \cite{kshir}, it constitutes a single-point of failure in the system. Plus, in large-scale systems, the messages traffic can congest the network which can result in a more expensive and inefficient solution. The distributed approach uses several nodes as failure detectors, which eliminates the single-point of failure problem, however, introduces much more complexity to the system \cite{Zaiter2013}. 
+	
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Fault Recovery Techniques}
+
+The fault recovery occurs immediately after a detector sense the fault of a system's node. According to the author of \cite{Schweiz}, the high availability of a system is normally achieved using redundant entities, whereby, when a component fails, the redundant node takes over its tasks. The author of \cite{Redwine} states that there are two types of physical redundancy: active replication and primary backup. 
+
+Regarding the active replication, it is usually addressed as a N-modular redundancy approach \cite{Schweiz}, in which a set of replicated modules receive the same input, and the resulting outputs from the different modules are compared and the result with more concordance(majority) is elected as the output. In Figure \ref{fig:nmodular} is represented this active replication method. The most common N-modular redundancy is the \acf{tmr}. \ac{tmr} uses a set of three replicated modules, thus, it allows that a module can fail, or produce a faulty value, and, the other correctly working modules, are able to mask that failure. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{figures/nmodular.png}
+		\caption{N Modular Redundancy.}
+		\label{fig:nmodular}
+	\end{figure}
+
+Concerning the primary backup approach, also known as hot standby redundancy \cite{Schweiz}, it uses a primary node, and one or more unused backup nodes. In this approach, there is a need for a failure detector so that when the primary node fails, the backup node can be notified to take over the processing. 
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{figures/hotstandby.png}
+		\caption{Hot standby redundancy. Adapted from \cite{Schweiz}.}
+		\label{fig:hot_standby}
+	\end{figure}
+	
+\end{Paragraph}
+
+
 
 \section{\acf{bas}}
 
