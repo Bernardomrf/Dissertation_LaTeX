@@ -36,7 +36,7 @@ Regarding the active replication, it is usually addressed as a N-modular redunda
 		\label{fig:nmodular}
 	\end{figure}
 
-Concerning the primary backup approach, also known as hot standby redundancy \cite{Schweiz}, it uses a primary node, and one or more unused backup nodes. In this approach, there is a need for a failure detector so that when the primary node fails, the backup node can be notified to take over the processing. 
+Concerning the primary backup approach, also known as hot standby redundancy \cite{Schweiz}, it uses a primary node, and one or more unused backup nodes. In this approach, there is a need for a failure detector so that when the primary node fails, the backup node can be notified to take over the processing. In Figure \ref{fig:hot_standby} it is represented the hot standby redundancy, and as can be observed, both the active and the passive replicated module need to be connected in order to be synchronized \cite{Schweiz}. 
 
 	\begin{figure}[H]
 		\centering
@@ -44,10 +44,12 @@ Concerning the primary backup approach, also known as hot standby redundancy \ci
 		\caption{Hot standby redundancy. Adapted from \cite{Schweiz}.}
 		\label{fig:hot_standby}
 	\end{figure}
+
+The author of \cite{Schweiz} also states, as an example, a situation with three hosts connected through a common communication bus. Each host need to send periodic heartbeat messages to this bus and, if a host's heartbeat is missing, due to a failure in the host or in the network, the other hosts can act immediately to resolve the failure.
 	
 \end{Paragraph}
 
-
+The methods presented in this chapter can be used in any component-based system to achieve an acceptable level of fault tolerance, however, each method can be more suitable to different situations. Over the next chapters, this methods will be evaluated in more specific areas like \acf{wsn}s and \acf{bas}s. 
 
 \section{\acf{bas}}
 
@@ -71,7 +73,7 @@ In this section there will be addressed the most common technologies present at 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/hierarchy.png}
+	\includegraphics[width=0.6\textwidth]{figures/hierarchy.png}
 	\caption{Building Automation System hierarchy \cite{kastener}. }
 	\label{fig:hierarchy}
 \end{figure}
