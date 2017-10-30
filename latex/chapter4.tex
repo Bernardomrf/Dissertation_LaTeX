@@ -1,8 +1,6 @@
 \chapter{Implementation}
 \label{chapter:implementation}
 
-In chapter 3, it was presented an overview of the SmartLighting project, giving an outline of the requirements and use cases. Also, to satisfy the project needs, an overview of the several scenarios of functioning as well as a possible architecture for the system was presented.
-
 The objective for this chapter is to describe the steps and decisions taken, and the reasoning behind the implemented features. It starts in section \ref{implementation:objectives}, by presenting the objectives for the implementation, following by the used technologies on the several components in section \ref{implementation:technologies}. After that, in sections \ref{implementation:devices} and \ref{implementation:rules}, it is presented the standards used to access the devices and to define rules, respectively. Following, in section \ref{implementation:architecture}, the whole system's architecture as well as the functioning of its components is described. 
 
 Since one of the requirements and objectives for this project was the existence of failure handling mechanisms, in section \ref{implementation:scenarios}, it is described the implementation taking into account the several scenarios addressed in the previous chapter. 
@@ -21,16 +19,16 @@ Looking at the architecture presented in chapter 3, the component for the user m
 \section{Adopted  Technologies}
 \label{implementation:technologies}
 
-This section aims to discuss the technologies chosen for the different components of the architecture. This choices will be explained taking into account the requirements for this project, however, it is important to note that there are no perfect solutions and, in some cases, several approaches could have been taken.
+This section aims to discuss the technologies chosen for the different components of the architecture. This choices will be explained taking into account the requirements for this project, however, it is important to note that there are no perfect solutions and, in some cases, several approaches could have been taken. 
 
-Since there was a dissertation that already implemented some features like the \ac{cep} engine and the \ac{bm}, some of the technologies used in this dissertation were influenced by past decisions. As far as the \ac{cep} engine concerns, the choice was the WSO2 \ac{cep} \cite{wso2}, since its features addressed all requirements, that such system would need, to fit this project's requirements. For the purpose of this dissertation both the \ac{cep} engine and the \ac{bm} as well as the communication between them, did not affect any of the new implemented features, however, since MQTT was primarily used as the elect protocol for communications in the referred dissertation, the implemented features presented in this work followed the same path.
+Since there was a dissertation\cite{helder} that already implemented some features like the \ac{cep} engine and the \ac{bm}, some of the technologies used in this dissertation were influenced by past decisions. As far as the \ac{cep} engine concerns, the choice was the WSO2 \ac{cep} \cite{wso2}, since its features addressed all requirements, that such system would need, to fit this project's requirements. For the purpose of this dissertation both the \ac{cep} engine and the \ac{bm} as well as the communication between them, did not affect any of the new implemented features, however, since MQTT was primarily used as the elect protocol for communications in the referred dissertation, the implemented features presented in this work followed the same path.
 
 Finally, it is important to state that the standard used, in SmartLighting project, for both object definition to read and write information to/from devices, and the rules structure, were also maintained and will be described in the following sections. 
 
 \section{Access to Devices}
 \label{implementation:devices}
 
-Devices like sensors, which measure environment changes, and actuators, that trigger mechanisms to make changes in that same environment, are fundamental pieces to implement a smart and automated environment. Since there are a huge variety of devices with different characteristics, in order to enable extensibility for the system, the access to those devices, as well as the messages format, should be standardised. In another dissertation for this project, a standard following the IP Smart Objects Alliance guidelines was made and is illustrated in Figure \ref{fig:obj}
+Devices like sensors, which measure environment changes, and actuators, and may trigger mechanisms to make changes in that same environment, are fundamental pieces to implement a smart and automated environment. Since there are a huge variety of devices with different characteristics, in order to enable extensibility for the system, the access to those devices, as well as the messages format, should be standardised. In another dissertation for this project, a standard following the IP Smart Objects Alliance Guideline\cite{IPSOAlliance2014} was made and is illustrated in Figure \ref{fig:obj}
 
 \begin{figure}[H]
 	\centering
@@ -39,7 +37,7 @@ Devices like sensors, which measure environment changes, and actuators, that tri
 	\label{fig:obj}
 \end{figure}
 
-In this representation, a device can have multiple objects (sensors and/or actuators), identified through an ID and an object instance. Per example, a device can have multiple sensing or actuating capabilities, each one of them identified with a different ID. A device with two motion sensors, will have two objects with the same ID but different object instances. 
+In this representation, a device can have multiple objects (sensors and/or actuators), identified through an ID and an object instance. As example, a device can have multiple sensing or actuating capabilities, each one of them identified with a different ID. A device with two motion sensors, will have two objects with the same ID but different object instances. 
 
 Inside the representation of each object, the information is divided in resources. Resources represent the available features that each object provides, such as the available values that can be read or written, or the actions that can be triggered. As an example, an luminaire actuator object can have resources to read the current state of the luminaire, turn  on/off or dim the light to a certain value, each one of them represented with a different ID. The resource instance is used when, per example, when an actuator for aluminaire with two lamps offers the same resources for each lamp separately.
 
@@ -67,7 +65,8 @@ For instance, a device with a temperature sensor that offers the possibility of 
 	
 Since the protocol used for this project was \ac{mqtt}, which allows to subscribe and publish messages in specific topics, this URI can be used in the topic to address each device resource. 
 
-As stated before, due to the work done in other dissertation for this project, the message format to communicate with devices was chosen based on the event format supported by the WSO2 \ac{cep}, chosen as the \ac{cep} engine for this project. The format is represented in Snippet \ref{snippet:example}.
+
+Since the WSO2 \ac{cep} was chosen as the complex event processor for this project\cite{helder}, a message format to communicate with devices, supported by that engine, was chosen.The format is represented in Snippet \ref{snippet:example}.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -127,7 +126,7 @@ This message would set the value 15 on a device's resource if sent to the corres
 \label{implementation:rules}
 
 
-To obtain a fully autonomous system, rules must be designed in order to achieve it. In a previous dissertation of this project, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the \ac{cep} engine or the Gateway engine, that will be addressed later.
+To obtain a fully autonomous system, rules must be designed in order to achieve it. In a former work for project\cite{helder}, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the \ac{cep} engine or the Gateway engine, that will be addressed later.
 
 In this solution, a Rule is divided in Actions, each one containing a Target and a Function. The Target specifies to where the output events, resulting from applying the rule, should be sent, while the Listeners inside the Function specify which input events trigger the rule. Also inside the Function, there can be present four types of modules to transform the event stream: Aggregators, Converters, Windows and Filters. Filters are used to select only events that pass a certain condition, otherwise the rule is not applied. Windows, allow to capture events in a given interval of time or occurrences following some criteria. This module is often used with Aggregators that perform aggregate calculations, such as summing the events or calculating averages. Lastly, the function of Converters is to make calculations with each event, for instance to preform unit conversions. There can also be used the Pattern and Sequence modules that, as the name says, are used to detect patterns or specific sequences of events.
 

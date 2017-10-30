@@ -1,7 +1,7 @@
 \chapter{Smart Building Solution}
 \label{chapter:architecture}
 
-In this chapter there will be provided a solution to improve the efficiency and usability of a building by using automation mechanisms, enhancing the intelligence of the building. Taking in account the \ac{iot} principles, this system will be capable of real-time processing of large data streams, analyse and correlate events, and being able to react and adapt to emergency states and guarantee the minimum functionality, always. This solution is intended to integrate the SmartLightinhg project and will be addressed in this chapter.
+In this chapter there will be provided a solution to improve the efficiency and usability of a building by using automation mechanisms, enhancing the intelligence of the building. Taking in account the \ac{iot} principles, this system should be capable of real-time processing of large data streams, analyse and correlate events, and being able to react and adapt to emergency states and guarantee the minimum functionality, always. This solution is intended to integrate the SmartLightinhg project and will be addressed in this chapter.
 
 This chapter will begin with a brief description, in section \ref{Architecture:slproject}, of SmartLighting project and its intentions of developing a smart environment of automation and control in IT2 building. Later, in order to ensure that all system necessities are addressed and taken into account, in section \ref{Architecture:Requirements} will be done a survey of necessary capabilities and  requirements to satisfy its stakeholders.
 
@@ -13,26 +13,13 @@ Finally, in section \ref{Architecture:Architecture}, a presentation and evaluati
 \newpage
 
 
-\iffalse
-********************************
-
-
-
-
-********************************
-
-\fi
-
-
-
-
 \section{SmartLighting Project}
 \label{Architecture:slproject}
 
-\subsection{Overview and Objectives}
+\subsection{Project Overview and Objectives}
 \label{Architecture:Overview}
 
-The SmartLighting project aims to create a smart environment in IT2 building in order to automate the lighting and HVAC infrastructure. IT2 building have been running with CFL luminaries, which, are often not only, inefficient and hazardous for the environment, but also, in most cases, unable to be dimmed. 
+The SmartLighting project\cite{Moreira} aims to create a smart environment in IT2 building in order to automate the lighting and HVAC infrastructure. IT2 building have been running with CFL luminaries, which, are often not only, inefficient and hazardous for the environment, but also, in most cases, unable to be dimmed. 
 
 This project intend to remove all this CFL luminaries by LED luminaries, that can resolve all the issues stated before and also are able, combining with sensors, to collect data from the environment such as luminance, temperature, humidity, motion and others. All of the collected data will be used to act in real-time to the changes in sensors readings. 
 
@@ -251,66 +238,13 @@ The system should allow users, based on their roles and permissions, to manually
 	
 \end{Paragraph}
 
-
-\section{Use Cases}
-\label{Architecture:usecases}
-
-As was referred in the introduction for this chapter, the main aim for this dissertation is the handling of failures, in the different components of the architecture, and empower gateways with the ability to process events (i.e sensors outputs) and produce responses based on simple and basic rules loaded beforehand.
-
-In order to achieve an environment where the minimum functionality of the system is always assured, for example, the lights turning on when someone walks in a corridor, there can be no system component that, in case of failure, could put in risk those functionalities. With this in mind, and looking to the existing architecture, simplified in Figure \ref{fig:sc1} only with components that directly and actively affect the event processing capability, three operation scenarios can be identified. 
-
-
-
-\begin{Paragraph}{Scenario 1}
-	
-	This first scenario corresponds to the normal operation of the system, as shown in Figure \ref{fig:sc1}, where every component is working properly. In this case, the CEP module is responsible for processing every event and return the outcome to the corresponding gateway.
-	 
-	 \begin{figure}[H]
-	 	\centering
-	 	\includegraphics[width=0.4\textwidth]{figures/sc1.png}
-	 	\caption{Simplified SmartLighting architecture. }
-	 	\label{fig:sc1}
-	 \end{figure}
-	 
-\end{Paragraph}
-
-\begin{Paragraph}{Scenario 2}
-	
-	In this second scenario, shown in Figure \ref{fig:sc2}, when the CEP module fails, the event processing is halted. So, in order to assure that at least the basic building functionalities, like lighting, work, gateways should be able to perform lightweight event processing.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.4\textwidth]{figures/sc2.png}
-		\caption{Functioning scenario 2.}
-		\label{fig:sc2}
-	\end{figure}
-	
-\end{Paragraph}
-
-\begin{Paragraph}{Scenario 3}
-	
-	The third scenario, shown in Figure \ref{fig:sc3}, when the broker is down, the communication between gateways and the CEP Engine is cut off, so even if the CEP Engine is still running, it wont be able to process any events generated by the sensors.
-	In this scenario, the most severe one, gateways need to be responsible of processing events and apply the rules for the minimum functionality that was described before.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.4\textwidth]{figures/sc3.png}
-		\caption{Functioning scenario 3. }
-		\label{fig:sc3}
-	\end{figure}
-	
-	
-\end{Paragraph}
-
-In every scenario stated before there is a need for failure recovery of the gateways too. For instance, if a gateway gets disconnected, the other gateways should be able to take over the sensors and actuators previously owned by the failing gateway and act as gateway for them.
-
 \section{System Architecture}
 \label{Architecture:Architecture}
 
 
 Taking into account the objectives, use cases and requirements covered above, and the existing architecture for the SmartLighting project, the proposed architecture has in mind, not only \ac{iot} and complex event processing principles, but also the referred features for this dissertation such as failure handling and rules distribution through gateways.
 
-In this section will be presented the global system architecture for this project as well as a description of all the components that compose the solution.
+In this section will be presented the global system architecture for this project, represented in Figure \ref{fig:arch} as well as a description of all the components that compose the solution.
 
 Note that components like the \ac{cep} engine, and the \ac{bm} are already implemented due to a past dissertation for the SmartLighting project \cite{helder}.
 
@@ -363,9 +297,63 @@ Note that components like the \ac{cep} engine, and the \ac{bm} are already imple
 
 \begin{Paragraph}{Sensors and actuators}
 	
-The field layer represents the set of devices, both sensors and actuators, used to gather information and interact with the environment. The information gathering and detection of changes is done by sensors, that send this information to the respective gateways in the Network layer. After the processing of this data, either in the Aggregation and Automation layer or even by the gateways in the Network layer, the orders for changes are sent to the actuators.
+	The field layer represents the set of devices, both sensors and actuators, used to gather information and interact with the environment. The information gathering and detection of changes is done by sensors, that send this information to the respective gateways in the Network layer. After the processing of this data, either in the Aggregation and Automation layer or even by the gateways in the Network layer, the orders for changes are sent to the actuators.
 	
 \end{Paragraph}
+
+
+\section{Failure Use Cases}
+\label{Architecture:usecases}
+
+As was referred in the introduction for this chapter, the main aim for this dissertation is the handling of failures, in the different components of the architecture, and empower gateways with the ability to process events (i.e sensors outputs) and produce responses based on simple and basic rules loaded beforehand.
+
+In order to achieve an environment where the minimum functionality of the system is always assured, for example, the lights turning on when someone walks in a corridor, there can be no system component that, in case of failure, could put in risk those functionalities. With this in mind, and looking to the existing architecture, simplified in Figure \ref{fig:sc1} only with components that directly and actively affect the event processing capability, three operation scenarios can be identified. 
+
+
+
+\begin{Paragraph}{Scenario 1}
+	
+	This first scenario corresponds to the normal operation of the system, as shown in Figure \ref{fig:sc1}, where every component is working properly. In this case, the CEP module is responsible for processing every event and return the outcome to the corresponding gateway.
+	 
+	 \begin{figure}[H]
+	 	\centering
+	 	\includegraphics[width=0.4\textwidth]{figures/sc1.png}
+	 	\caption{Simplified SmartLighting architecture. }
+	 	\label{fig:sc1}
+	 \end{figure}
+	 
+\end{Paragraph}
+
+\begin{Paragraph}{Scenario 2}
+	
+	In this second scenario, shown in Figure \ref{fig:sc2}, when the CEP module fails, the event processing is halted. So, in order to assure that at least the basic building functionalities, like lighting, work, gateways should be able to perform lightweight event processing.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\textwidth]{figures/sc2.png}
+		\caption{Functioning scenario 2.}
+		\label{fig:sc2}
+	\end{figure}
+	
+\end{Paragraph}
+
+\begin{Paragraph}{Scenario 3}
+	
+	The third scenario, shown in Figure \ref{fig:sc3}, when the broker is down, the communication between gateways and the CEP Engine is cut off, so even if the CEP Engine is still running, it wont be able to process any events generated by the sensors.
+	In this scenario, the most severe one, gateways need to be responsible of processing events and apply the rules for the minimum functionality that was described before.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\textwidth]{figures/sc3.png}
+		\caption{Functioning scenario 3. }
+		\label{fig:sc3}
+	\end{figure}
+	
+	
+\end{Paragraph}
+
+In every scenario stated before there is a need for failure recovery of the gateways too. For instance, if a gateway gets disconnected, the other gateways should be able to take over the sensors and actuators previously owned by the failing gateway and act as gateway for them.
+
 
 
 
