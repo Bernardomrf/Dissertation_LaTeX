@@ -252,7 +252,7 @@ As shown in Figure \ref{fig:coap}, \ac{coap}, unlike HTTP, uses \ac{udp} in the 
 	\label{fig:coap}
 \end{figure}
 
-As is also shown in Figure \ref{fig:coap}, \ac{coap} is divided into two sub-layers: request/response and messages. The messages layer is responsible for message processes such as fail and duplication handling, since UDP, as stated before, do not have reliability mechanisms \cite{Salman2013}. The request/response layer is responsible for enable the RESTful interaction by offering well known methods such as GET, POST, PUTT and DELETE to interchange data \cite{Lerche2012}.
+As is also shown in Figure \ref{fig:coap}, \ac{coap} is divided into two sub-layers: request/response and messages. The messages layer is responsible for message processes such as fail and duplication handling, since UDP, as stated before, do not have reliability mechanisms \cite{Salman2013}. The request/response layer is responsible for enable the RESTful interaction by offering well known methods such as GET, POST, PUT and DELETE to interchange data \cite{Lerche2012}.
 
 \ac{coap} has also an "observe" resource that enables clients, through a publish/subscribe mechanism, to observe a resource and when there is a change, the client is notified by the server \cite{Lerche2012}. All \ac{coap} features make this protocol also very attractive for some use cases in an \ac{iot} environment.
 
