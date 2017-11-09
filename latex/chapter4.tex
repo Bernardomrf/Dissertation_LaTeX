@@ -19,9 +19,9 @@ Looking at the architecture presented in chapter 3, the component for the user m
 \section{Adopted  Technologies}
 \label{implementation:technologies}
 
-This section aims to discuss the technologies chosen for the different components of the architecture. This choices will be explained taking into account the requirements for this project, however, it is important to note that there are no perfect solutions and, in some cases, several approaches could have been taken. 
+This section aims to discuss the technologies chosen for the different components of the architecture. This choices will be justified and explained taking into account the requirements for this project, however, it is important to note that there are no perfect solutions and, in some cases, several approaches could have been taken. 
 
-Since there was a dissertation\cite{helder} that already implemented some features like the \ac{cep} engine and the \ac{bm}, some of the technologies used in this dissertation were influenced by past decisions. As far as the \ac{cep} engine concerns, the choice was the WSO2 \ac{cep} \cite{wso2}, since its features addressed all requirements, that such system would need, to fit this project's requirements. For the purpose of this dissertation both the \ac{cep} engine and the \ac{bm} as well as the communication between them, did not affect any of the new implemented features, however, since MQTT was primarily used as the elect protocol for communications in the referred dissertation, the implemented features presented in this work followed the same path.
+Since there was a dissertation\cite{helder} that already implemented some features like the \ac{cep} engine and the \ac{bm}, some of the technologies used in this dissertation were influenced by past decisions. As far as the \ac{cep} engine concerns, the choice was the WSO2 \ac{cep} \cite{wso2}, since its features addressed all requirements, that such system would need, to fit this project's requirements. For the purpose of this dissertation both the \ac{cep} engine and the \ac{bm} as well as the communication between them, did not affect any of the new implemented features, however, since MQTT protocol was primarily used as the elect protocol for communications in the referred dissertation, the implemented features presented in this work followed the same path.
 
 Finally, it is important to state that the standard used, in SmartLighting project, for both object definition to read and write information to/from devices, and the rules structure, were also maintained and will be described in the following sections. 
 
@@ -126,74 +126,14 @@ This message would set the value 15 on a device's resource if sent to the corres
 \label{implementation:rules}
 
 
-To obtain a fully autonomous system, rules must be designed in order to achieve it. In a former work for project\cite{helder}, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the \ac{cep} engine or the Gateway engine, that will be addressed later.
+To obtain a fully autonomous system, rules must be designed in order to achieve it. In a former work for SmartLighting project\cite{helder}, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the \ac{cep} engine or the Gateway engine, that will be addressed later.
 
 In this solution, a Rule is divided in Actions, each one containing a Target and a Function. The Target specifies to where the output events, resulting from applying the rule, should be sent, while the Listeners inside the Function specify which input events trigger the rule. Also inside the Function, there can be present four types of modules to transform the event stream: Aggregators, Converters, Windows and Filters. Filters are used to select only events that pass a certain condition, otherwise the rule is not applied. Windows, allow to capture events in a given interval of time or occurrences following some criteria. This module is often used with Aggregators that perform aggregate calculations, such as summing the events or calculating averages. Lastly, the function of Converters is to make calculations with each event, for instance to preform unit conversions. There can also be used the Pattern and Sequence modules that, as the name says, are used to detect patterns or specific sequences of events.
 
 
-In Snippet \ref{snippet:rule} is shown an example on an output JSON of a rule with a single action. As can be observed, a rule can be constituted by sub rules. Each sub rule within a Rule has the same Function but different Targets and Listeners. In this particular case, the rule has a function called "setif\_value\_percent" with two different types of Listeners, a "listen\_boolean" and a "listen\_value". The first is used to listen to boolean values (which in this case are the motion sensor state) and the last to listen to float values (luminance sensors, in this case). The boolean data is read for a 6 seconds time window and aggregated with the “any” Aggregator which detects if there was any motion in the last 6 seconds. The data containing the luminance values, is aggregated with an average over the last 5 events, and converted using the converter “lux\_to\_percent”. Therefore, the function sends to the target an event with the 100\% calculated percentage if a motion is detected in the last 6 seconds, and 50\% otherwise. 
+In Snippet \ref{snip:rule} in Appendix A, is shown an example on an output JSON of a rule with a single action. As can be observed, a rule can be constituted by sub rules. Each sub rule within a Rule has the same Function but different Targets and Listeners. In this particular case, the rule has a function called "setif\_value\_percent" with two different types of Listeners, a "listen\_boolean" and a "listen\_value". The first is used to listen to boolean values (which in this case are the motion sensor state) and the last to listen to float values (luminance sensors, in this case). The boolean data is read for a 6 seconds time window and aggregated with the “any” Aggregator which detects if there was any motion in the last 6 seconds. The data containing the luminance values, is aggregated with an average over the last 5 events, and converted using the converter “lux\_to\_percent”. Therefore, the function sends to the target an event with the 100\% calculated percentage if a motion is detected in the last 6 seconds, and 50\% otherwise. 
 
 
-\begin{listing}[H]
-	\begin{minted}[
-	frame=single
-	]{json}
-{
-    "name": "Labs Lights",
-    "subrules": [{
-        "actions": [{
-            "target": {
-                "type": "mqtt",
-                "topic": "/SM/out_events/IT2/Floor_1/Lab/1.10/1/*/3302/*/5851/*",
-                "value_type": "int"
-            },
-            "function": {
-                "name": "setif_value_percent",
-                "listen_boolean": {
-                    "type": "single",
-                    "listeners": [{
-                        "type": "mqtt",
-                        "topic": "/SM/IT2/Floor_1/Lab/1.10/1/+/3302/+/5500/+",
-                        "value_type": "int"
-                    }],
-                    "window": {
-                        "type": "time",
-                        "units": "seconds",
-                        "value": 6
-                    },
-                    "aggregator": {
-                        "type": "any"
-                    }
-                },
-                "listen_value": {
-                    "type": "single",
-                    "listeners": [{
-                        "type": "mqtt",
-                        "topic": "/SM/IT2/Floor_1/Lab/1.10/1/+/3301/+/5700/+",
-                        "value_type": "float"
-                    }],
-                    "window": {
-                        "type": "length",
-                        "value": 5
-                    },
-                    "aggregator": {
-                        "type": "avg"
-                    },
-                    "converter": {
-                        "type": "lux_to_percentage",
-                        "value": 50
-                    }
-                },
-                "percent_if_true": 100,
-                "percent_if_false": 50
-            }
-        }]
-    }]
-}
-	\end{minted}
-	\caption{Example of a JSON rule outputted be the Building Manager platform.}
-	\label{snippet:rule}
-\end{listing}
 
 
 
@@ -202,7 +142,7 @@ In Snippet \ref{snippet:rule} is shown an example on an output JSON of a rule wi
 \label{implementation:architecture}
 Taking into consideration the objectives and adopted technologies addressed in chapters \ref{implementation:objectives} and \ref{implementation:technologies}, the implemented architecture is represented in Figure \ref{fig:arch2}. Comparing this architecture to the one presented in Figure \ref{fig:arch}, it is clear the use of MQTT as the main communication protocol, the removal of the User Management component, since it was not in the scope for this dissertation, and as far as the \ac{cep} engine and the Building Manager concerns, those components were already implemented, as stated before. The BLE Adapter which is part of the gateway was also already implemented. Lastly, the MQTT broker used in this implementation was Mosquitto\footnote{https://mosquitto.org/}, which is a lightweight broker suited for \ac{iot} environments which implements the latest versions on MQTT protocol . 
 
-For the scope of this dissertation, the focus was the implementation of a Gateway with automation capabilities, and also a Gateway Manager to handle not only the rule and device distribution between the available gateways, but also to handling fails in order to maintain the system working even in emergency states.
+
 
 
 \begin{figure}[H]
@@ -211,6 +151,11 @@ For the scope of this dissertation, the focus was the implementation of a Gatewa
 	\caption{Implementation Architecture}
 	\label{fig:arch2}
 \end{figure}
+
+For the scope of this dissertation, the focus was the implementation of a Gateway with ability to configure and manage devices, and with a lightweight automation engine that is able to parse rules and process events based on them. Also it was implemented a Gateway Manager with features like rule parsing and distribution among gateways and failure handling and synchronization of gateways.
+
+Regarding the failover strategy used, the detection of failures was insured by making every component report its state to the central broker, by publishing a periodic MQTT heart\_beat message. This way, if a fail occurs, the other working nodes are able to detect the absence of the failing node and begin recovering from the fault. All the processes regarding this features will be explained next.
+
 
 \subsection{Gateway Manager}
 \label{arch:gm}
@@ -223,7 +168,7 @@ This component was programmed using Python 3\footnote{https://docs.python.org/3/
 
 \begin{Paragraph}{Rule Parsing and Distribution}
 	
-One of the Gateway's Manager roles is to receive rules, developed in the existing Building Manager platform. As addressed before, a rule is represented in JSON format, and when the rule is set to be deployed in the gateways automation engine, the Gateway Manager parses it in order to divide the rule in sub rules and distribute them among the available gateways. To keep track of which rules are deployed where, and to which rule's different targets and listeners correspond, the \ac{gm} attributes a unique ID to each rule and stores, in data structures, the topics(from input and output events) used in each rule and to which rule IDs they correspond, since different rules can have the same targets and/or listeners. This data structures will be important to implement the fail handling measures, which will be addressed later. Bellow, in Figure \ref{fig:parser_struct}, can be seen the data structure used to store this information.
+One of the Gateway's Manager roles is to receive rules, developed in the existing Building Manager platform. As addressed before, a rule is represented in JSON format, and when the rule is set to be deployed in the gateway's automation engine, the Gateway Manager parses it in order to divide the rule in sub rules and distribute them among the available gateways. To keep track of which rules are deployed where, and to which rule's different targets and listeners correspond, the \ac{gm} attributes a unique ID to each rule and stores, in data structures, the topics(from input and output events) used in each rule and to which rule IDs they correspond, since different rules can have the same targets and/or listeners. This data structures will be important to implement the fail handling measures, which will be addressed later. In Figure \ref{fig:parser_struct}, can be observed the data structure used to store this information. Each entry in the list is a tuple containing a target topic(or listener topic) and a list of rules ID's that contain the same topic.
 
 \begin{figure}[H]
 	\centering
@@ -232,7 +177,9 @@ One of the Gateway's Manager roles is to receive rules, developed in the existin
 	\label{fig:parser_struct}
 \end{figure}
 
-After the rule is parsed, the \ac{gm} distribute the sub rules to the available gateways using a round-robin method, in order to maintain a equal number or deployed rules among gateways. Bellow, in Figure \ref{fig:addrule} can be observed an interaction diagram of the communication needed to add a new rule to the Gateway Manager and a Subrule to a Gateway, using MQTT.
+After the rule is parsed, the \ac{gm} distribute the sub rules to the available gateways using a round-robin method, in order to maintain a equal number or deployed rules among gateways. This approach was chosen so that gateways can have a balanced load between them. Other approaches could have been implemented, such as distribute rules by proximity to the devices that they refer to, but as downside, there could be gateways with an extensive number of rules that could put in jeopardy the performance and responsiveness of event processing. 
+
+In Figure \ref{fig:addrule} can be observed an interaction diagram of the communication needed to add a new rule to the Gateway Manager and a Subrule to a Gateway, using MQTT.
 
 \begin{figure}[H]
 	\centering
@@ -240,6 +187,8 @@ After the rule is parsed, the \ac{gm} distribute the sub rules to the available 
 	\caption{Interaction diagram of adding a new rule to the Gateway Manager and a Subrule to a Gateway.}
 	\label{fig:addrule}
 \end{figure}
+
+
 
 \end{Paragraph}
 
@@ -255,7 +204,7 @@ When new a gateway is connected to the system, it sends a message to the \ac{gm}
 
 \end{Paragraph}
 
-\begin{Paragraph}{Building Manager Dashboard}
+\begin{Paragraph}{Gateway Manager Dashboard}
 
 In order to visualize the state of the gateways present in the system, a dashboard was created, using Python3 web framework Flask\footnote{http://flask.pocoo.org/}. In Figure \ref{fig:main_gm} is shown the main page of this dashboard.
 

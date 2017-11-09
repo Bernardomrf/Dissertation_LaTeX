@@ -1,0 +1,54 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+	\PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}name\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}Labs Lights\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}subrules\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}actions\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}target\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}mqtt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}topic\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}/SM/out\PYGZus{}events/IT2/Floor\PYGZus{}1/Lab/1.10/1/*/3302/*/5851/*\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}value\PYGZus{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}int\PYGZdq{}}
+	\PYG{p}{\PYGZcb{},}
+	\PYG{n+nt}{\PYGZdq{}function\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}name\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}setif\PYGZus{}value\PYGZus{}percent\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}listen\PYGZus{}boolean\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}single\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}listeners\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}mqtt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}topic\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}/SM/IT2/Floor\PYGZus{}1/Lab/1.10/1/+/3302/+/5500/+\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}value\PYGZus{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}int\PYGZdq{}}
+	\PYG{p}{\PYGZcb{}],}
+	\PYG{n+nt}{\PYGZdq{}window\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}time\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}units\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}seconds\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}value\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{6}
+	\PYG{p}{\PYGZcb{},}
+	\PYG{n+nt}{\PYGZdq{}aggregator\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}any\PYGZdq{}}
+	\PYG{p}{\PYGZcb{}}
+	\PYG{p}{\PYGZcb{},}
+	\PYG{n+nt}{\PYGZdq{}listen\PYGZus{}value\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}single\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}listeners\PYGZdq{}}\PYG{p}{:} \PYG{p}{[\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}mqtt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}topic\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}/SM/IT2/Floor\PYGZus{}1/Lab/1.10/1/+/3301/+/5700/+\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}value\PYGZus{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}float\PYGZdq{}}
+	\PYG{p}{\PYGZcb{}],}
+	\PYG{n+nt}{\PYGZdq{}window\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}length\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}value\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{5}
+	\PYG{p}{\PYGZcb{},}
+	\PYG{n+nt}{\PYGZdq{}aggregator\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}avg\PYGZdq{}}
+	\PYG{p}{\PYGZcb{},}
+	\PYG{n+nt}{\PYGZdq{}converter\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+	\PYG{n+nt}{\PYGZdq{}type\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}lux\PYGZus{}to\PYGZus{}percentage\PYGZdq{}}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}value\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{50}
+	\PYG{p}{\PYGZcb{}}
+	\PYG{p}{\PYGZcb{},}
+	\PYG{n+nt}{\PYGZdq{}percent\PYGZus{}if\PYGZus{}true\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{100}\PYG{p}{,}
+	\PYG{n+nt}{\PYGZdq{}percent\PYGZus{}if\PYGZus{}false\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{50}
+	\PYG{p}{\PYGZcb{}}
+	\PYG{p}{\PYGZcb{}]}
+	\PYG{p}{\PYGZcb{}]}
+	\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
