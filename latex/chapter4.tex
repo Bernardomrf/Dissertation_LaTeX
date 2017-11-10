@@ -188,13 +188,13 @@ In Figure \ref{fig:addrule} can be observed an interaction diagram of the commun
 	\label{fig:addrule}
 \end{figure}
 
-
+As can be observed, the Building Manager publishes a rule and the Gateway Manager parses it in order to divide them into subrules. This subrules are numbered and then distributed to Gateways using the topic(already subscribed in the broker by Gateways) ``/<gw\_hostname>/add\_rule''.
 
 \end{Paragraph}
 
 \begin{Paragraph}{System Awareness}
 
-The \ac{gm}, being the unit that will impose the fail handling measures, needs to be aware of each component and each gateway state. In order to do that, each component has to send a periodic heart beat message to the central broker, using the "/heart\_beat" topic, which is subscribed by the \ac{gm}. The \ac{gm} then checks periodically if every component sent the heart\_beat. If a component fails and it is not able to send the heart\_beat, after a programmable timeout, the \ac{gm} begins the implementation of failing handling measures.
+The \ac{gm}, being the unit that will impose the fail handling measures, needs to be aware of each component and each gateway state. In order to do that, and as addressed before, each component has to send a periodic heart beat message to the central broker, using the ``/heart\_beat'' topic, which is subscribed by the \ac{gm}. The \ac{gm} then checks periodically if every component sent the heart\_beat. If a component fails and it is not able to send the heart\_beat, after a programmable timeout, the \ac{gm} begins the implementation of failing handling measures. This features could have been implemented using Last Will feature of MQTT. Clients could configure a Last Will message, so that upon disconnecting from the broker, due to a failure, that message would be published in the broker and the other nodes would be aware that the faulty node was disconnected. This approach was not implemented so that other protocols, such as COAP(that does not support this feature) could be used, without profound changes in the application's code.
 
 \end{Paragraph}
 
@@ -231,13 +231,13 @@ Since Gateways are the components that communicate directly with devices, a gate
 	\label{fig:gwdown}
 \end{figure}
 	
-As can be observed, since the \ac{gm} has all the information, regarding which gateways have access to which devices, it can easily distribute the lost devices among the gateways that can communicate with them. Also, the rules that were deployed in the lost gateway are distributed through the available gateways using, again, a "round-robin" method in order to balance the number of rules in each gateway.  
+As can be observed, since the \ac{gm} has the information regarding which gateways have access to which devices, it can easily distribute the lost devices among the gateways that can communicate with them. Also, the rules that were deployed in the lost gateway are distributed through the available gateways using, again, a "round-robin" method in order to balance the number of rules in each gateway.  
 
 \end{Paragraph}
 
 \begin{Paragraph}{Gateways Synchronization}
 
-As will be addressed later, there can be an emergency where the gateways cannot send events nor receive actions through the central \ac{mqtt} Broker. In this state, Gateways must communicate directly with each others. In order to to that, not only they need to know to which gateways they should send its device events to be processed, but also need to know where they must send the processed events to. Since the Gateway Manager has all the information regarding the gateways state, i.e, which rules and devices are deployed in each gateway, the \ac{gm} generates, everytime there is a change in either a gateway's devices or rules, two JSON's containing this information and send them to all Gateways. The first JSON contains a list of Listeners \ac{mqtt} topics and for each one, a list of gateways that have process rules for those events. To explain further, when a device generates an event, the corresponding Gateway, uses the information in this JSON to know which gateways are deploying rules that process that event, and send it to each one of them. The second JSON contains a list of Targets and the respective gateways that have devices triggered by that output event. This way, when a gateway finishes the processing of an event, it finds in this list which gateways have devices that are triggered by that event and sends it to them.
+In some cases, there can be an emergency where the gateways cannot send events nor receive actions through the central \ac{mqtt} Broker. In this state, Gateways must communicate directly with each others. In order to to that, not only they need to know to which gateways they should send its device events to be processed, but also need to know where they must send the processed events to. Since the Gateway Manager has all the information regarding the gateways state, i.e, which rules and devices are deployed in each gateway, the \ac{gm} generates, everytime there is a change in either a gateway's devices or rules, two JSON's containing this information and send them to all Gateways. The first JSON contains a list of Listeners \ac{mqtt} topics and for each one, a list of gateways that have process rules for those events. To explain further, when a device generates an event, the corresponding Gateway, uses the information in this JSON to know which gateways are deploying rules that process that event, and send it to each one of them. The second JSON contains a list of Targets and the respective gateways that have devices triggered by that output event. This way, when a gateway finishes the processing of an event, it finds in this list which gateways have devices that are triggered by that event and sends it to them.
  
 \end{Paragraph}
 
@@ -245,11 +245,10 @@ As will be addressed later, there can be an emergency where the gateways cannot 
 \subsection{Gateway}
 \label{arch:gw}
 
-This section will describe how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that are able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. In an initial state, the implementation began to be done using Java, however, the program would consume too much memory, which would be a downside, taking into account the proposed requirements. With this in mind, the programming language used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For this reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
+This section will describe how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that is able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. In an initial state, the implementation began to be done using Java, however, the program would consume too much memory, which would be a downside, taking into account the proposed requirements. With this in mind, the programming language used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For this reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
 
-To allow the communication between gateways in a scenario where the access to the central \ac{mqtt} broker might be impossible(due to a fail in the network or in the broker itself), a Mosquitto lightweight MQTT broker was also deployed in each gateway. The use for this brokers will be explained later in section \ref{implementation:scenarios}. Also, since the IP addresses of the several components, which are needed to communicate with each others, can change due to network problems, it was deployed in each node of the system an Avahi deamon\footnote{https://www.avahi.org/}, enabling that each component could be reached by just its hostname, which never changes for each machine.
+To allow the communication between gateways in a scenario where the access to the central \ac{mqtt} broker might be impossible, either due to a failure in the network or in the broker itself, a Mosquitto lightweight MQTT broker was also deployed in each gateway. The use for these brokers will be explained later in section \ref{implementation:scenarios}. Also, since the IP addresses of the several components, which are needed to communicate with each others, can change due to network problems, it was deployed in each node of the system an Avahi mDNS deamon\footnote{https://www.avahi.org/}, enabling that each component could be reached by just its hostname, which never changes for each machine.
 
-Bellow, will be addressed the implemented features on Gateway's software.
 
 \begin{Paragraph}{Devices Configuration and Management}
 
@@ -266,15 +265,16 @@ When a gateway is deployed, it needs to send, to the \ac{gm} a list of devices w
 
 	
 \end{Paragraph}
+\newpage
 
 \begin{Paragraph}{Rule Parser}
 
-The \ac{gm}, as addressed before, parse the received rules and give an unique ID to each subrule. Then, when balancing the rules among the available gateways, it sends a JSON with the subrule and the given ID. When a sub rule is received in a gateway, it must be deconstructed in order to the automation engine know which events trigger it and what actions must be performed. In Figure \ref{fig:parse} it is represented a flow diagram explaining the process of parsing a rule. As addressed before, each subrule can either have a Set Value or a Set Percent Function. In Set Value Functions, there is only one action to be parsed, however, in Set Percent Functions, there are two actions to be considered, a Listen\_value and a Listen\_boolean action. For each action, the parser checks the existence of the modules addressed before, i.e. Windows, Aggregators, Filters and Converters, and creates an object for each one of them, containing its informations. An Action object is then created, containing an unique ID and a reference for the modules objects. In the end, the parser saves in a data structure, the information regarding the rule in the following way: \textit{Rules[Listeners] = [ActionsID]}, where, Rules is a list of MQTT topics, of the different listeners parsed, and each one of them has a list of ActionsIDs with the same Listener. This was implemented this way so that when an event is received, it is only needed to search for the corresponding Listener topic, in the data structure, to know which actions must be triggered. 
+The \ac{gm}, as addressed before, parses the received rules and give an unique ID to each subrule. Then, when balancing the rules among the available gateways, it sends a JSON with the subrule and the given ID. When a sub rule is received in a gateway, it must be deconstructed in order for the automation engine to know which events trigger it, and what actions must be performed. In Figure \ref{fig:parse} it is represented a flow diagram explaining the process of parsing a rule. As addressed before, each subrule can either have a Set Value or a Set Percent Function. In Set Value Functions, there is only one action to be parsed, however, in Set Percent Functions, there are two actions to be considered, a ``Listen\_value'' and a ``Listen\_boolean'' action. For each action, the parser checks the existence of the modules addressed before, i.e. Windows, Aggregators, Filters and Converters, and creates an object for each one of them, containing its informations. An Action object is then created, containing an unique ID and a reference for the modules objects. In the end, the parser saves in a data structure, the information regarding the rule in the following way: ``Rules[Listeners] = [ActionsID]'', where, Rules is a list of MQTT topics, of the different listeners parsed, and each one of them has a list of ActionsIDs with the same Listener. This was implemented this way so that when an event is received, it is only needed to search for the corresponding Listener topic, in the data structure, to know which actions must be triggered. 
 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{figures/parseRule.png}
+	\includegraphics[width=0.7\textwidth]{figures/parseRule.png}
 	\caption{Rule parser flow diagram}
 	\label{fig:parse}
 \end{figure}
@@ -322,7 +322,7 @@ This automation engine will only be enabled if the \ac{cep} Engine or the centra
 
 \begin{figure}[]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figures/action.png}
+	\includegraphics[width=0.6\textwidth]{figures/action.png}
 	\caption{Event processing flow diagram.}
 	\label{fig:action}
 \end{figure}
@@ -367,7 +367,7 @@ In scenario 2, represented in Figure \ref{fig:fs2}, the \ac{cep} Engine is down.
 	\label{fig:gae}
 \end{figure}
 
-Again, this scenario support failures in gateways, since the Gateway Manager is operational, using the process explained earlier and represented in Figure \ref{fig:gwdown}.
+Again, this scenario supports failures in gateways, since the Gateway Manager is operational, using the process explained earlier and represented in Figure \ref{fig:gwdown}.
 
 \end{Paragraph}
 
