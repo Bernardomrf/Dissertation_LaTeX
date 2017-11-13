@@ -2,9 +2,6 @@
 \label{chapter:evaluation_and_results}
 
 
-
-In chapter 4, it was presented the implementation of the proposed solution, giving a description of all the implemented features and how the system should adapt and react in different scenarios, in order to maintain, at least, a minimum functionality, always.
-
 The objective for this chapter is to validate the proposed solution. Firstly, in section \ref{results:scenario}, a deployment scenario overview will be given, highlighting the devices and tools used for that purpose. Following, in section \ref{results:results}, the obtained results for different tests will be analysed. With the requirements, addressed in chapter 3, taken into consideration, the performance of the automation engine, implemented in gateways, will be evaluated, and also, to judge the capacity of the system to react to abnormal functioning scenarios, the reaction time to this occurrences will be measured.
 
 \newpage
@@ -31,8 +28,11 @@ Regarding the Gateway Manager, it contains both a software for gateway's managem
 
 In order to assure the communication between the different components, the Mosquitto MQTT Broker was deployed in a separate virtual machine with a dual-core processor and 2 gigabytes of memory.
 
-Finally, concerning the gateways, which are responsible for communicate with devices and, in some scenarios, process events using its Automation Engine. In this deployment scenario were used simulated devices. To further explain, a equal set of devices were configured in both gateways, simulating a scene where the devices are in range of two different gateways. Each gateway were equipped with code to generate events of the devices assigned to them, by the Gateway Manager. If a gateways had control over a sensor, it should send events with a fixed programmable frequency. This was used for the testing scenario addressed in section \ref{results:fail}%The simulated devices used were motion sensors and lights actuators and it was deployed a rule, to trigger a light on for 5 seconds, each time a motion sensor sends an event. 
+Finally, concerning the gateways, which are responsible for communicate with devices and, in some scenarios, process events using its Automation Engine, it was used a Raspberry Pi 3 Model B, which has a quad-core processor with 1 gigabyte of memory \footnote{https://www.raspberrypi.org/products/raspberry-pi-3-model-b/}. 
 
+Regarding the deployment scenario, a equal set of simulated devices were configured in both gateways, simulating a scene where the devices are in range of two different gateways. Each gateway was equipped with code to generate events of the devices assigned to them, by the Gateway Manager. If a gateways had control over a sensor, it should send events with a fixed programmable frequency. This was used for the testing scenario addressed in section \ref{results:fail}. %The simulated devices used were motion sensors and lights actuators and it was deployed a rule, to trigger a light on for 5 seconds, each time a motion sensor sends an event. 
+
+All the tests were done using the internal network of IT Building.
 
 
 
@@ -46,7 +46,7 @@ In this section will be presented the results and discussion of the tests prefor
 \subsection{Gateway's Automation Engine Performance}
 \label{results:cep}
 
-In order to evaluate the gateway's Automation Engine performance, a stress test was preformed. The objective was to measure the processing time of events, in five different stress situations: first, sending a single event and measure the time taken by the engine to produce an output response, and then increase the number of consecutive events, 10, 100, 1000 and 10000, to not only measure the time taken to process all those events, but also to check if all events were processed. 
+In order to evaluate the gateway's Automation Engine performance, a stress test was preformed. The objective was to measure the processing time of events, in five different stress situations: first, sending a single event and measuring the time taken by the engine to produce an output response, and then increasing the number of consecutive events, 10, 100, 1000 and 10000, to not only measure the time taken to process all those events, but also to check if all events were processed. 
 
 For this test, two python scripts were made: one to send a programmable number of events consecutively, and other to measure the time since the first event was sent, and the last response action was received. The deployed rule consisted in inputting a motion event and respond with an event to turn on a light as result. The results of this test are expressed in Figure \ref{fig:performance}.
 
@@ -63,11 +63,11 @@ As can be observed, the time taken to process each event in the different test s
 	\begin{tabular}{l|l|l|l|l|l|}
 		\cline{2-6}
 		& \textbf{1} & \textbf{10} & \textbf{100} & \textbf{1000} & \textbf{10000} \\ \hline
-		\multicolumn{1}{|l|}{\textbf{Average Time}}       & 5,2 ms     & 6,9 ms      & 3,7 ms       & 5,3 ms        & 5,8 ms         \\ \hline
-		\multicolumn{1}{|l|}{\textbf{Minimum Time}}       & 4,4 ms     & 6,6 ms      & 3,6 ms       & 4,5 ms        & 5,5 ms         \\ \hline
-		\multicolumn{1}{|l|}{\textbf{Maximum Time}}       & 6,0 ms     & 7,3 ms      & 3,7 ms       & 6,7 ms        & 6,1 ms         \\ \hline
-		\multicolumn{1}{|l|}{\textbf{Standard Deviation}} & 0,7 ms     & 0,3 ms      & 0 ms         & 0,9 ms        & 0,3 ms         \\ \hline
-		\multicolumn{1}{|l|}{\textbf{Total Time}}         & 0,005 sec  & 0,069 sec   & 0,367 sec    & 5,350 sec     & 57,953 sec     \\ \hline
+		\multicolumn{1}{|l|}{\textbf{Average Time}}       & 5,2 ms     & 5,9 ms      & 4,6 ms       & 5,3 ms        & 5,8 ms         \\ \hline
+		\multicolumn{1}{|l|}{\textbf{Minimum Time}}       & 4,4 ms     & 5,6 ms      & 4,5 ms       & 4,5 ms        & 5,5 ms         \\ \hline
+		\multicolumn{1}{|l|}{\textbf{Maximum Time}}       & 6,0 ms     & 6,3 ms      & 4,6 ms       & 6,7 ms        & 6,1 ms         \\ \hline
+		\multicolumn{1}{|l|}{\textbf{Standard Deviation}} & 0,7 ms     & 0,3 ms      & 0,1 ms         & 0,9 ms        & 0,3 ms         \\ \hline
+		\multicolumn{1}{|l|}{\textbf{Total Time}}         & 0,005 sec  & 0,059 sec   & 0,455 sec    & 5,350 sec     & 57,953 sec     \\ \hline
 	\end{tabular}
 	\centering
 \caption{Time taken to process each event.}
