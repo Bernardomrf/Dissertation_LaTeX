@@ -74,10 +74,15 @@ As can be observed, the time taken to process each event in the different test s
 \label{table:event}
 \end{table}
 
+This test was performed 10 times for each number of simultaneous events. Regarding the time to process each event, it was expected that when increasing the number of simultaneous events, the time needed to process each one of them would increment, since it would increase the processor load, however, as can be observed in Figure \ref{fig:performance}, there is a slight decrease for 100 simultaneous events. This can be explained by the internal architecture of Raspberry Pi's processor and cache.
+
 \subsection{System Failure's Reaction Performance}
 \label{results:fail}
 
-In order to test the system reaction to fail scenarios, two tests were done. The first one was to measure the time needed, after a failure in the central \ac{cep} engine, for gateways to enable its automation engine and start processing events. In order to do that, a Python script was made to measure the time since the central \ac{cep} Engine went down(purposely) and the receiving of the first gateway processed result event. Also, input events were being sent to the broker, every 100 milliseconds, this way, after the gateway automation engine was enabled it would receive an input event to process within 100 ms. The obtained results can be consulted bellow, in table \ref{cepDown}.
+In order to test the system reaction to fail scenarios, two tests were done. The first one was to measure the time needed, after a failure in the \ac{cep} engine or in the MQTT Broker, for gateways to enable its automation engine and start processing events. This test addresses the reaction time to scenarios 2,4 and 5, addressed in Chapter \ref{implementation:scenarios}. In these three scenarios, the heartbeat message from the CEP Engine (which that states that this component is running, and thus, there is no need for the gateway's automation engine to be running) stop reaching gateways, either because the CEP Engine actually failed (scenarios 2 and 4), or because the MQTT Broker failed (scenario 5). The scenarios are different, however, the reaction to them is the same for gateways: the gateway's automation engine is enabled and starts processing events. 
+
+
+ In order to obtain reaction time of gateways to these scenarios, a Python script was made to measure the time since the central \ac{cep} Engine went down (purposely) and the receiving of the first gateway processed result event. Also, input events were being sent to the broker, every 100 milliseconds, this way, after the gateway automation engine was enabled it would receive an input event to process within 100 ms. The obtained results can be consulted bellow, in table \ref{cepDown}.
 
 
 \begin{table}[H]
@@ -94,7 +99,9 @@ In order to test the system reaction to fail scenarios, two tests were done. The
 	\label{cepDown}
 \end{table}
 
-As can be observer, in average, a gateway needed 5 to 9 seconds to react to the \ac{cep} engine failure. Note that gateways wait for five seconds(configurable timeout) before conclude that the \ac{cep} Engine is down and thus, enable its own automation engine to process events.
+As can be observer, in average, a gateway needed 5 to 9 seconds to react to the \ac{cep} engine failure. Note that gateways wait for five seconds (configurable timeout) before conclude that the \ac{cep} Engine is down and thus, enable its own automation engine to process events.
+
+Regarding scenario 3, in which there is a failure in the Gateway Manager, no reaction times can be measured, since the failure of this component does not produce any alteration to the normal functioning of the system, i.e. the processing of sensor's generated events.
 
 
 The second test objective was to measure the time needed to recover from a gateway failure. When a gateway fails, the devices that are in its control become unreachable and thus, the events generated are not published in the broker. The gateway manager, then, needs to check which other gateways have access to those devices and assign them to a new gateway. Also the rules that were deployed in the failing gateway need to be sent to other working gateways. For this test in specific, the same device was configured in two different gateways, and, a event simulator was also implemented in each one of them in order to gateways publish simulated events of the devices they control. To explain further, two gateways were connected with access to the same device, and the Gateway Manager chose one of them to control that device. Then, using a Python script, it was measured the time since the gateway, that was in control of the device, was disconnected, until the other gateway, took over the device and started publishing events. The results of this test were as shown in table \ref{gwdown}
@@ -132,7 +139,7 @@ Then, using the same scenario, the disconnected gateway was put back up, and sin
 	\label{gwup}
 \end{table}
 
-
+\newpage
 \begin{Paragraph}{Summary}
 	
 	
