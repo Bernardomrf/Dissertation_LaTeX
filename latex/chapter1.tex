@@ -3,49 +3,54 @@
 \chapter{Introduction}
 \label{chapter:introduction}
 
-Over the last decades, there has been a rising dependence on technology, cross-cutting every sector. The increasing and fast growth of the society is directly related to technological development as it aims to solve everyday problems. Each person, company or industry rely closely on technology.
+Over the last decades, there has been a rising dependence on information and communication technology, cross-cutting every sector. The fast growth of society is directly related to technological development as it aims to solve everyday problems. Each person, company or industry rely closely on technology.
+
+However, this dependence comes at the cost of energy consumption, which is an essential and expensive requirement. This fact, urged society into finding affordable and environmentally friendly ways of generating energy, such as renewable energies. Yet, even though this type of energy producers have undesired effects on landscape preservation the solution for energy problems lies in reducing as much as possible energy consumption around the globe, and not just trying to find cheap ways of producing it.
 
 
-However, this dependence comes with a cost, energy, which is the technology main resource and the most expensive one. This fact, urged society into finding affordable and environmentally friendly ways of generating energy, such as renewable energies. Yet, this type of energy producers have harmful effects on the landscape preservation and are way more expensive than fossil energy producers. With this factors in mind, the solution for energy problems should be trying to reduce as much as possible the consumption of energy around the globe and not only trying to find cheap ways of producing it.
+The amount of energy consumed in the buildings sector is 20.1\% of the worldwide total \cite{BuildingEnergy}. These numbers have been acting as an influence for finding efficient ways of reducing the energy consumption in this sector. There are already several solutions in BAS’s (Building Automation Systems), which achieve good results in automation mechanisms to reduce energy consumption in buildings. However, the majority of BAS solutions are based on proprietary implementations that require most, if not all, of the hardware, installation and management to be done by the same vendor. Even when applying industry standards, device interoperability is often limited. Moreover, as a strong downside these systems typically do not allow complex correlation between events. Simple action-reaction systems are not enough.
 
-The amount of energy consumed in the buildings sector is 20.1\% of the total energy consumed worldwide \cite{BuildingEnergy}. These numbers have been acting as an influence for finding efficient ways of reducing the energy consumption in this sector. There are already several solutions in BAS's (Building Automation Systems), which achieved quite good results in automation mechanisms to reduce energy consumption in buildings. However, almost every BAS solution isn't OpenSource nor can be used with custom hardware, i.e all the hardware, installation and management need to be done by the same vendor. Moreover, as a strong downside these systems almost don't allow complex correlation between events. Simple action-reaction systems are not enough.
+The rise of the Internet of Things (IoT) paradigm has enabled devices to share large amounts of data, that can be processed to extract additional information. This can be used to improve the automation of real world tasks. This concept aims to improve comfort and decrease costs, which are the main goals of smart buildings.
 
-The rising appearance of Internet of Things (IoT) paradigm have been enabling devices to share large amounts of data, that can be processed in order to retrieve valuable information and thus, being able to automate real world tasks. This concept aims to improve comfort and decrease costs, which are the main goals of smart buildings.
+The work presented in this document fits this approach, as it aims to create a smart environment where the information of connected devices is gathered and processed in order to, not only achieve real time acting over the occurring events in a building, but also making sure that the whole systems can work and adapt when some of its components fail.
 
-This dissertation fits this approach, as it aims to create a smart environment where the information of connected devices is gathered and processed in order to, not only achieve real time acting over the occurring events in a building, but also making sure that the whole systems can work and adapt when some of its components fail.
 
 \section{Motivation}
 
-This dissertation is part of a research project of the Instituto de Telecomunicações of Aveiro (IT) named ``SmartLighting'', where the main objective is to endorse the second building of this institute (IT2) with a network of sensors and actuators in order to obtain an energy efficient solution to reduce operational costs and the comfort of its occupants. This building is relatively recent, yet it lacks in the support for intelligence and automation systems, and this fact entailed the appearance of the SmartLighting project. 
+This dissertation is part of a research project of Instituto de Telecomunicações of Aveiro (IT) named ``SmartLighting''. The main goal of this project is to endorse the second building of this institute (IT2) with a network of sensors and actuators in order to obtain an energy efficient solution, reducing operational costs and increasing comfort of occupants. Despite being a relatively recent building, it lacks the support for intelligence and automation systems, and this fact entailed the appearance of the SmartLighting project.
 
-Both this dissertation and project have the support from Think Control which is a consultancy company in the area of efficient lighting systems and building automation.
+Both this dissertation and project have the support of Think Control, an engineering consultancy company in the area of efficient lighting systems and building automation.
+
 
 \section{Objectives}
 
 The aim of this dissertation is not only, improve the energy efficiency and reduce operational costs of a building while applying IoT concepts, but also, create a secure and reliable environment resistant to fails in every element of its whole architecture.
 
-It is expected that this dissertation uses the prior work done for this project and achieve a decentralized solution, with a network of gateways connected to the sensors and actuators to not only having no single points of failure but also granting a more quick reaction to core events and unexpected system failures.
+It was expected that this dissertation built upon prior work done for this project that included a network of gateways connected to sensors and actuators \cite{helder}. On top of that the goal was to achieve a decentralized solution, removing single points of failure and also enabling faster reaction times to core events and unexpected system failures.
 
-As stated before, all the new features need to integrate fully with the actual state of SmartLighting project to grant the continuity of the research and allow future developments in further dissertations.
+As stated before, all new features needed to integrate fully with the actual state of SmartLighting project to grant continuity of the research work and allow additional developments in future dissertations.
+
 
 \section{Contributions}
 
-This dissertation contributes with a decentralized solution of gateways that are able to react quickly not only to unexpected events such as the CEP system failure but also to ensure that the most basic actions needed for the building automation system work are processed as quickly as possible.
+This dissertation contributes with a decentralized solution of gateways that are able to react quickly to unexpected events, such as the CEP system failure, but also to ensure that basic building automation operations are processed as quickly as possible.
 
-One of the most important aspect that has been taken into account was the use of lightweight technologies to make sure that the whole solution could fit in any micro controller acting as gateway.
+One of the most important aspect that has been taken into account was the use of lightweight technologies to ensure the whole solution could fit in a resource limited microcontroller device acting as gateway.
 
-Finally, it was implemented a demonstrator which consists in a dashboard to control and observe in real time the state of all the gateways registered in the system. This demonstrator and the prior work done in SmartLighting project was presented at the Students and Teachers@DETI 2017 event, where dissertations, personal projects and course projects are presented publicly to the community.
+Finally, it a demonstrator was implemented consisting in a dashboard to control and observe in real time the state of all registered gateways in the system. This demonstrator and prior work done in SmartLighting project was presented at the ``Students and Teachers@DETI 2017'' event, where dissertations, personal projects and course projects were presented publicly to the community.
+
 
 \section{Structure}
 
+Following this introduction chapter, the remainder of the document is organized as follows.
+
+
 \begin{itemize}
 
-	\item{\textbf{Chapter 2:} presentation of the state of the art. In this chapter some key concepts
-		for the theme, will be presented. These will focus on building automation, failure handling, Internet of Things and Complex Event Processing.}
-	\item{\textbf{Chapter 3:} introduction to the SmartLighting project and presentation of the use cases and requirements for this solution. Also, an architecture and an explanation of its components will be presented.}
-	\item{\textbf{Chapter 4:} description of the implementation of the architecture proposed in Chapter 3 and explanation of the implementation decisions taken.}
-	\item{\textbf{Chapter 5:} presentation and analysis of the results obtained from testing the
-		implemented solution. In this chapter it is presented the test methodology and the analysis of results under a feasibility perspective.}
-	\item{\textbf{Chapter 6:} presents the conclusions regarding the development of the solution presented in this dissertation.}
+	\item{\textbf{Chapter 2:} presentation of the state of the art, including key concepts for the presented theme. These will focus on building automation, failure handling, Internet of Things and Complex Event Processing.}
+	\item{\textbf{Chapter 3:} introduction to SmartLighting project and presentation of use cases and requirements for this solution. Also, an explanation of architecture and components is provided.}
+	\item{\textbf{Chapter 4:} description of the chosen implementation for the architecture presented in Chapter 3 and explanation of the implementation decisions taken.}
+	\item{\textbf{Chapter 5:} presentation and analysis of the results obtained from testing, including test methodology, and analysis of results under a feasibility perspective.}
+	\item{\textbf{Chapter 6:} concluding remarks regarding the achieved goals for the developed solution and presentation of potential future steps.}
 
 \end{itemize}
