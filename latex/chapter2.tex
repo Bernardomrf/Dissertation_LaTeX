@@ -163,12 +163,15 @@ To sum up, BLE is one of the best solutions for communications between IoT devic
 
 
 \subsubsection{Wireless Communication Protocols Comparison}
-TODO  
+
+In this section is presented a comparison between the addressed wireless communication protocols, adding two more wireless technologies: Wi-Fi HaLow \cite{Wi-FiAlliance2017} and Thread. These standards, although not fully or already available, have great potential for future adoption and therefore will also be considered.
 
 
-*****
+Briefly, IEEE 802.11ah, also known as Wi-Fi HaLow, is a recently published standard that aims to bring Wi-Fi closer to IoT solutions. This is a strong possibility since Wi-Fi HaLow uses a lower band than the classic Wi-Fi, which confer to it nearly twice the range while also granting a more robust connection in any kind of environments \cite{Wi-FiAlliance2017}. Wi-Fi HaLow is also an energy-efficient protocol that, allied to the benefits of Wi-Fi, such as government-grade security and easy setup, can become an important player in the wireless communication protocols for IoT.
+
+Regarding to Thread standard, as addressed before, have
+
 A major advantage of BLE over ZigBee, is its widespread integration in smartphones, tablets and even laptops, with a large share of them already equipped with Bluetooth Smart Ready. This makes it better suitable for some IoT applications such as health care and building automation, where the user’s smartphone can be an integral part of the system, being able to interact with the other devices.
-*****
 
 \subsection{Application Protocols}
 
@@ -243,9 +246,9 @@ Although for majority of \ac{iot} environments reliability is not a deciding fea
 	\label{fig:xmpp}
 \end{figure}
 
-Unlike the protocols addressed previously, \ac{xmpp} supports not only a publish/subscribe architecture, but also a request/response one, however, by using \ac{xml} messages that, although providing a greater flexibility, induce a higher overhead than the former protocols, which creates more power consumption for devices \cite{Salman2013}. Fact that can be a problem for \ac{iot} environments, as stated before.
+Unlike the protocols addressed previously, \ac{xmpp} supports not only a publish/subscribe architecture, but also a request/response one. XMPP uses an XML-based approach to messaging, which allows multiple extensions of the protocol to be created, making it a highly extensible protocol. However, being that XML-based messages are text based, the communication overhead is higher \cite{Salman2013}. 
 
-Although \ac{xmpp} has some drawbacks, it still has capacity to be an important protocol in some specific \ac{iot} use cases, due to the near real time message exchanging and the high extensibility offered.
+Although \ac{xmpp} was not designed for IoT environments, it still has capacity to be an important protocol in some specific \ac{iot} use cases, due to the near real time message exchanging and the high extensibility offered.
 
 \subsubsection{Application Protocols Comparison}
 
@@ -270,14 +273,15 @@ Regarding \ac{mqtt} and \ac{amqp}, both protocols use a publish/subscribe patter
 
 Looking at \ac{coap}, the greater difference between the last two is the use request/response pattern, instead of a publish/subscribe one. Also, \ac{coap} uses a one-to-one transfer protocol between a client and a server, which makes it more suitable as state change model, instead of an event driven one.
 
-Finally, the \ac{xmpp} although being the protocol with the most extensive number of features, such as allowing both publish/subscribe and request/response patterns, and being a near real time communication protocol, still lacks by not being as lightweight as the other protocols. Nevertheless, this protocol has a place in the market, for solutions where reliability is a key factor.
+Finally, the \ac{xmpp} although being a near real time communication protocol with an high number of features, such as allowing both publish/subscribe and request/response patterns, still lacks by not being as lightweight as the other protocols. Nevertheless, this protocol has a place in the market for solutions where reliability is a key factor.
 
 
 \subsection{\ac{iot} enabled \ac{bas} solutions}
 
-According to the author of \cite{TransformativeWave}, the old industry of \ac{bas}s systems is being disrupted by the Internet of Things. Only some of the most known \ac{bas} companies are trying to a integrate \ac{iot} principles and open protocols in their solutions in order to maintain themselves in the market. The emerge of cheap and small devices with wireless connectivity using open standards and the possibility of creating affordable automation environments, using open-source software, are now at reach, providing a wider variety of solutions to empower buildings with automation capability's and thus, reduce the energy consumption while increasing the comfort in buildings.
+According to the author of \cite{TransformativeWave}, the old industry of BASs systems is being disrupted by the Internet of Things. Only some of the most known BAS companies are trying to integrate IoT principles and open protocols in their solutions in order to keep themselves in a leading market position. The emerge of cheap and small devices with wireless connectivity using open standards and the possibility of creating affordable automation environments, using open-source software, are now in reach, providing a wider variety of solutions to empower buildings with automation capabilities and thus, reduce the energy consumption while increasing the comfort in buildings.
 
-A practical example of a building automation system, using \ac{iot} principals and standards, is HCL Technologies \ac{bas}. HCL Technologies is a member of the Intel Internet of Things Solutions Alliance \cite{intel} and uses an Intel-based gateway to deliver a powerful, yet cost-effective building management solution \cite{hcl}. In this system, as shown in Figure \ref{fig:intel}, is used an Intel's \ac{iot} gateway empowered with HCL \ac{bas} software, which is responsible for providing a web interface and means for simple automation mechanisms such as, per example, turning air conditioners on when some temperature threshold is reached. The HCL \ac{bas} software and gateway supports protocols like ZigBee and Wi-Fi, and the translation between them is made without building manager's intervention.
+A practical example of a building automation system, using \ac{iot} principles and standards, is HCL Technologies \ac{bas}. HCL Technologies is a member of the Intel Internet of Things Solutions Alliance \cite{intel} and uses an Intel-based gateway to deliver a powerful, yet cost-effective building management solution \cite{hcl}. In this system, as shown in Figure \ref{fig:intel}, is used an Intel's \ac{iot} gateway empowered with HCL \ac{bas} software is used, which is responsible for providing a web interface and means for simple automation mechanisms, e.g. turning the HVAC system on when a temperature threshold is reached. The HCL BAS software and gateway supports protocols like ZigBee and Wi-Fi, and the translation between them is made without need of configuration by the building manager.
+
 
 
 \begin{figure}[H]
@@ -287,7 +291,8 @@ A practical example of a building automation system, using \ac{iot} principals a
 	\label{fig:intel}
 \end{figure}
 
-Although the presented solution constitutes a robust and state of the art solution as a \ac{bas}, with basic automation that can address most of building managers needs, there is a lack of complex automatic correlations between events generated by the sensors network. In the next section will be presented the importance of \acf{cep} modules to enhance the performance of event processing as well as the intelligence of a building through complex correlations.
+Although the presented solution constitutes a robust and novel solution as a BAS, with basic automation that can address most of building manager’s needs, there is a lack of complex automatic correlations between events generated by the sensors network. In the next section the importance of Complex Event Processing (CEP) modules to enhance the performance of event processing as well as the intelligence of a building through complex correlations is presented.
+
 
 
 \section{Fault Tolerance in Component-based Systems}
@@ -340,34 +345,36 @@ The methods presented in this chapter can be used in any component-based system 
 \subsection{Fault-Tolerance in IoT}
 
 
-In the typical smart environments, sensors and actuators are connected to a gateway, also called a sink, that is capable of communicate with them and, either process itself the received data or send it to other component responsible for doing so \cite{Gia2015}. Therefore, three core components, of a smart environment, that have a direct effect on the whole system functioning, can be considered: devices, gateways and automation engines. A device malfunctioning can only be surpassed by human intervention since it has no self healing mechanisms. Otherwise there would have to be redundant devices. At the gateways level, since it is a sink device, where the information flows to, there would be also necessary redundant gateways or, in case of multiple gateways connected to different devices, the other gateways should be able to sense that there was a disconnected gateway and takeover the control for the lost devices. Lastly, the automation engines, like the other components, could resolve a failure situation by having redundancy or self healing techniques implemented in the application. However, in case of irreversible failure, gateways should be able to sense that the automation components are unreachable and, in a perfect scenario, having automation logic implemented so that the system could work at an emergency state until the automation engines were re-established.
+In typical smart environments, sensors and actuators are connected to a gateway, also called a sink, that is capable of communication and processing the received data, either by itself or by sending to another component responsible for doing so \cite{Gia2015}. Therefore, three core components of a smart environment that have a direct effect on the whole system operation, can be considered: devices, gateways and automation engines. A device malfunction can only be surpassed by human intervention when it has no self- healing mechanisms. Otherwise there would have to be redundant devices. At the gateway level, since it is a sink device where the information flows to, redundant gateways would also be necessary. Otherwise, in case of multiple gateways connected to different devices, the other gateways should be able to sense that there was a disconnected gateway and takeover the control for the lost devices. Lastly, the automation engines, like the other components, could resolve a failure situation by having redundancy or self-healing techniques implemented in the application. However, in case of irreversible failure, gateways should be able to sense that the automation components are unreachable and, in a perfect scenario, having automation logic implemented so that the system could work at an emergency state until the automation engines are re-established.
 
 
 \section{Automation Logic}
-Automation can be described as actions preformed without human intervention. In the present dissertation context, automation is achieved using a logic component that receives all events, gathered by sensors from the environment, and infer actions based on buildings manager preloaded rules. For instance, events like movement in a room or temperature and humidity changes, are sent to this automation component that, based on the rules, can send triggers to turn on/off lights, air conditioners or others.
+Automation can be described as actions preformed without human intervention. In the present dissertation context, automation is achieved using a logic component that receives all events, gathered by sensors from the environment, and infer actions based on buildings manager preloaded rules. For instance, events like movement in a room or temperature and humidity changes, are sent to this automation component that, based on a set of rules, can send triggers to turn on/off lights, HVAC units or others.
 
-In a small house, the number of sensors and events are fairly small and thus, there is no need for a powerful and complex automation unit. However, in a building context, the amount of events generated is much higher, which requires the use of a more efficient and high performance platform. Also in an environment with so many variables, events cannot be treated isolated from the greater context, so there is a need for a platform that can be able to correlate this isolated events and infer more complex actions.
+In a small house, the number of sensors and events are fairly small and thus, there is no need for a powerful and complex automation unit. However, in a building context, the amount of events generated is much higher, which requires the use of a more efficient and high performance platform. Also in an environment with so many variables, events cannot be treated isolated from the greater context, so there is a need for a platform that able to correlate these isolated events and infer complex action-reaction relationships.
 
-In the next subsection, will be presented a system capable of infer actions based on the processing and correlation of large event streams.
+
+In the next subsection, a system capable of inferring actions based on processing and correlating large event streams is presented.
+
 
 \subsection{Complex Event Processing}
 
-With the emergence of \ac{iot} in different areas, huge amounts of data, that need proper analysis, are produced. However, in areas like smart homes and buildings, the information streams need to be processed almost instantly in order to infer quick actions. \acf{cep} is a technology used to process and analyse large streams of data, from multiple sources, and infer real-time conclusions or actions based on the detection of patterns and complex events. As illustrated in Figure \ref{fig:cep}, a complex event is inferred when a certain number of isolated events happen in specific conditions.  
+With the emergence of IoT in different areas, huge amounts of data, that need proper analysis, are produced. However, in areas like smart homes and buildings, the information streams need to be processed almost instantly in order to infer quick actions. CEP is a technology used to process and analyse large streams of data, from multiple sources, and infer real-time conclusions or actions based on the detection of patterns and complex events. As illustrated in Figure \ref{fig:cep}, a complex event is inferred when a certain number of isolated events happen in a specific pattern.  
 
+
+
+
+This processing methodology is used in different contexts where a real-time and high performance platform to process data is needed. One of these cases is the financial industry where, in order to take low risk and profitable actions, \ac{cep} is used to deduce real-time trading predictions.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/cep1.png}
-	\caption{Detection of complex events using Complex Event Processing \cite{Pooja2015}.}
+	\includegraphics[width=0.8\textwidth]{figures/cep1.png}
+	\caption{Detection of complex events using Complex Event Processing.}
 	\label{fig:cep}
 \end{figure}
 
-This automation technology is used in different contexts where, a real-time and high performance platform to process data, is needed. One of this cases is the financial industry where, in order to take low risk and profitable actions, \ac{cep} is used to deduce real-time trading predictions.
+As stated before, smart buildings could also use CEP to greatly increase the quality of its automation. In particular, with a CEP engine, the events generated by the network of sensors can be analysed to derive actions that, with a classic automation system, would be impossible. As a simple example, in an empty room where the air conditioner is turned off, a sharp decrease of temperature over a small period of time could mean that a window was left open and thus, a message could be sent to the building manager alerting this situation. In this example, with the gathered data from different sensors, such as temperature and presence, over some time, the Complex Event Processing (CEP) engine was able to infer a conclusion. This type of conclusions are only achieved if the automation system takes into consideration multiple events across time instead of analyzing them separately.
 
 
-As stated before, smart buildings could also use the \ac{cep} technology to greatly increase the quality of its automation. For instance, with a \ac{cep} engine, the events generated by the network of sensors could be processed by this component to preform actions that, with a classic automation system, would be impossible. As a simple example, in an empty room where the air conditioner is turned off, a great decrease of temperature over a small period of time could mean that a window was left open and thus, a message could be sent to the building manager alerting this situation. In this example, with the gathered data from different sensors, such as temperature and presence, over some time, the \acf{cep} engine was able to infer a conclusion. This type of conclusions are only achieved if the automation system has in consideration multiple events across time and do not simply analyse them separately.
-
-A \ac{cep} engine implements a set of tools such as filtering, time windowing, aggregation or pattern detection of events, and make possible to design complex rules using this mechanisms. They can be implemented either by using a query-based model using a query language similar to SQL, or a rule-based model, where a rule is divided in three components: an event, the condition that is evaluated when the event arrives and the action that is taken when the condition is satisfied.
-
-
+A CEP engine implements a set of tools such as filtering, time windowing, aggregation or pattern detection of events, and makes possible to design complex rules using these mechanisms. They can be implemented either by using a query-based model using a query language similar to SQL, or a rule-based model, where a rule is divided in three components: an event, the condition that is evaluated when the event arrives and the action that is taken when the condition is satisfied.
 
