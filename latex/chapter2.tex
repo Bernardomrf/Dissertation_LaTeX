@@ -19,9 +19,9 @@ A Building Automation System consists in the automatic control and monitoring of
 	\label{fig:smart-building}
 \end{figure}
 
-The biggest problem in building automation is market segmentation, where manufacturers from different segments created, over the years, either proprietary solutions or application specific protocols and communication standards.  This lead to a scenario where integrating all building automation features into a single concentrated system is a quite  difficult and complex task. The most recurrent scenario includes several application specific automation systems which are monitored by a higher level Building Management System (BMS).
+The biggest problem in building automation is market segmentation, where manufacturers from different segments created, over the years, either proprietary solutions or application specific protocols and communication standards.  This lead to a scenario where integrating all building automation features into a single concentrated system is a quite  difficult and complex task. The most recurrent scenario includes several application specific automation systems which are monitored by a higher level \acf{bms}.
 
-In the past it was quite common for each vendor to have proprietary specifications. However, as BAS and BMS systems became widespread, market competition and request for interoperability lead manufacturers to disclosing their specifications in an attempt to secure a larger market share. This led to the rise of new standards, often as the result of a combination of several vendor proprietary specifications. Currently, the most common communication and management standard used in BMS is the \acf{bacnet} \cite{bacnet}, \acf{knx} \cite{knx}, \acf{lonworks} \cite{EchelonCorporation2009}, and \acf{dali} \cite{dali}. Each one of them as an important role at different levels of a building management and automation system. As shown in Figure \ref{fig:hierarchy}, those levels are Management System Level, Automation Level and Field Level \cite{Iwayemi2011}. The all set of devices, sensors or actuators, compose the field layer. The Automation level is responsible for all the logic and hardware needed to control those devices and the Management Level consists in the control and management of the system and the reactions to events present in the gathered data.
+In the past it was quite common for each vendor to have proprietary specifications. However, as BAS and \ac{bms} systems became widespread, market competition and request for interoperability lead manufacturers to disclosing their specifications in an attempt to secure a larger market share. This led to the rise of new standards, often as the result of a combination of several vendor proprietary specifications. Currently, the most common communication and management standard used in \ac{bms} is the \acf{bacnet} \cite{bacnet}, \acf{knx} \cite{knx}, \acf{lonworks} \cite{EchelonCorporation2009}, and \acf{dali} \cite{dali}. Each one of them as an important role at different levels of a building management and automation system. As shown in Figure \ref{fig:hierarchy}, those levels are Management System Level, Automation Level and Field Level \cite{Iwayemi2011}. The all set of devices, sensors or actuators, compose the field layer. The Automation level is responsible for all the logic and hardware needed to control those devices and the Management Level consists in the control and management of the system and the reactions to events present in the gathered data.
 
 \begin{figure}[H]
 	\centering
@@ -34,12 +34,12 @@ BACnet fits within the Managemet System level, allowing monitoring different aut
 
 \subsection{\ac{bas} Solutions}
 
-Over the years a large number of companies stepped forward to offer solutions for reducing energy consumption in buildings. Companies like Siemens, which provides three different BAS/BMS systems, Honeywell, and Johnson Controls, which claims to be market leader, offer services, using, most of the times, the formerly addressed open standard protocols.
+Over the years a large number of companies stepped forward to offer solutions for reducing energy consumption in buildings. Companies like Siemens, which provides three different \ac{bas}/\ac{bms} systems, Honeywell, and Johnson Controls, which claims to be market leader, offer services, using, most of the times, the formerly addressed open standard protocols.
 
 
 However, these products have some common drawbacks: most of them are highly costly, which ends up to be a problem for medium to small companies to afford, and also, are not open source and don't allow for building managers to install and integrate new devices and feature at will. 
 
-With the rising of IoT, there has been an increasingly amount of novelty solutions that use high scalable technologies, well known communication standards, such as IP, and use lightweight devices with low power consumption. This concepts can also be applied to BMS/BAS and will be addressed over the next section.
+With the rising of IoT, there has been an increasingly amount of novelty solutions that use high scalable technologies, well known communication standards, such as IP, and use lightweight devices with low power consumption. This concepts can also be applied to \ac{bas}/\ac{bms} and will be addressed over the next section.
 
 \section{\acf{iot}}
 
@@ -56,7 +56,7 @@ In the recent years, with the technological advances made in electronics, device
 	\label{fig:iot_pic}
 \end{figure}
 
-Nevertheless, the growth of \ac{iot} still faces some challenges. As the authors of \cite{Al-fuqaha2015} state, with the growing number of devices being connected to the Internet, IPv6 is going to be crucial to cope with billions of new devices that will require a unique IP address. Nevertheless, \ac{iot} remains with no agreements on what standards should be used, which is a problem since it hampers the communication between devices
+Nevertheless, the growth of \ac{iot} still faces some challenges. As the authors of \cite{Al-fuqaha2015} state, with the growing number of devices being connected to the Internet, \acf{ipv6} is going to be crucial to cope with billions of new devices that will require a unique IP address. Nevertheless, \ac{iot} remains with no agreements on what standards should be used, which is a problem since it hampers the communication between devices
 
 The \ac{iot} concept, according to \cite{Evans2011} will be a very important evolution to the Internet, giving the ability to create new applications to improve people's lives. The sharing of knowledge and wisdom has always been a key factor for human evolution, and now, with \ac{iot} and the help of smart devices that sense, collect and share information, we can create new ways to enhance people's comfort and well-being.
 
@@ -100,11 +100,11 @@ IEEE 802.15.4 is also the baseline for other \ac{iot} communication protocols su
 
 
 \subsubsection{6LoWPAN}
-\acf{6plowpan} is a standard presented by Internet Engineering Task Force (IETF), and its main objective was to implement IPv6 over low power networks, granting the possibility for IoT devices to be reached through the Internet using a unique address. Also this would allow the use of some IPv6 important features such as Quality of Service (QoS), mobility and multicasting.
+\acf{6plowpan} is a standard presented by Internet Engineering Task Force (IETF), and its main objective was to implement \ac{ipv6} over low power networks, granting the possibility for IoT devices to be reached through the Internet using a unique address. Also this would allow the use of some \ac{ipv6} important features such as Quality of Service (QoS), mobility and multicasting.
 
-\ac{6plowpan} uses the previously addressed standard, IEEE 802.15.4, for the two lowest layers of the OSI model, shown in Figure \ref{fig:osi}. Since the network layer protocol was needed to comply with those two lower layers, and the requirements for an IPv6 based protocol didn't match the constrained IEEE 802.15.4 standard, 6LoWPAN implemented mechanisms to efficiently transport IPv6 packets within small link layer frames \cite{chalappuram2016}. 
+\ac{6plowpan} uses the previously addressed standard, IEEE 802.15.4, for the two lowest layers of the OSI model, shown in Figure \ref{fig:osi}. Since the network layer protocol was needed to comply with those two lower layers, and the requirements for an \ac{ipv6} based protocol didn't match the constrained IEEE 802.15.4 standard, 6LoWPAN implemented mechanisms to efficiently transport \ac{ipv6} packets within small link layer frames \cite{chalappuram2016}. 
 
-In order to use \ac{6plowpan} in a IPv6 network, it is only needed a low complexity edge router to route the traffic from IPv6 to \ac{6plowpan}, as shown in Figure \ref{fig:6low}. 
+In order to use \ac{6plowpan} in a \ac{ipv6} network, it is only needed a low complexity edge router to route the traffic from \ac{ipv6} to \ac{6plowpan}, as shown in Figure \ref{fig:6low}. 
 
 \begin{figure}[H]
 	\centering
@@ -114,7 +114,7 @@ In order to use \ac{6plowpan} in a IPv6 network, it is only needed a low complex
 \end{figure}
 
 
-To sum up, with the proliferating market of \ac{iot} devices, the use of IPv6 is unavoidable, and the fact that 6LoWPAN offers a low power and low complexity way of addressing this problem, makes this protocol a viable solution for its use in \ac{iot} environments \cite{Mehboob2016}.  
+To sum up, with the proliferating market of \ac{iot} devices, the use of \ac{ipv6} is unavoidable, and the fact that 6LoWPAN offers a low power and low complexity way of addressing this problem, makes this protocol a viable solution for its use in \ac{iot} environments \cite{Mehboob2016}.  
 
 
 \subsubsection{ZigBee}
@@ -132,7 +132,7 @@ ZigBee is a standard introduced by ZigBee Alliance, released to the public in Ju
 Although other standards have been emerging on the IoT constrained devices market, ZigBee widely dominates this market as it has been targeting it since the beginning, as a very low power and low latency standard.
 Although ZigBee is not suitable for long ranges and has low data transfer speeds, a single master node is able to control 254 devices such as light bulbs and light switches \cite{Mehboob2016}. 
 
-Early this year, ZigBee Alliance unveiled dotdot\footnote{https://speakdotdot.com/}, an application layer protocol that aims to reduce the fragmentation in IoT by offering a common language between all IoT devices on any network. Due to a cooperation between ZigBee Allience and Thread Group, a company that created Thread\footnote{https://threadgroup.org/}, which is an IPv6 based protocol, that like ZigBee is based on IEEE 802.15.4, dotdot is set to launch its first certified products later this year.
+Early this year, ZigBee Alliance unveiled dotdot\footnote{https://speakdotdot.com/}, an application layer protocol that aims to reduce the fragmentation in IoT by offering a common language between all IoT devices on any network. Due to a cooperation between ZigBee Allience and Thread Group, a company that created Thread\footnote{https://threadgroup.org/}, which is an \ac{ipv6} based protocol, that like ZigBee is based on IEEE 802.15.4, dotdot is set to launch its first certified products later this year.
 
 
 \subsubsection{Bluetooth Low Energy}
@@ -157,7 +157,7 @@ BLE is suitable to low-energy devices because it adopts a client/server model wh
 	\label{fig:ble2}
 \end{figure}
 
-More recently, Bluetooth SIG introduced support for IPv6 networking in Bluetooth 4.2 and Bluetooth 5.0 taking advantage of the 6LoWPAN standard.
+More recently, Bluetooth SIG introduced support for \ac{ipv6} networking in Bluetooth 4.2 and Bluetooth 5.0 taking advantage of the 6LoWPAN standard.
 
 To sum up, BLE is one of the best solutions for communications between IoT devices due to its low energy consumption and acceptable data transfer rates.
 
@@ -168,7 +168,7 @@ In this section is presented a comparison between the addressed wireless communi
 
 Briefly, IEEE 802.11ah, also known as Wi-Fi HaLow, is a recently published standard that aims to bring Wi-Fi closer to IoT solutions. This is a strong possibility since Wi-Fi HaLow uses a lower band than the classic Wi-Fi, which confer to it nearly twice the range while also granting a more robust connection in any kind of environments \cite{Wi-FiAlliance2017}. Wi-Fi HaLow is also an energy-efficient protocol that, allied to the benefits of Wi-Fi, such as government-grade security and easy setup, can become an important player in the wireless communication protocols for IoT.
 
-Regarding to Thread standard, as addressed before, is an IPv6 based protocol, that like ZigBee is based on IEEE 802.15.4. Although this protocol was created for smart houses, Thread Group is expanding its connectivity to the buildings sector. 
+Regarding to Thread standard, as addressed before, is an \ac{ipv6} based protocol, that like ZigBee is based on IEEE 802.15.4. Although this protocol was created for smart houses, Thread Group is expanding its connectivity to the buildings sector. 
 
 These standards, although not fully or already available, have great potential for future adoption and therefore will also be considered.
 
@@ -219,7 +219,7 @@ To sum, MQTT is an important Application layer protocol and very suitable to be 
 
 \acf{coap} is an application protocol created by IETF with the objective of providing \acf{rest} functionalities to constrained devices and networks. REST is a standard used in communications between computer systems on the Internet. Although this principle is a well-known and adopted standard for HTTP, when talking about IoT, whose devices are energy-wise constrained, this standard presents a high overhead \cite{Salman2013}. \ac{coap} comes to resolve this drawback by presenting a lightweight RESTful solution, following a request/response pattern, with the constrained devices market in mind.
 
-As shown in Figure \ref{fig:coap}, \ac{coap}, unlike HTTP, uses \ac{udp} in the underlying layer of its architecture. This fact makes \ac{coap} communication more efficient as packets are sent without handshaking, or congestion control mechanisms that would introduce more overhead, as used by TCP. The communication reliability is implemented by \ac{coap} lightweight internal mechanisms \cite{Salman2013}.
+As shown in Figure \ref{fig:coap}, \ac{coap}, unlike HTTP, uses \ac{udp} in the underlying layer of its architecture. This fact makes \ac{coap} communication more efficient as packets are sent without handshaking, or congestion control mechanisms that would introduce more overhead, as used by \acf{tcp}. The communication reliability is implemented by \ac{coap} lightweight internal mechanisms \cite{Salman2013}.
 
 \begin{figure}[H]
 	\centering
@@ -261,7 +261,7 @@ Although for majority of \ac{iot} environments reliability is not a deciding fea
 	\label{fig:xmpp}
 \end{figure}
 
-Unlike the protocols addressed previously, \ac{xmpp} supports not only a publish/subscribe architecture, but also a request/response one. XMPP uses an XML-based approach to messaging, which allows multiple extensions of the protocol to be created, making it a highly extensible protocol. However, being that XML-based messages are text based, the communication overhead is higher \cite{Salman2013}. 
+Unlike the protocols addressed previously, \ac{xmpp} supports not only a publish/subscribe architecture, but also a request/response one. XMPP uses an \acf{xml}-based approach to messaging, which allows multiple extensions of the protocol to be created, making it a highly extensible protocol. However, being that XML-based messages are text based, the communication overhead is higher \cite{Salman2013}. 
 
 Although \ac{xmpp} was not designed for IoT environments, it still has capacity to be an important protocol in some specific \ac{iot} use cases, due to the near real time message exchanging and the high extensibility offered.
 
@@ -295,7 +295,7 @@ Finally, the \ac{xmpp} although being a near real time communication protocol wi
 
 According to the author of \cite{TransformativeWave}, the old industry of BASs systems is being disrupted by the Internet of Things. Only some of the most known BAS companies are trying to integrate IoT principles and open protocols in their solutions in order to keep themselves in a leading market position. The emerge of cheap and small devices with wireless connectivity using open standards and the possibility of creating affordable automation environments, using open-source software, are now in reach, providing a wider variety of solutions to empower buildings with automation capabilities and thus, reduce the energy consumption while increasing the comfort in buildings.
 
-A practical example of a building automation system, using \ac{iot} principles and standards, is HCL Technologies \ac{bas}. HCL Technologies is a member of the Intel Internet of Things Solutions Alliance \cite{intel} and uses an Intel-based gateway to deliver a powerful, yet cost-effective building management solution \cite{hcl}. In this system, as shown in Figure \ref{fig:intel}, is used an Intel's \ac{iot} gateway empowered with HCL \ac{bas} software is used, which is responsible for providing a web interface and means for simple automation mechanisms, e.g. turning the HVAC system on when a temperature threshold is reached. The HCL BAS software and gateway supports protocols like ZigBee and Wi-Fi, and the translation between them is made without need of configuration by the building manager.
+A practical example of a building automation system, using \ac{iot} principles and standards, is HCL Technologies \ac{bas}. HCL Technologies is a member of the Intel Internet of Things Solutions Alliance \cite{intel} and uses an Intel-based gateway to deliver a powerful, yet cost-effective building management solution \cite{hcl}. In this system, as shown in Figure \ref{fig:intel}, is used an Intel's \ac{iot} gateway empowered with HCL \ac{bas} software is used, which is responsible for providing a web interface and means for simple automation mechanisms, e.g. turning the \acf{hvac} system on when a temperature threshold is reached. The HCL BAS software and gateway supports protocols like ZigBee and Wi-Fi, and the translation between them is made without need of configuration by the building manager.
 
 
 
@@ -392,6 +392,4 @@ As stated before, smart buildings could also use CEP to greatly increase the qua
 
 
 A CEP engine implements a set of tools such as filtering, time windowing, aggregation or pattern detection of events, and makes possible to design complex rules using these mechanisms. They can be implemented either by using a query-based model using a query language similar to SQL, or a rule-based model, where a rule is divided in three components: an event, the condition that is evaluated when the event arrives and the action that is taken when the condition is satisfied.
-
-Regarding the 
 

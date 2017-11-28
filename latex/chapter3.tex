@@ -1,14 +1,14 @@
 \chapter{Smart Building Solution}
 \label{chapter:architecture}
 
-In this chapter there will be provided a solution to improve the efficiency and usability of a building by using automation mechanisms, enhancing the intelligence of the building. Taking in account the \ac{iot} principles, this system should be capable of real-time processing of large data streams, analyse and correlate events, and being able to react and adapt to emergency states and guarantee the minimum functionality, always. This solution is intended to integrate the SmartLightinhg project and will be addressed in this chapter.
+In this chapter it is provided a solution to improve efficiency and usability of a building by adopting automation mechanisms which enhance the intelligence of the building. Considering IoT principles, this system should be capable of processing large data streams in real time, analyzing and correlating events, and react and adapt to emergency states and always guarantee a minimum functionality. This solution is intended to integrate the SmartLightinhg project which is addressed in this chapter.
 
-This chapter will begin with a brief description, in section \ref{Architecture:slproject}, of SmartLighting project and its intentions of developing a smart environment of automation and control in IT2 building. Later, in order to ensure that all system necessities are addressed and taken into account, in section \ref{Architecture:Requirements} will be done a survey of necessary capabilities and  requirements to satisfy its stakeholders.
 
-Since the main aim of this dissertation is the failure handling and adaptation of the gateways to emergency states, in section \ref{Architecture:usecases}, will be addressed three scenarios of operation needed to be taken into account.
+This chapter begins with a brief description, in section \ref{Architecture:slproject}, of SmartLighting project and its intentions of developing a smart environment of automation and control in IT2 building. Later, to ensure that all system needs are addressed and taken into account, in section \ref{Architecture:Requirements} a survey of necessary capabilities and requirements to satisfy stakeholders is done.
 
-Finally, in section \ref{Architecture:Architecture}, a presentation and evaluation of the system architecture, and its components interactions. 
+Since the main aim of this dissertation is the failure handling and adaptation of the gateways to emergency states, in section \ref{Architecture:usecases}, five critical scenarios of operation are addressed.
 
+Finally, in section \ref{Architecture:Architecture}, a presentation and evaluation of the system architecture, and its components’ interactions are discussed.
 
 \newpage
 
@@ -19,24 +19,26 @@ Finally, in section \ref{Architecture:Architecture}, a presentation and evaluati
 \subsection{Project Overview and Objectives}
 \label{Architecture:Overview}
 
-The SmartLighting project\cite{Moreira} aims to create a smart environment in IT2 building in order to automate the lighting and HVAC infrastructure. IT2 building have been running with CFL luminaries, which, are often not only, inefficient and hazardous for the environment, but also, in most cases, unable to be dimmed. 
+The SmartLighting project\cite{Moreira} aims to create a smart environment in IT2 building in order to automate lighting and HVAC infrastructures. IT2 building has been running with \acf{cfl} luminaries, which, are often not only, inefficient and hazardous for the environment, but also, in most cases, unable to support variation of the luminous output, i.e. to be dimmed.
 
-This project intend to remove all this CFL luminaries by LED luminaries, that can resolve all the issues stated before and also are able, combining with sensors, to collect data from the environment such as luminance, temperature, humidity, motion and others. All of the collected data will be used to act in real-time to the changes in sensors readings. 
+This project intends to remove all these \ac{cfl} luminaries by \acf{led} luminaries, that can resolve all previously stated issues and also be combined with sensors. These can used to collect data from the environment such as luminance, temperature, humidity, motion and others. The collected data is then used to act in real-time to the changes in sensor values.
 
-Such system needs to be backed up by an intelligent management platform in order to act based on a set of rules and input streams of sensors values. Moreover, there will be mechanisms to correlate events and determine patterns that will enable a more immediate reaction. As an example, if a user has the habit of turn on the AC everyday in the morning, the system will be able to learn and automatically do that action soon as the user arrives in the building. 
+Such system needs to be backed up by an intelligent management platform in order to react based on a set of rules and input streams of sensor values. Moreover, there will be mechanisms to correlate events and determine patterns that enable a more immediate reaction. As an example, if a user has the habit to turn on the AC every day in the morning, the system will be able to learn and automatically replicate that action as soon as the user arrives in the building.
 
-Also, the system can use external sources such as meteorological forecast to take preventively actions, such as increase the dimming levels of luminaries and the building temperature in cold rainy days.
+Also, the system can use external sources like meteorological forecasts to take preventive actions, such as increasing the dimming levels of luminaries and the building temperature in cold rainy days.
 
-Additionally, the users will be able to set their own rules to enhance the comfort in its office. This can be done either by using a mobile application or a web interface. Also, this user platforms can enable the use of notifications providing ways to alert the building occupants of important events. For instance, users can be informed about future meetings, the presence of another occupant in the building, and more.
 
-Finally, an important feature for this project is the fail safe mechanisms to ensure that all the basic automation needed for the building well functioning, such as the trigger of a motion sensor lighting up the corresponding luminaries, work even if in situations of failure in core elements of the architecture or network communication problems. This can be achieved by giving gateways, the component that communicate directly with the sensors and actuators, lightweight processing mechanisms to ensure the basic functionalities described before. This will be the main focus of the presented dissertation.
+Additionally, users should be able to set their own rules to enhance the comfort in their offices. This could be done either by using a mobile application or a web interface. Also, these user platforms can enable use of notifications, providing ways to alert the building occupants of important events. For instance, users can be informed about future meetings, the presence of another occupant in the building, and more.
+
+
+Finally, an important feature for this project is the failsafe mechanisms to ensure that all basic automation needed for the building’s proper operation. This includes such things as the trigger of a motion sensor to light up corresponding luminaries, which should work even in situations of failure in core elements of the architecture or network communications. This can be achieved by giving gateways, the component that communicates directly with the sensors and actuators, lightweight processing mechanisms to ensure the basic functionalities described before. This will be the main focus of the presented dissertation.
 
 
 
 \subsection{Stakeholders}
 \label{Architecture:Stakeholders}
 
-The success of a project depends directly in the people involved, either by developing its features or simply by consuming them in its final form. A correct identification of the stakeholders, their motivations and expectations, pay a important role in the success of any project. 
+The success of a project depends directly in the people involved, either by developing its features or simply by consuming them in its final form. A correct identification of the stakeholders, their motivations and expectations, plays an important role in the success of any project. In SmartLighting project, 4 stakeholders were identified, namely:
 
 In SmartLighting project, 4 stakeholders were identified, namely:
 
@@ -48,9 +50,9 @@ In SmartLighting project, 4 stakeholders were identified, namely:
 \end{itemize}
 
 
-The primary stakeholders in this project, are the IT2 building occupants and owners. While occupants will take direct advantage from the implemented features due to the enhance in comfort and usability of the building, owners gains will be economic as far as the building energy consumption and maintenance costs will be reduced.
+The primary stakeholders in this project, are the IT2 building occupants and owners. While occupants will take direct advantage from the implemented features due to the enhanced comfort and usability of the building, owners gains will be economic as far as the building energy consumption and maintenance costs will be reduced.
 
-As for building managers, the benefits are from easier interaction and configuration of the whole system, that allow a more precise aware of every node status, to a notification system for quicker reaction to system failures, or even to prevent such ones, and act before they happen.
+As for building managers, the benefits come from an easier interaction and configuration of the whole system. A more precise aware of system's components status and a notification system, can help prevent or quickly react to systems failures.
 
 Lastly, the developers team take a huge benefit in the success of the project since they are interested and devoted to create the best product possible that fulfils all the other stakeholders expectations.
 
@@ -58,13 +60,13 @@ Lastly, the developers team take a huge benefit in the success of the project si
 \subsection{Use Cases}
 \label{Architecture:SLusecases}
 
-Based on the stakeholders survey done previously, the two main actors for this \ac{bas} solution are the building's manager and the occupants. Those actors directly use the platforms and resources provided, to enhance the comfort of the environment around them as they please, so the main focus for user driven cases will be in those two. 
+Based on the stakeholders' survey done in the previous section, the two main actors for this \ac{bas} solution are the building's manager and the occupants. Those actors directly use the platforms and resources provided, to enhance the comfort of the environment around them as they please, so the main focus for user driven cases will be in those two. 
 
-Although there are many use cases for both the building's manager and the occupants, in this section will be only addressed those that were already implemented in this project, giving a greater understanding of the overall project's functionalities. Later in section \ref{Architecture:usecases}, there will be presented the use cases and scenarios introduced by this dissertation work.
+Although there are many use cases for both the building’s manager and the occupants, in this section will only be addressed those that were already implemented in this project, giving a greater understanding of the overall project’s functionalities. Later, in section \ref{Architecture:usecases}, the use cases and scenarios introduced by this dissertation work are presented.
 
 \begin{Paragraph}{Building occupant}
 	
-The building occupants will be the principal users that will interact with the system. This interaction can be achieved by using either a mobile application or a web interface. The use cases addressed bellow combine the most common and frequent operations:
+The building occupants will be the principal users to interact with the system. This interaction can be achieved by using either a mobile application or a web interface. The use cases addressed bellow combine the most common and frequent operations:
 
 
 \begin{figure}[H]
@@ -76,11 +78,11 @@ The building occupants will be the principal users that will interact with the s
 
 \begin{itemize}
 
-	\item{\textbf{Login/Logout:}	This use cases are intended to enable the access to user oriented features. The building occupants can login in the platform, either using the mobile application or the web interface, to access his preferences and personal environment control features.}
-	\item{\textbf{Request changes in devices state:}	The building occupant can request a change in the state of a device, that can be accepted or denied by the system depending on the access rights of the user. For instance, an occupant can request a change in near by devices like  air conditioners, lights, and others.}
+	\item{\textbf{Login/Logout:}	This use case is intended to enable the access to user oriented features. The building occupants can login to the platform, either using the mobile application or the web interface, to access preferences and personal environment control features.}
+	\item{\textbf{Request changes in devices state:}	The building occupant can request a change in the state of a device, that can be accepted or denied by the system depending on the access rights of the user. For instance, an occupant can request a change in nearby devices like air conditioners, lights, and others.}
 	\item{\textbf{List nearby devices:}	This use case allows users to request the list of nearby devices, based on its location, allowing to access or request changes to devices in the same room as the occupant, giving that these are the most likely to be needed access.}
-	\item{\textbf{Configure device preferences:}	The user can create or edit device pre-sets, allowing that the selected values are applied automatically to the device in future uses. For instance, the air conditioner in a user office can be pre-set to 21ºC so that when this device is turned on, that value is automatically set. This changes would also depend with the user access rights.}
-	\item{\textbf{Configure user rules:}	This use case allow the building occupants to create rules that preform a set of actions automatically, giving the right conditions. For instance the user could create a rule to automatically turn the air conditioner on if the temperature in his office exceed a giving value.} 
+	\item{\textbf{Configure device preferences:}	The user can create or edit device pre-sets, allowing the selected values to be applied automatically to the device in future uses. For instance, the air conditioner in a user office can be pre-set to 21ºC so that when this device is turned on, that value is automatically set. These changes would also be checked against the user access rights.}
+	\item{\textbf{Configure user rules:}	This use case allows building occupants to create rules that perform a set of actions automatically, giving the right conditions. For instance, the user could create a rule to automatically turn the air conditioner on if the temperature in his office exceed a giving value.} 
 
 \end{itemize}
 \end{Paragraph}
@@ -96,9 +98,9 @@ The building occupants will be the principal users that will interact with the s
 		\label{fig:manager}
 	\end{figure}
 \begin{itemize}
-	\item{\textbf{Manage building structure:}	The manager can create the representation of the building in the structure management platform. This allow the creation of a virtual portrayal of the floors, rooms and areas of the building.}
-	\item{\textbf{Distribute devices:}	This use case permit that connected devices can be distributed through the areas and rooms of the building virtual representation.}
-	\item{\textbf{Configure global rules:}	The building manager has the ability to add, delete, enable or disable rules for the whole building. These core rules' main purpose are the building's efficiency increase, for instance instead of leaving the corridors lights always on, a rule can be created to turn them off when there's no one walking by. There is also a mechanism to test the rule before the deployment.}
+	\item{\textbf{Manage building structure:}	The manager can create the representation of the building in the structure management platform. This allows the creation of a virtual portrait of the floors, rooms and areas of the building.}
+	\item{\textbf{Distribute devices:}	This use case permits connected devices to be distributed through the areas and rooms of the building’s virtual representation.}
+	\item{\textbf{Configure global rules:}	The building manager has the ability to add, delete, enable or disable rules for the whole building. These core rules’ main purpose are the increase in building´s efficiency. For instance, instead of leaving the corridors lights always on, a rule can be created to turn them off when there’s no one walking by. There is also a mechanism to test the rule before the deployment.}
 \end{itemize}
 \end{Paragraph}
 
@@ -109,9 +111,9 @@ The building occupants will be the principal users that will interact with the s
 
 Taking into account the objectives for this dissertation, and the existing architecture for the SmartLighting project, the proposed architecture has in mind, not only \ac{iot} and complex event processing principles, but also the referred features for this dissertation such as failure handling and rules distribution through gateways.
 
-In this section will be presented the global system architecture for this project, represented in Figure \ref{fig:arch} as well as a description of all the components that compose the solution.
+In this section, the global system architecture for this project, represented in Figure \ref{fig:arch}, is presented alongside with a description of all the components that compose the solution.
 
-Note that components like the \ac{cep} engine, and the \ac{bm} are already implemented due to a past dissertation for the SmartLighting project \cite{helder}.
+Note that components like the \ac{cep} engine, and the \ac{bm} are already implemented in a past dissertation of the SmartLighting project \cite{helder}.
 
 \begin{figure}[H]
 	\centering
@@ -126,55 +128,58 @@ Note that components like the \ac{cep} engine, and the \ac{bm} are already imple
 
 \begin{Paragraph}{User Management}
 	
-	The user management platform is responsible for giving to common users of the building, the ability to interact with the platform through a web page. Users can manage their own building rules and control field devices directly. This can be done by publishing on the broker the wanted changes or by communication directly with the CEP Engine or the building management platform.
+	The user management platform is responsible for giving to common users of the building, the ability to interact with the platform through a web page. Users can manage their own building rules and control field devices directly. This can be done by publishing on the broker the desired changes, or by communication directly with the CEP Engine or the building management platform.
 	
 \end{Paragraph}
 
 \begin{Paragraph}{Building Management}
 	
-	The building manager component is a user friendly platform that aims to facilitate the rule management and the configuration of the building's schema. The building manager can create, edit  or delete rules in a simple intuitive way and this component later translates them in a complex language that the CEP Engine can understand. Also, through a virtual representation of the building, the \ac{bm} can distribute devices across all its areas. After the correct configuration of the desired devices, this component is responsible for providing the information about each device and how should the CEP engine, and the other blocks of the architecture, address to this device in order to, for instance, send an order to change state or report new sensor data to the CEP Engine.
+	The building management component is a user friendly platform that aims to facilitate the rule management and the configuration of the building's schema. The building manager can create, edit  or delete rules in a simple intuitive way and this component later translates them in a complex language that the CEP Engine can understand. Also, through a virtual representation of the building, the \ac{bm} can distribute devices across all its areas. After the correct configuration of the desired devices, this component is responsible for providing the information of how should the CEP engine, and the other blocks of the architecture, address to this device in order to send an order to change state or report new sensor data to the CEP Engine.
 	
 \end{Paragraph}
 
 \begin{Paragraph}{CEP Engine}
 	
-	The CEP Engine is one of the most important components for a successful building automation solution. This engine must be a real-time and high performance component, that should be able to process hundreds of sensor triggered events per second based on complex rules created by the users. The actions preformed by this engine can be either directly to an actuator or to a component in the platform. For instance, sending an alert to the building manager when there are irregular sensor readings.
+The CEP Engine is a crucial component in the proposed building automation solution. This engine must be a real-time and high-performance component, able to process hundreds of sensor triggered events, per second, based on complex rules created by users. The actions performed by this engine can either be directed to an actuator or to a component in the platform. For instance, sending a notification to the building manager when there are irregular sensor readings.
+
 	
 	
 \end{Paragraph}
 
 \begin{Paragraph}{Broker}
 	
-	The broker component, which refers to a message broker, it is responsible for receive and route information across the connected components. Every component connects to receive and send information, to and from other components.
+	The broker component, which refers to a message broker, is responsible for receiving and routing information across the connected components. Every component connects to receive and send information, to and from other components.
+
 	
 \end{Paragraph}
 
 \begin{Paragraph}{Gateway Manager}
 	
-	The gateway manager is the component responsible for rules distribution to gateways and fail handling. The first one, since gateways will be equipped with the ability to process events, based on simple rules in the case of CEP failure, there is the need for a regulator to distribute and be always aware where this rules are being deployed, and, in case of a gateway failure, distribute the devices and rules from that gateway, to other ones capable of supporting them. Also, the gateway manager should guarantee a balanced number of rules and devices across all gateways. For instance, if two gateways are in the reach of the same device, the gateways manager should allocate that device to the gateway with fewer devices.
+	The gateway manager is the component responsible for rules distribution to gateways and fail handling. The first one, since gateways will be equipped with the ability to process events, in the case of a failure in the CEP Engine, there is the need for a regulator to distribute and be always aware where the gateways' rules are being deployed. In case of a gateway failure, it is also responsible for distributing the devices and rules from that gateway, to other ones capable of supporting them. Also, the gateway manager should guarantee a balanced number of rules and devices across all gateways. For instance, if two gateways are in the reach of the same device, the gateway manager should allocate that device to the one with fewer devices.
 	
 	
 \end{Paragraph}
 
 \begin{Paragraph}{Gateways}
 	
-	Gateways are responsible for discovering devices and communicate to them. This nodes have to convert sensor's events into understandable messages to the automation engine, and vice versa. Also, gateways should be equipped with a lightweight automation engine so that, in case of a failure in the CEP Engine or in the broker, the gateways can continue to process events, and thus, a minimum downtime in the system's functioning.
+	Gateways are responsible for discovering devices and communicating with them. These nodes have to convert sensor events into understandable messages to the automation engine, and vice versa. Also, gateways should be equipped with a lightweight automation engine so that, in case of a failure in the CEP engine, or in the broker, the gateways can continue to process events, and thus, a minimum downtime in the system’s operation.
+
 	
 \end{Paragraph}
 
 \begin{Paragraph}{Sensors and actuators}
 	
-	The field layer represents the set of devices, both sensors and actuators, used to gather information and interact with the environment. The information gathering and detection of changes is done by sensors, that send this information to the respective gateways in the Network layer. After the processing of this data, either in the Aggregation and Automation layer or even by the gateways in the Network layer, the orders for changes are sent to the actuators.
+The field layer represents the set of devices, both sensors and actuators, used to gather information and interact with the environment. The information gathering and detection of changes is done by sensors, that send this information to the respective gateways in the network layer. After processing of this data, either in the aggregation and automation layer, or even by gateways in the network layer, the orders for changes are sent to the actuators.
 	
 \end{Paragraph}
 
 \section{Requirements}
 \label{Architecture:Requirements}
-As stated before, the proposed solution for this dissertation is part of the SmartLighting project, thus, designed to be integrated in a real-world scenario. Accordingly, the requirements, in this section, must converge and be in conformity with the project's objectives stated in section \ref{Architecture:slproject}. 
+The proposed solution must be designed to be integrated in a real-world scenario. Accordingly, the requirements, in this section, must converge and be in conformity with the project's objectives stated in section \ref{Architecture:slproject}. 
 
 \begin{Paragraph}{Fast Responsiveness}
 
-The system's performance and fast responsiveness are huge requirements for a successful \ac{bas} solution. The system must react to events with such responsiveness that the occupants experience and comfort is not affected. For instance, when a user enters a room, it is expects that the lights turn on in a question of milliseconds causing an instantaneousness feeling to the user. In other cases, a slower responsiveness is not critical for the occupant. As an example, in the heating system, when the temperature goes bellow a certain threshold, if the air conditioners take a few seconds to turn on, it won't be noticeable for the users.
+The system’s performance and fast responsiveness are huge requirements for a successful BAS solution. The system must react to events with such responsiveness that the occupants experience and comfort is not affected. For instance, when a user enters a room, it is expected that the lights turn on in a question of milliseconds providing an instantaneous feeling to the user. In other cases, a slower responsiveness is not critical for the occupant. As an example, in the heating system, when the temperature goes below a certain threshold, if the air conditioners take a few seconds to turn on, it won’t be noticeable for the users.
 
 In addiction, the system's management platform responsiveness is another performance requirement as it shouldn't feel slow to the user.
 
@@ -191,28 +196,31 @@ Finally, the system should facilitate the integration of different type of senso
 
 \begin{Paragraph}{Scalability}
 
-The system should assure that with the addition of devices, the overall performance does not decline. Also, it should facilitate the horizontal scalability of system nodes, making it transparent and easy to integrate new servers to maintain or improve the system's performance.
+The system should assure that with the addition of devices, the overall performance does not decline. Also, it should facilitate the horizontal scalability of system nodes, making it transparent and easy to integrate new servers to maintain or improve system performance.
+
 
 \end{Paragraph}
 
 \begin{Paragraph}{Failure Handling and Basic Functionalities}
 	
-Failure handling and the assurance of basic functionalities were the main goals for this dissertation, making very important, the requirements regarding this topic.
+Failure handling and the assurance of basic functionalities were the main goals for this dissertation, making this requirements of the utmost importance.
+
 
 The whole system is designed to fulfil a set of expectations and to work perfectly at any given time, however, there could be some cases where due to a critical system failure, either a downtime in the CEP engine, communication errors or a congested network, the whole system could start malfunctioning. In more severe cases this could mean, for instance, an entire blackout in a building, or a fire sensor not triggering the alarm leading to serious injuries to the occupants.
 
-With all this facts in consideration, a significant requirement for a \ac{bas} solution is the ability to be always aware of the entire system state and to react immediately to abnormal system occurrences. This means, for instance, that in case of communication failure between the sensors and the \ac{cep} engine, the basic functionalities like lights turning on or off, alarms, doors and other key functionalities still work autonomously.
+With all this facts in consideration, a significant requirement for a \ac{bas} solution is the ability to always be aware of the entire system state and to react immediately to abnormal system occurrences. This means, for instance, that in case of communication failure between the sensors and the \ac{cep} engine, the basic functionalities like lights turning on or off, alarms, doors and other key functionalities still work autonomously.
 \end{Paragraph}
 
 \begin{Paragraph}{Data Correlation}
 
-In order to a more accurate and elaborate reaction to sensing events, the event processing unit should be able to correlate events and infer decisions based on previous learning. For instance, if a user always turn on the air conditioner, when the temperature is bellow a certain threshold, the system should be able to learn from this behaviour and promptly react without human intervention.
+In order to do a more accurate and elaborate reaction to sensing events, the event processing unit should be able to correlate events and infer decisions based on previous learning. For instance, if a user always turn on the air conditioner, when the temperature is bellow a certain threshold, the system should be able to learn from this behaviour and promptly react without human intervention.
 
 \end{Paragraph}
 
 \begin{Paragraph}{User Control and User-friendly Interfaces}
 	
-The system should allow users, based on their roles and permissions, to manually alter the state of a device. This means that interfaces, web or mobile, should be available to the users to control the surroundings. This interfaces should be done, taking in account that not all users have the expertise to interact with verbose configuration parameters, thus, the interfaces should be as intuitive and perceptible as possible.
+The system should allow users, based on their roles and permissions, to manually alter the state of a device. This means that interfaces, web or mobile, should be available to the users to control the surroundings. These interfaces should be implemented, taking in account that not all users have the expertise to interact with verbose configuration parameters, thus, the interfaces should be as intuitive and perceptible as possible.
+
 	
 \end{Paragraph}
 
@@ -262,8 +270,7 @@ In order to achieve an environment where the minimum functionality of the system
 		\label{fig:sc3}
 	\end{figure}
 	
-	Scenario 3 represents a failure in the Gateway Manager while all the other components are working correctly. Again, this failure can be due to a program error, a downtime in the server where the program is running, or because of a failure in the connection between this component and the message broker. When one of this situations happens, the system should continue to work correctly, however, since this component is responsible for distribute rules and devices through the accessible gateways, this features will not be available and thus, the automation of some building areas might stop working.
-	
+	Scenario 3 represents a failure in the Gateway Manager while all the other components are working correctly. Again, this failure can be due to a program error, a downtime in the server where the program is running, or because of a failure in the connection between this component and the message broker. When one of these situations happens, the system should continue to work correctly, however, since this component is responsible for distributing rules and devices through the accessible gateways, this features will not be available and thus, the automation of some building areas might stop working.
 	
 \end{Paragraph}
 
@@ -276,7 +283,7 @@ In order to achieve an environment where the minimum functionality of the system
 		\label{fig:sc4}
 	\end{figure}
 	
-	This scenario corresponds to both the Gateway Manager and the \ac{cep} Engine being unavailable. This scenario is a combination of the failures shown in scenario 2 and 3, as both the CEP Engine and the Gateway Manager are no longer disposable. Again, this can happen if the two components fail internally at the same time, or the communication between them and the message broker is down. Based on what each component is responsible for, this scenario would made unavailable the processing of events in the CEP Engine and the rules and devices distribution to gateways performed by the Gateway Manager. In this scenario the system should continue the processing of events in the gateways, and make use, if necessary from the message broker.
+	This scenario corresponds to both the Gateway Manager and the \ac{cep} Engine being unavailable. This scenario is a combination of the failures shown in scenario 2 and 3, as both the CEP Engine and the Gateway Manager are no longer available. Again, this can happen if the two components fail internally at the same time, or the communication between them and the message broker is down. Based on what each component is responsible for, this scenario would made unavailable the processing of events in the CEP Engine and the rules and devices distribution to gateways performed by the Gateway Manager. In this scenario the system should continue the processing of events in the gateways, and make use, if necessary from the message broker.
 	
 \end{Paragraph}
 
@@ -290,7 +297,8 @@ In order to achieve an environment where the minimum functionality of the system
 		\label{fig:sc5}
 	\end{figure}
 	
-	The third scenario, shown in Figure \ref{fig:sc5}, when the message broker is down, the communication between gateways and the CEP Engine is cut off, so even if the CEP Engine and the Gateway Manager were still running, they would not be able to communicate with the gateways. This scenario can happen due to a network failure in the building. In this case, since every component, excepting the devices and gateways, are running in building servers, if the internal network was down, the gateways would be isolated and the devices would only be able to rely on the respective gateways, since the connection between the two would not be affected. This would be the most severe scenario, and the system should be able to grant the  minimum functionality by, for instance, process the device's events on the gateways, as said before.
+	The third scenario, shown in Figure \ref{fig:sc5}, when the message broker is down, the communication between gateways and the CEP Engine is cut off. Even if the CEP Engine and the Gateway Manager were still running, they would not be able to communicate with the gateways. This scenario can happen due to a network failure in the building. In this case, since every component, except the devices and gateways, are running in building servers, if the internal network was down, the gateways would be isolated and the devices would only be able to rely on the respective gateways, since the connection between the two would not be affected. This would be the most severe scenario, and the system should be able to grant the minimum functionality by, for instance, process the device’s events on the gateways, as said before.
+
 	
 \end{Paragraph}
 
