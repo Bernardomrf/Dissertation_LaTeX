@@ -1,7 +1,7 @@
 \chapter{Implementation}
 \label{chapter:implementation}
 
-The objective for this chapter is to describe the steps and decisions taken, and the reasoning behind the implemented features. It starts in section \ref{implementation:objectives}, by presenting the objectives for the implementation, following by the used technologies on the several components in section \ref{implementation:technologies}. After that, in sections \ref{implementation:devices} and \ref{implementation:rules}, it is presented the standards used to access the devices and to define rules, respectively. Following, in section \ref{implementation:architecture}, the whole system's architecture as well as the functioning of its components is described. 
+The objective for this chapter is to describe the steps and decisions taken, and the reasoning behind the implemented features. It starts in section \ref{implementation:objectives}, by presenting the objectives for the implementation, following by the used technologies on the several components in section \ref{implementation:technologies}. After that, in sections \ref{implementation:devices} and \ref{implementation:rules}, it is presented the standards used to access the devices and to define rules, respectively. Following, in section \ref{implementation:architecture}, the whole system's architecture, as well as the functionalities of its components, are described. 
 
 Since one of the requirements and objectives for this project was the existence of failure handling mechanisms, in section \ref{implementation:scenarios}, it is described the implementation taking into account the several scenarios addressed in the previous chapter. 
 
@@ -10,7 +10,7 @@ Since one of the requirements and objectives for this project was the existence 
 \section{Objectives}
 \label{implementation:objectives}
 
-Although the implementation of the whole solution, presented in chapter \ref{chapter:architecture}, would be optimal to validate the project, it would be unrealistic due to the amount of time necessary to do so and the limited time available for this dissertation. Since some of the features were already implemented, such as a working platform to create and manage rules, a \ac{cep} engine and a simple gateway to communicate with devices through BLE, this dissertation's main focus was in the implementation of gateways capable of implement automation rules, alike to the ones implemented by the CEP engine, as well as give them means to adapt to failing and emergency states. For that reason, was also implemented a gateway manager to act as a monitor for the gateways, being able to control not only the functioning of each one of them as well as manage the distribution of rules and devices throughout the gateways.
+Although the implementation of the whole solution, presented in chapter \ref{chapter:architecture}, would be optimal to validate the project, it would be unrealistic due to the amount of time necessary to do so and the limited time available for this dissertation. Since some of the features were already implemented, such as a working platform to create and manage rules, a \ac{cep} engine and a simple gateway to communicate with devices through BLE, this dissertation's main focus was in the implementation of gateways capable of implement automation rules, alike to the ones implemented by the CEP engine, as well as give them means to adapt to failing and emergency states. For that reason, was also implemented a gateway manager to act as a monitor for the gateways. The gateway manager is not only able to control the operation of each gateway, but also, manage the distribution of rules and devices throughout them.
 
 Looking at the architecture presented in chapter 3, the component for the user management dashboard was not implemented for the scope of this work. Apart from this, all the features mentioned were implemented and are detailed in the continuation of this chapter.
 
@@ -19,16 +19,16 @@ Looking at the architecture presented in chapter 3, the component for the user m
 \section{Adopted  Technologies}
 \label{implementation:technologies}
 
-This section aims to discuss the technologies chosen for the different components of the architecture. These choices will be justified and explained taking into account the requirements for this project, however, it is important to note that there are no perfect solutions and, in some cases, several approaches could have been taken. 
+This section aims to discuss the technologies chosen for the different components of the architecture. These choices will be justified and explained taking into account the requirements for this project. However, it is important to note that there are no perfect solutions and, in some cases, several approaches could have been taken. 
 
-Since there was a dissertation\cite{helder} that already implemented some features like the \ac{cep} engine and the \ac{bm}, some of the technologies used in this dissertation were influenced by past decisions. As far as the \ac{cep} engine concerns, the choice was the WSO2 \ac{cep} \cite{wso2}, since its features addressed all requirements, that such system would need, to fit this project's requirements. For the purpose of this dissertation both the \ac{cep} engine and the \ac{bm} as well as the communication between them, did not affect any of the new implemented features, however, since MQTT protocol was primarily used as the elect protocol for communications in the referred dissertation, the implemented features presented in this work followed the same path.
+Since there was a dissertation\cite{helder} that already implemented some features like the \ac{cep} engine and the \ac{bm}, some of the technologies used in this dissertation were influenced by past decisions. As far as the \ac{cep} engine concerns, the choice was the WSO2 \ac{cep} \cite{wso2}, since its features addressed all requirements, that such system would need, to fit this project's requirements. For the purpose of this dissertation both the \ac{cep} engine and the \ac{bm} as well as the communication between them, did not affect any of the new implemented features. Since the MQTT protocol was primarily used as the elect protocol for communications in the referred dissertation, the implemented features presented in this work followed the same path.
 
 Finally, it is important to state that the standard used, in SmartLighting project, for both object definition to read and write information to/from devices, and the rules structure, were also maintained and will be described in the following sections. 
 
 \section{Access to Devices}
 \label{implementation:devices}
 
-Devices like sensors, which measure environment changes, and actuators, and may trigger mechanisms to make changes in that same environment, are fundamental pieces to implement a smart and automated environment. Since there are a huge variety of devices with different characteristics, in order to enable extensibility for the system, the access to those devices, as well as the messages format, should be standardised. In another dissertation for this project, a standard following the IP Smart Objects Alliance Guideline\cite{IPSOAlliance2014} was made and is illustrated in Figure \ref{fig:obj}
+Devices like sensors, which measure environment changes, and actuators, that may trigger mechanisms to make changes in that same environment, are fundamental pieces to implement a smart and automated environment. Since there are a huge variety of devices with different characteristics, in order to enable extensibility for the system, the access to those devices, as well as the messages format, should be standardised. In another dissertation for this project, a standard following the IP Smart Objects Alliance Guideline\cite{IPSOAlliance2014} was made and is illustrated in Figure \ref{fig:obj}
 
 \begin{figure}[H]
 	\centering
@@ -39,9 +39,9 @@ Devices like sensors, which measure environment changes, and actuators, and may 
 
 In this representation, a device can have multiple objects (sensors and/or actuators), identified through an ID and an object instance. As example, a device can have multiple sensing or actuating capabilities, each one of them identified with a different ID. A device with two motion sensors, will have two objects with the same ID but different object instances. 
 
-Inside the representation of each object, the information is divided in resources. Resources represent the available features that each object provides, such as the available values that can be read or written, or the actions that can be triggered. As an example, an luminaire actuator object can have resources to read the current state of the luminaire, turn  on/off or dim the light to a certain value, each one of them represented with a different ID. The resource instance is used when, per example, when an actuator for aluminaire with two lamps offers the same resources for each lamp separately.
+Inside the representation of each object, the information is divided in resources. Resources represent the available features that each object provides, such as the available values that can be read or written, or the actions that can be triggered. As an example, an luminaire actuator object can have resources to read the current state of the luminaire, turn  on/off or dim the light to a certain value, each one of them represented with a different ID. The resource instance is used when, per example, an actuator for aluminaire with two lamps offers the same resources for each lamp separately.
 
-Using this representation, the properties of a device can me accessed using an Uniform Resource Identifier (URI) the following way: 
+Using this representation, the properties of a device can be accessed using an Uniform Resource Identifier (URI) the following way: 
 
 
 \begin{minted}[
@@ -53,7 +53,7 @@ frame=single
 
 \end{minted}
 	
-For instance, a device with a temperature sensor that offers the possibility of check the current state or check the minimum value measured by the sensor since it is ON, can be illustrated and accessed the following way:
+For instance, a device with a temperature sensor that offers the possibility to check the current state or check the minimum value measured by the sensor since it is ON, can be illustrated and accessed the following way:
 
 
 \begin{figure}[H]
@@ -66,7 +66,7 @@ For instance, a device with a temperature sensor that offers the possibility of 
 Since the protocol used for this project was \ac{mqtt}, which allows to subscribe and publish messages in specific topics, this URI can be used in the topic to address each device resource. 
 
 
-Since the WSO2 \ac{cep} was chosen as the complex event processor for this project\cite{helder}, a message format to communicate with devices, supported by that engine, was chosen.The format is represented in Snippet \ref{snippet:example}.
+Since the WSO2 \ac{cep} was chosen as the complex event processor for this project\cite{helder}, a message format to communicate with devices, supported by that engine, was chosen. The format is represented in Snippet \ref{snippet:example}.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -120,18 +120,18 @@ frame=single
 \label{snippet:todevice}
 \end{listing}
 
-This message would set the value 15 on a device's resource if sent to the corresponding topic using the format presented above.
+This message would set the value 15 on a device's resource, if sent to the corresponding topic using the format presented above.
 
 \section{Rules Standard}
 \label{implementation:rules}
 
 
-To obtain a fully autonomous system, rules must be designed in order to achieve it. In a former work for SmartLighting project\cite{helder}, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the \ac{cep} engine or the Gateway engine, that will be addressed later.
+To obtain a fully autonomous system, rules must be designed in order to achieve it. In a former work for SmartLighting project\cite{helder}, a solution was designed to, instead of using directly the languages provided by each \ac{cep} engine which are difficult to map using a Graphical User Interface, a more extensible and pluggable solution was created. When a rule is made in the platform, a JSON is generated containing all the information needed to convert the rule to the desired engine, either the WSO2 \ac{cep} engine or the Gateway engine, that will be addressed later.
 
-In this solution, a Rule is divided in Actions, each one containing a Target and a Function. The Target specifies to where the output events, resulting from applying the rule, should be sent, while the Listeners inside the Function specify which input events trigger the rule. Also inside the Function, there can be present four types of modules to transform the event stream: Aggregators, Converters, Windows and Filters. Filters are used to select only events that pass a certain condition, otherwise the rule is not applied. Windows, allow to capture events in a given interval of time or occurrences following some criteria. This module is often used with Aggregators that perform aggregate calculations, such as summing the events or calculating averages. Lastly, the function of Converters is to make calculations with each event, for instance to preform unit conversions. There can also be used the Pattern and Sequence modules that, as the name says, are used to detect patterns or specific sequences of events.
+In this solution, a Rule is divided in Actions, each one containing a Target and a Function. The Target specifies to where the output events, resulting from applying the rule, should be sent, while the Listeners inside the Function specify which input events trigger the rule. Still inside the Function, there can be present four types of modules to transform the event stream: Aggregators, Converters, Windows and Filters. Filters are used to select only events that pass a certain condition, otherwise the rule is not applied. Windows, allow to capture events in a given interval of time or occurrences following some criteria. This module is often used with Aggregators that perform aggregate calculations, such as summing the events or calculating averages. Lastly, the function of Converters is to make calculations with each event, for instance to perform unit conversions. There can also be used the Pattern and Sequence modules that, as the name says, are used to detect patterns or specific sequences of events.
 
 
-In Snippet \ref{snip:rule} in Appendix A, is shown an example on an output JSON of a rule with a single action. As can be observed, a rule can be constituted by sub rules. Each sub rule within a Rule has the same Function but different Targets and Listeners. In this particular case, the rule has a function called "setif\_value\_percent" with two different types of Listeners, a "listen\_boolean" and a "listen\_value". The first is used to listen to boolean values (which in this case are the motion sensor state) and the last to listen to float values (luminance sensors, in this case). The boolean data is read for a 6 seconds time window and aggregated with the “any” Aggregator which detects if there was any motion in the last 6 seconds. The data containing the luminance values, is aggregated with an average over the last 5 events, and converted using the converter “lux\_to\_percent”. Therefore, the function sends to the target an event with the 100\% calculated percentage if a motion is detected in the last 6 seconds, and 50\% otherwise. 
+In Snippet \ref{snip:rule} in Appendix A, is shown an example on an output JSON of a rule with a single action. As can be observed, a rule can be constituted by sub rules. Each sub rule within a Rule has the same Function but different Targets and Listeners. In this particular case, the rule has a function called "setif\_value\_percent" with two different types of Listeners, a "listen\_boolean" and a "listen\_value". The first is used to listen to boolean values (which in this case are the motion sensor state) and the last to listen to float values (luminance sensors, in this case). The boolean data is read for a 6 seconds time window and aggregated with the “any” Aggregator which detects if there was any motion in the last 6 seconds. The data containing the luminance values, is aggregated with an average over the last 5 events, and converted using the converter “lux\_to\_percent”. Therefore, the function sends an event to the target with the 100\% calculated percentage, if a motion is detected in the last 6 seconds, or 50\% otherwise. 
 
 
 
@@ -140,7 +140,7 @@ In Snippet \ref{snip:rule} in Appendix A, is shown an example on an output JSON 
 	
 \section{Architecture}
 \label{implementation:architecture}
-Taking into consideration the objectives and adopted technologies addressed in chapters \ref{implementation:objectives} and \ref{implementation:technologies}, the implemented architecture is represented in Figure \ref{fig:arch2}. Comparing this architecture to the one presented in Figure \ref{fig:arch}, it is clear the use of MQTT as the main communication protocol, the removal of the User Management component, since it was not in the scope for this dissertation, and as far as the \ac{cep} engine and the Building Manager concerns, those components were already implemented, as stated before. The BLE Adapter which is part of the gateway was also already implemented. Lastly, the MQTT broker used in this implementation was Mosquitto\footnote{https://mosquitto.org/}, which is a lightweight broker suited for \ac{iot} environments which implements the latest versions on MQTT protocol . 
+Taking into consideration the objectives and adopted technologies addressed in chapters \ref{implementation:objectives} and \ref{implementation:technologies}, the implemented architecture is represented in Figure \ref{fig:arch2}. Comparing this architecture to the one presented in Figure \ref{fig:arch}, it is clear the use of MQTT as the main communication protocol, the removal of the User Management component, since it was not in the scope for this dissertation, and, regarding the \ac{cep} engine and the Building Manager, those components were already implemented, as stated before. The BLE Adapter which is part of the gateway was also already implemented. Lastly, the MQTT broker used in this implementation was Mosquitto\footnote{https://mosquitto.org/}, which is a lightweight broker suited for \ac{iot} environments, which implements the latest versions on MQTT protocol. 
 
 
 
@@ -152,18 +152,18 @@ Taking into consideration the objectives and adopted technologies addressed in c
 	\label{fig:arch2}
 \end{figure}
 
-For the scope of this dissertation, the focus was the implementation of a Gateway with ability to configure and manage devices, and with a lightweight automation engine that is able to parse rules and process events based on them. Also it was implemented a Gateway Manager with features like rule parsing and distribution among gateways and failure handling and synchronization of gateways.
+For the scope of this dissertation, the focus was the implementation of a Gateway with ability to configure and manage devices, and with a lightweight automation engine that is able to parse rules and process events based on them. It was also implemented a Gateway Manager with features like rule parsing and distribution among gateways and failure handling and synchronization of gateways.
 
-Regarding the failover strategy used, the detection of failures was insured by making every component report its state to the central broker, by publishing a periodic MQTT heart\_beat message. This way, if a fail occurs, the other working nodes are able to detect the absence of the failing node and begin recovering from the fault. All the processes regarding these features will be explained next.
+Regarding the failover strategy used, the detection of failures was insured by making every component report its state to the central broker, by publishing a periodic MQTT heart\_beat message. This way, if a fail occurs, the other working nodes are able to detect the absence of the failing node and begin recovering from the fault. All the processes regarding these features are explained next.
 
 
 \subsection{Gateway Manager}
 \label{arch:gm}
 
-This section will describe how the Gateway Manager fits in the fulfilment of the requirements and objectives proposed for this project, and also how its features were thought and implemented. 
+This section describes how the Gateway Manager fits in the fulfilment of the requirements and objectives proposed for this project, and also how its features were thought and implemented. 
 
 
-This component was programmed using Python 3\footnote{https://docs.python.org/3/} and since MQTT was the chosen protocol to communicate with other nodes, the Eclipse Paho MQTT Python client\footnote{https://pypi.python.org/pypi/paho-mqtt/1.3.0} library was used. This client enables the application to connect to a MQTT broker in order to publish messages and subscribe to topics. Bellow will be described the most important features implemented for this component.
+This component was programmed using Python 3\footnote{https://docs.python.org/3/} and since MQTT was the chosen protocol to communicate with other nodes, the Eclipse Paho MQTT Python client\footnote{https://pypi.python.org/pypi/paho-mqtt/1.3.0} library was used. This client enables the application to connect to a MQTT broker in order to publish messages and subscribe to topics.
 
 
 \begin{Paragraph}{Rule Parsing and Distribution}
@@ -200,13 +200,13 @@ The \ac{gm}, being the unit that will impose the fail handling measures, needs t
 
 \begin{Paragraph}{Devices Configuration}
 
-When new a gateway is connected to the system, it sends a message to the \ac{gm}, informing which devices it is able to connect and then, with this information, the \ac{gm} balances the available devices among the gateways. To explain further, when two gateways are able to connect to the same devices, the \ac{gm} balances that devices among the two in order to maintain a equal number of devices in each one. Also, it stores for each device, the gateways that are able to connect to it. This allows that when a gateway fails, the \ac{gm} has all the information needed to inform the gateways that are able to connected to the lost devices, to take control of those devices.
+When a new gateway is connected to the system, it sends a message to the \ac{gm}, informing which devices it is able to connect and then, with this information, the \ac{gm} balances the available devices among the gateways. To explain further, when two gateways are able to connect to the same devices, the \ac{gm} balances that devices among the two in order to maintain a equal number of devices in each one. Also, it stores for each device, the gateways that are able to connect to it. This allows that when a gateway fails, the \ac{gm} has the information needed to inform a new gateway, that are able to connected to the lost devices, to take control of those devices.
 
 \end{Paragraph}
 
 \begin{Paragraph}{Gateway Manager Dashboard}
 
-In order to visualize the state of the gateways present in the system, a dashboard was created, using Python3 web framework Flask\footnote{http://flask.pocoo.org/}. In Figure \ref{fig:main_gm} is shown the main page of this dashboard.
+In order to visualize the state of the gateways present in the system, a dashboard was created, using a Python3 web framework, Flask\footnote{http://flask.pocoo.org/}. In Figure \ref{fig:main_gm} is shown the main page of this dashboard.
 
 \begin{figure}[H]
 	\centering
@@ -237,7 +237,7 @@ As can be observed, since the \ac{gm} has the information regarding which gatewa
 
 \begin{Paragraph}{Gateways Synchronization}
 
-In some cases, there can be an emergency where the gateways cannot send events nor receive actions through the central \ac{mqtt} Broker. In this state, Gateways must communicate directly with each others. In order to to that, not only they need to know to which gateways they should send its device events to be processed, but also need to know where they must send the processed events to. Since the Gateway Manager has all the information regarding the gateways state, i.e, which rules and devices are deployed in each gateway, the \ac{gm} generates, everytime there is a change in either a gateway's devices or rules, two JSON's containing this information and send them to all Gateways. The first JSON contains a list of Listeners \ac{mqtt} topics and for each one, a list of gateways that have process rules for those events. To explain further, when a device generates an event, the corresponding Gateway, uses the information in this JSON to know which gateways are deploying rules that process that event, and send it to each one of them. The second JSON contains a list of Targets and the respective gateways that have devices triggered by that output event. This way, when a gateway finishes the processing of an event, it finds in this list which gateways have devices that are triggered by that event and sends it to them.
+In some cases, there can be an emergency where the gateways cannot send events nor receive actions through the central \ac{mqtt} Broker. In this state, Gateways must communicate directly with each others. In order to to that, not only they need to know to which gateways they should send its device events to be processed, but also need to know where they must send the processed events to. Since the Gateway Manager has the information regarding the gateways state, i.e, which rules and devices are deployed in each gateway, the \ac{gm} generates, everytime there is a change in either a gateway's devices or rules, two JSON's containing this information and send them to all Gateways. The first JSON contains a list of Listeners \ac{mqtt} topics and for each one, a list of gateways that have process rules for those events. To explain further, when a device generates an event, the corresponding Gateway, uses the information in this JSON to know which gateways are deploying rules that process that event, and send it to each one of them. The second JSON contains a list of Targets and the respective gateways that have devices triggered by that output event. This way, when a gateway finishes the processing of an event, it finds in this list which gateways have devices that are triggered by that event and sends it to them.
  
 \end{Paragraph}
 
@@ -245,7 +245,7 @@ In some cases, there can be an emergency where the gateways cannot send events n
 \subsection{Gateway}
 \label{arch:gw}
 
-This section will describe how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that is able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. In an initial state, the implementation began to be done using Java, however, the program would consume too much memory, which would be a downside, taking into account the proposed requirements. With this in mind, the programming language used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For these reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
+This section describes how the Gateway proposed features and its requirements were implemented. Since this project aims to create a smart environment in buildings, the amount of gateways needed to cover the whole network of devices may vary depending on the building size. Most solutions in the \ac{bas} systems rely on expensive gateways which can be a downside for stakeholders. The solution is to create a gateway software that is able to work in a microcontroller or in a small and cheap \ac{soc} like a Raspberry Pi\footnote{https://www.raspberrypi.org/} or a Nano Pi\footnote{http://www.nanopi.org/}. In an initial state, the implementation began to be done using Java, however, the program would consume too much memory, which would be a downside, taking into account the proposed requirements. With this in mind, the programming language used in the deployment of this software was MicroPython\footnote{https://micropython.org/}. MicroPython is an open source Python programming language interpretor that runs on small embedded development boards \cite{micro2} and, although being full packed with advanced features, it is compact enough run within just 256k of code space and 16k of RAM \cite{micro}. For these reasons, MicroPython was chosen to allow more flexibility when choosing gateway's hardware.
 
 To allow the communication between gateways in a scenario where the access to the central \ac{mqtt} broker might be impossible, either due to a failure in the network or in the broker itself, a Mosquitto lightweight MQTT broker was also deployed in each gateway. The use for these brokers will be explained later in section \ref{implementation:scenarios}. Also, since the IP addresses of the several components, which are needed to communicate with each others, can change due to network problems, it was deployed in each node of the system an Avahi \acf{mdns} deamon\footnote{https://www.avahi.org/}, enabling that each component could be reached by just its hostname, which never changes for each machine.
 
@@ -269,7 +269,7 @@ When a gateway is deployed, it needs to send, to the \ac{gm} a list of devices w
 
 \begin{Paragraph}{Rule Parser}
 
-The \ac{gm}, as addressed before, parses the received rules and give an unique ID to each subrule. Then, when balancing the rules among the available gateways, it sends a JSON with the subrule and the given ID. When a sub rule is received in a gateway, it must be deconstructed in order for the automation engine to know which events trigger it, and what actions must be performed. In Figure \ref{fig:parse} it is represented a flow diagram explaining the process of parsing a rule. As addressed before, each subrule can either have a Set Value or a Set Percent Function. In Set Value Functions, there is only one action to be parsed, however, in Set Percent Functions, there are two actions to be considered, a ``Listen\_value'' and a ``Listen\_boolean'' action. For each action, the parser checks the existence of the modules addressed before, i.e. Windows, Aggregators, Filters and Converters, and creates an object for each one of them, containing its informations. An Action object is then created, containing an unique ID and a reference for the modules objects. In the end, the parser saves in a data structure, the information regarding the rule in the following way: ``Rules[Listeners] = [ActionsID]'', where, Rules is a list of MQTT topics, of the different listeners parsed, and each one of them has a list of ActionsIDs with the same Listener. This was implemented this way so that when an event is received, it is only needed to search for the corresponding Listener topic, in the data structure, to know which actions must be triggered. 
+The \ac{gm}, as addressed before, parses the received rules and give an unique ID to each subrule. Then, when balancing the rules among the available gateways, it sends a JSON with the subrule and the given ID. When a sub rule is received in a gateway, it must be deconstructed in order for the automation engine to know which events trigger it, and what actions must be performed. In Figure \ref{fig:parse} it is represented a flow diagram explaining the process of parsing a rule. As addressed before, each subrule can either have a Set Value or a Set Percent Function. In Set Value Functions, there is only one action to be parsed, however, in Set Percent Functions, there are two actions to be considered, a ``Listen\_value'' and a ``Listen\_boolean'' action. For each action, the parser checks the existence of the modules addressed before, i.e. Windows, Aggregators, Filters and Converters, and creates an object for each one of them, containing its informations. An Action object is then created, containing an unique ID and a reference for the modules objects. In the end, the parser saves, in a data structure, the information regarding the rule in the following way: ``Rules[Listeners] = [ActionsID]'', where, Rules is a list of MQTT topics, of the different listeners parsed, and each one of them has a list of ActionsIDs with the same Listener. This was implemented this way so that when an event is received, it is only needed to search for the corresponding Listener topic, in the data structure, to know which actions must be triggered. 
 
 
 \begin{figure}[H]
@@ -283,7 +283,7 @@ The \ac{gm}, as addressed before, parses the received rules and give an unique I
 
 \begin{Paragraph}{Gateway Automation Engine}
 
-The \acf{gae}, as stated before, will only work in emergency states, either if the central broker or the \ac{cep} Engine are down. When this happens, gateways subscribe, in the central broker, to the MQTT topics of the listeners present in the rules deployed by each one. This way, the events generated by the devices are published in the broker and then sent to gateways that have rules with those events as input for its rules. 
+The \acf{gae}, as stated before, will only work in emergency states, either if the central broker or the \ac{cep} Engine are down. When this happens, gateways subscribe, in the central broker, to the MQTT topics of the listeners present in the rules deployed by each one. This way, the events generated by the devices are published in the broker and then sent to gateways that have rules with those events as input. 
 
 As mentioned earlier, when an event arrives to a gateway, first it must discover the Actions that need to be triggered so that the event can be processed. The \ac{gae} was designed to implement the modules present in Table \ref{module-table}.
  
@@ -329,12 +329,13 @@ This automation engine will only be enabled if the \ac{cep} Engine or the centra
 
 \end{Paragraph}
 
-\section{Functioning Scenarios}
+\section{Operational Scenarios}
 \label{implementation:scenarios}
 
 As one of the most important requirements and objectives for the present dissertation project, the fail handling mechanisms are a core feature for every smart environment deployed in a building. In order to rely with assurance in a fully autonomous system, it must be adapted to answer swiftly to unexpected behaviours within the system. In the scope of this project, the most important component, to impose an autonomous system, is the \ac{cep} engine, however if that component fails, due to internal software failure or a communication failure, the integrity of the building as well as the safety of its occupants could be at risk. For this reason, as addressed before, an automation engine (\ac{gae}) was implemented so that gateways could process events in order to trigger actions.
 
-In section \ref{Architecture:usecases}, were introduced five different functioning scenarios: every component working as expected, \ac{cep} Engine down, Gateway Manager down, both CEP Engine and Gateway Manager down, and lastly, the MQTT broker down. For each of these scenarios, it will be explained how the system handle each of the failures in order to maintain the minimum functionalities of the building. 
+In section \ref{Architecture:usecases}, were introduced five different operational scenarios: every component working as expected, \ac{cep} Engine down, Gateway Manager down, both CEP Engine and Gateway Manager down, and lastly, the MQTT broker down. For each of these scenarios, it will be explained how the system handle each of the failures in order to maintain the minimum functionalities of the building. 
+
 \begin{Paragraph}{Scenario 1 - All components are operational}
 \begin{figure}[H]
 	\centering
@@ -343,7 +344,7 @@ In section \ref{Architecture:usecases}, were introduced five different functioni
 	\label{fig:fs1}
 \end{figure}
 
-In scenario 1, as can be observed in Figure \ref{fig:fs1}, all components are working in the expected way. Devices send events to the connected gateways, which fowards them to the central \ac{mqtt} Broker. Then the \ac{cep} Engine process them, based on the deployed rules and publishes the output events on the \ac{mqtt} Broker. Since gateways, as seen before, subscribe to all the topics that concern their devices, they receive the actions and send them to the devices.
+In scenario 1, as can be observed in Figure \ref{fig:fs1}, all components are working in the expected way. Devices send events to the connected gateways, which forwards them to the central \ac{mqtt} Broker. Then the \ac{cep} Engine process them, based on the deployed rules and publishes the output events on the \ac{mqtt} Broker. Since gateways, as seen before, subscribe to all the topics that concern their devices, they receive the actions and send them to the devices.
 
 In this scenario, the automation engine of the gateways is disabled, since the central \ac{cep} is operational. Finally, this scenario support Gateways failure, since the Gateway Manager is also operational, as it was explained in Figure \ref{fig:gwdown}.
 
@@ -378,7 +379,7 @@ Again, this scenario supports failures in gateways, since the Gateway Manager is
 		\label{fig:fs5}
 	\end{figure}
 
-Scenario 3 represents a failure in the Gateway Manager while all the other components are working correctly. When this happens, the system continues to work correctly, however if a gateway fails while in this scenario, the lost devices and rules will not redistributed to other gateways and thus, the automation of some building areas will stop working. Also, while in this state, no new rules can be added to gateways. Since none of the other components are directly dependent of the Gateway Manager, for its normal functioning, its absence will not interfere with the system, and thus, the rest of the nodes can be agnostic about the Gateway Manager state.
+Scenario 3 represents a failure in the Gateway Manager while all the other components are working correctly. When this happens, the system continues to work correctly, however if a gateway fails while in this scenario, the lost devices and rules will not redistributed to other gateways and thus, the automation of some building areas will stop working. Also, while in this state, no new rules can be added to gateways. Since none of the other components are directly dependent of the Gateway Manager, for its normal operation, its absence will not interfere with the system, and thus, the rest of the nodes can be agnostic about the Gateway Manager state.
 
 
 \end{Paragraph}

@@ -2,7 +2,7 @@
 \label{chapter:evaluation_and_results}
 
 
-The objective for this chapter is to validate the proposed solution. Firstly, in section \ref{results:scenario}, a deployment scenario overview will be given, highlighting the devices and tools used for that purpose. Following, in section \ref{results:results}, the obtained results for different tests will be analysed. With the requirements, addressed in chapter 3, taken into consideration, the performance of the automation engine, implemented in gateways, will be evaluated, and also, to judge the capacity of the system to react to abnormal functioning scenarios, the reaction time to this occurrences will be measured.
+The objective for this chapter is to validate the proposed solution. Firstly, in section \ref{results:scenario}, a deployment scenario overview will be given, highlighting the devices and tools used for that purpose. Following, in section \ref{results:results}, the obtained results for different tests will be analysed. With the requirements, addressed in chapter 3, taken into consideration, the performance of the automation engine, implemented in gateways, will be evaluated, and also, to judge the capacity of the system to react to abnormal operational scenarios, the reaction time to this occurrences will be measured.
 
 \newpage
 
@@ -76,6 +76,30 @@ As can be observed, the time taken to process each event in the different test s
 
 This test was performed 10 times for each number of simultaneous events. Regarding the time to process each event, it was expected that when increasing the number of simultaneous events, the time needed to process each one of them would increment, since it would increase the processor load, however, as can be observed in Figure \ref{fig:performance}, there is a slight decrease for 100 simultaneous events. This can be explained by the internal architecture of Raspberry Pi's processor and cache.
 
+\begin{Paragraph}{Raspberry 3 Performance}
+
+
+One of the objectives for this dissertation was to built a Gateway software able to operate in constrained devices, such as a Raspberry Pi. While doing the stress test above, it was measured the amount of CPU and memory used by the implemented software. In Figures \ref{fig:idle} and \ref{fig:loaded}, is represented the output of ``htop''\footnote{https://hisham.hm/htop/} command, which is an interactive process viewer for Unix, before and while the processing of the 10000 events, respectively.
+
+
+ \begin{figure}[H]
+ 	\centering
+ 	\includegraphics[width=0.9\textwidth]{figures/idle.png}
+ 	\caption{Output of ``htop'' command with no events being processed.}
+ 	\label{fig:idle}
+ \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/loaded.png}
+	\caption{Output of ``htop'' command while processing 10000 events.}
+	\label{fig:loaded}
+\end{figure}
+
+As can be observed, not only the gateway software only uses a small amount of memory, but also, the CPU usage while processing the 10000 events versus while in idle, only increases the usage of the second core by 16\%. Concluding, the use of Micropython as the chosen language for this software, paid off by presenting great results in terms of memory and CPU usage. This means that other \ac{soc}'s, with lower specifications and even lower power consumptions, could be used in this project.
+
+\end{Paragraph}
+
 \subsection{System Failure's Reaction Performance}
 \label{results:fail}
 
@@ -101,7 +125,7 @@ In order to test the system reaction to fail scenarios, two tests were done. The
 
 As can be observer, in average, a gateway needed 5 to 9 seconds to react to the \ac{cep} engine failure. Note that gateways wait for five seconds (configurable timeout) before conclude that the \ac{cep} Engine is down and thus, enable its own automation engine to process events.
 
-Regarding scenario 3, in which there is a failure in the Gateway Manager, no reaction times can be measured, since the failure of this component does not produce any alteration to the normal functioning of the system, i.e. the processing of sensor's generated events.
+Regarding scenario 3, in which there is a failure in the Gateway Manager, no reaction times can be measured, since the failure of this component does not produce any alteration to the normal operation of the system, i.e. the processing of sensor's generated events.
 
 
 The second test objective was to measure the time needed to recover from a gateway failure. When a gateway fails, the devices that are in its control become unreachable and thus, the events generated are not published in the broker. The gateway manager, then, needs to check which other gateways have access to those devices and assign them to a new gateway. Also the rules that were deployed in the failing gateway need to be sent to other working gateways. For this test in specific, the same device was configured in two different gateways, and, a event simulator was also implemented in each one of them in order to gateways publish simulated events of the devices they control. To explain further, two gateways were connected with access to the same device, and the Gateway Manager chose one of them to control that device. Then, using a Python script, it was measured the time since the gateway, that was in control of the device, was disconnected, until the other gateway, took over the device and started publishing events. The results of this test were as shown in table \ref{gwdown}
@@ -121,7 +145,7 @@ The second test objective was to measure the time needed to recover from a gatew
 	\label{gwdown}
 \end{table}
 
-As can be concluded, by observing the results, the reaction time of a gateway failure is in average 7 to 19 seconds. Note that in this test, gateways were sending heart beats in 5 second intervals, and the the \ac{gm} was checking every 10 seconds whether a gateway was disconnected for more than 10 seconds. That is why there is such a discrepancy between the maximum and minimum values obtained. It depends on when the last heart beat of the failing gateway was sent.
+As can be concluded, by observing the results, the reaction time of a gateway failure is in average 7 to 19 seconds. Note that in this test, gateways were sending heart beats in 5 second intervals, and the the \ac{gm} was checking every 10 seconds whether a gateway was disconnected for more than 10 seconds. That is why there is such discrepancy between the maximum and minimum values obtained. It depends on when the last heart beat of the failing gateway was sent.
 
 Then, using the same scenario, the disconnected gateway was put back up, and since it was a known gateway for the Gateway Manager, immediately after the first heart beat was received, it attributed the control of the same device back to that gateway. The results, as can be seen in table \ref{gwup}, were from 129 to 199 milliseconds.
 
